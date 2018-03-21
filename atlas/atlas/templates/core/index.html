@@ -2,10 +2,46 @@
 <html>
     {% include "core/header.html" %}
     <body>
-        <header>
-            <h1>Atlas</h1>
-        </header>
         <main>
+            <nav class="main-menu">
+                <div class="top-bar">
+                    <div class="top-bar-left">
+                        <ul class="dropdown menu" data-dropdown-menu>
+                            <li class="menu-text">Atlas</li>
+                            <li>
+                                <a href="#">Assets</a>
+                                <ul class="menu vertical">
+                                    <li><a href="/hardware">Hardware</a></li>
+                                    <li><a href="/software">Software</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Section</a></li>
+                            <li><a href="#">People</a></li>
+                        </ul>
+                    </div>
+                    <div class="top-bar-right">
+                        <ul class="menu">
+                            <li><input type="search" placeholder="Search"></li>
+                            <li><button type="button" class="button">Search</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <section class="inner">
+                <header>
+                    <div class="updates">
+                        <p>This is a critical update</p>
+                    </div>
+                    <div class="search">
+                        <form id="header-search" role="search">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                            <input type="text" placeholder="search">
+                            <div class="results">
+                            </div>
+                        </form>
+                    </div>
+                </header>
+            </section>
             {% block content-top %}
             {% endblock %}
 
