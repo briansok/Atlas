@@ -1,0 +1,13 @@
+// Foundation
+@import "../foundation/scss/foundation.scss";
+@import "../fonts/fontawesome/scss/font-awesome.scss";
+@import "settings.scss";
+
+@include foundation-everything;
+@include foundation-flex-classes;
+@include foundation-flex-grid;
+
+// Custom
+@import "mixins.scss";
+@import "commons.scss";
+@import "dashboard.scss";
