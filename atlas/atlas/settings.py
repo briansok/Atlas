@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'person.Person'
+
 
 # Application definition
 
@@ -39,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'compressor',
+
+    'asset',
+    'desk',
+    'person',
 ]
 
 MIDDLEWARE = [
