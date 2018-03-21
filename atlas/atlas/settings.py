@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'compressor',
 
     'asset',
+    'info',
     'location',
     'person',
 ]
