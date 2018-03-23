@@ -1,0 +1,42 @@
+table {
+  thead {
+    border: none;
+
+    tr {
+      background-color: $background-color;
+    }
+
+    th {
+      padding: $spacing/2;
+
+      &:first-child {
+        border-radius: $global-radius 0 0 $global-radius;
+      }
+
+      &:last-child {
+        border-radius: 0 $global-radius $global-radius 0;
+      }
+    }
+  }
+  tbody {
+    border: none;
+
+    tr {
+      background: none;
+
+      &:nth-child(even) {
+        background: none;
+      }
+    }
+
+    td {
+      padding: 0.75rem;
+      border-bottom: 1px solid $background-color;
+
+      .button {
+        margin-bottom: 0;
+        float: right;
+      }
+    }
+  }
+}

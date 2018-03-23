@@ -7,6 +7,7 @@ class EntrySoftware(admin.ModelAdmin):
         'valid_until',
         'created_at',
     )
+    save_as = True
 
 class EntryHardware(admin.ModelAdmin):
     list_display = (
@@ -14,6 +15,7 @@ class EntryHardware(admin.ModelAdmin):
         'model',
         'created_at',
     )
+    save_as = True
 
 admin.site.register(Software, EntrySoftware)
 admin.site.register(Hardware, EntryHardware)

@@ -1,5 +1,25 @@
-.util-bar {
-  height: 150px;
-  @include gradient(#263836, #182928);
+body {
+  background-color: $background-color;
 }
+
+.inner {
+  padding: $spacing*0.75;
+}
+
+.block {
+  background: $white;
+  border-radius: $global-radius;
+  padding: $spacing*0.75;
+  margin-bottom: $spacing*0.75;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-bottom: $spacing/2;
+  }
+
+  .button {
+    margin-bottom: 0;
+  }
+}
+
 

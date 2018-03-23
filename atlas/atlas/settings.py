@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'person.Person'
 
-
+LOGIN_URL = '/login'
 # Application definition
 
 INSTALLED_APPS = [

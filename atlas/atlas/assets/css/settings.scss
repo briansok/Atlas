@@ -2,7 +2,8 @@
 // Custom
 $spacing: 2rem;
 $side-menu-color: #2f2f2f;
-$background-color: #f7f5f2;
+$background-color: #EFEFEF;
+$opac-background: rgba(115,115,115,0.6);
 
 // 1. Global
 // ---------
@@ -11,15 +12,15 @@ $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
 $foundation-palette: (
-  primary: #1fcc74,
-  secondary: #767676,
+  primary: #05d669,
+  secondary: #192331,
   success: #3adb76,
   warning: #ffae00,
   alert: #cc4b37,
 );
 $light-gray: #e6e6e6;
 $medium-gray: #cacaca;
-$dark-gray: #8a8a8a;
+$dark-gray: #1b1b1b;
 $black: #0a0a0a;
 $white: #fefefe;
 $body-background: $white;
@@ -31,7 +32,7 @@ $global-padding: 1rem;
 $global-position: 1rem;
 $global-weight-normal: normal;
 $global-weight-bold: bold;
-$global-radius: 5px;
+$global-radius: 7px;
 $global-menu-padding: 0.7rem 1rem;
 $global-menu-nested-margin: 1rem;
 $global-text-direction: ltr;
@@ -228,7 +229,7 @@ $button-background: $primary-color;
 $button-background-hover: scale-color($button-background, $lightness: -15%);
 $button-color: $white;
 $button-color-alt: $black;
-$button-radius: 30px;
+$button-radius: $global-radius;
 $button-hollow-border-width: 1px;
 $button-sizes: (
   tiny: 0.6rem,
@@ -786,8 +787,8 @@ $tooltip-radius: $global-radius;
 // 55. Top Bar
 // -----------
 
-$topbar-padding: 0.5rem;
-$topbar-background: $white;
+$topbar-padding: 1rem;
+$topbar-background: $dark-gray;
 $topbar-submenu-background: $topbar-background;
 $topbar-title-spacing: 0.5rem 1rem 0.5rem 0;
 $topbar-input-width: 200px;

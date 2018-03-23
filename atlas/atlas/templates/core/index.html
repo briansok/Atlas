@@ -7,19 +7,24 @@
                 <div class="top-bar">
                     <div class="top-bar-left">
                         <ul class="dropdown menu" data-dropdown-menu>
-                            <li class="menu-text">Atlas</li>
+                            <li class="menu-text logo">
+                                <a href="/">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;  Atlas
+                                </a>
+                            </li>
                             <li>
-                                <a href="#">Assets</a>
+                                <a href="/assets">Assets</a>
                                 <ul class="menu vertical">
-                                    <li><a href="/hardware">Hardware</a></li>
-                                    <li><a href="/software">Software</a></li>
+                                    <li><a href="/assets/hardware">Hardware</a></li>
+                                    <li><a href="/assets/software">Software</a></li>
+                                    <li><a href="/assets">All assets</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">Section</a></li>
+                            <li><a href="#">Sections</a></li>
                             <li><a href="#">People</a></li>
                         </ul>
                     </div>
-                    <div class="top-bar-right">
+                    <div class="top-bar-right search-menu">
                         <ul class="menu">
                             <li><input type="search" placeholder="Search"></li>
                             <li><button type="button" class="button">Search</button></li>
@@ -28,30 +33,19 @@
                 </div>
             </nav>
             <section class="inner">
-                <header>
-                    <div class="updates">
-                        <p>This is a critical update</p>
+                <div class="wrapper">
+                    <header class="block top">
+                        {% block content-top %}
+                            <h3>Hello, {{ request.user.username }}</h3>
+                            <p>Below you can find the most important information for you.</p>
+                        {% endblock %}
+                    </header>
+                    <div class="block middle">
+                        {% block content %}
+                        {% endblock %}
                     </div>
-                    <div class="search">
-                        <form id="header-search" role="search">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            <input type="text" placeholder="search">
-                            <div class="results">
-                            </div>
-                        </form>
-                    </div>
-                </header>
+                </div>
             </section>
-            {% block content-top %}
-            {% endblock %}
-
-            {% block title %}
-            {% endblock %}
-
-            {% block content %}
-                <section class="content">
-                </section>
-            {% endblock %}
         </main>
         {% include "core/footer.html" %}
     </body>

@@ -8,7 +8,9 @@
 @include foundation-flex-grid;
 
 // Custom
+@import "keyframes.scss";
 @import "mixins.scss";
+@import "table.scss";
 @import "framework.scss";
 @import "commons.scss";
 @import "dashboard.scss";

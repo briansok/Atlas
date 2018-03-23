@@ -1,0 +1,48 @@
+{% extends 'core/index.html' %}
+
+{% block metatitle %}
+    <title>Atlas - Software</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+    <h3>Shortcuts</h3>
+    <div class="action-buttons">
+        <a href="/assets/add" class="button">Add software</a>
+        <a href="/assets/add" class="button">Filter</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h3>All assets</h3>
+    <table>
+        <thead>
+        <tr>
+            <th width="20%">Name</th>
+            <th>User</th>
+            <th>Section</th>
+            <th>License</th>
+            <th width="20%">Date</th>
+            <th width="5%">Price</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for asset in assets %}
+            <tr>
+                <td>{{ asset.title }}</td>
+                <td>{{ asset.user.username }}</td>
+                <td>{{ asset.section.title }}</td>
+                <td class="license">{{ asset.license }}</td>
+                <td>{{ asset.created_at }}</td>
+                <td>{{ asset.price }}</td>
+                <td>
+                    <a href="/assets/add" class="button">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
