@@ -10,13 +10,13 @@
 {% block content-top %}
     <h3>Shortcuts</h3>
     <div class="action-buttons">
-		<button class="button" data-open="addAsset">Add asset</button>
+		<button class="button" data-open="addAsset">Remove</button>
         <a href="/assets/add" class="button">Filter</a>
     </div>
 {% endblock %}
 
 {% block content %}
-    <h3>All assets</h3>
+    <h3>{{ asset.title }}</h3>
     <table>
         <thead>
             <tr>
@@ -29,20 +29,6 @@
             </tr>
         </thead>
         <tbody>
-            {% for asset in assets %}
-                <tr>
-                    <td>
-                        <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
-                    </td>
-                    <td>{{ asset.user.username }}</td>
-                    <td>{{ asset.section.title }}</td>
-                    <td>{{ asset.created_at }}</td>
-                    <td>{{ asset.price }}</td>
-                    <td>
-                        <a href="/assets/add" class="button">Edit</a>
-                    </td>
-                </tr>
-            {% endfor %}
         </tbody>
     </table>
 {% endblock %}

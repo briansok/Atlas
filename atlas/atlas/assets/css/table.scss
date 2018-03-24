@@ -37,6 +37,10 @@ table {
         margin-bottom: 0;
         float: right;
       }
+
+      &:first-child {
+        font-weight: bold;
+      }
     }
   }
 }

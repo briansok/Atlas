@@ -8,9 +8,21 @@ def index(request):
 
     context = {
         'assets': assets,
+        'filter': 'all',
     }
 
     return render(request, 'asset/assets.html', context)
+
+@login_required
+def detail(request, id):
+    asset = Asset.objects.get(id=id)
+
+    context = {
+        'asset': asset,
+        'filter': 'all',
+    }
+
+    return render(request, 'asset/detail.html', context)
 
 @login_required
 def hardware(request):
@@ -18,9 +30,10 @@ def hardware(request):
 
     context = {
         'assets': assets,
+        'filter': 'hardware',
     }
 
-    return render(request, 'asset/hardware.html', context)
+    return render(request, 'asset/assets.html', context)
 
 @login_required
 def software(request):
@@ -28,6 +41,7 @@ def software(request):
 
     context = {
         'assets': assets,
+        'filter': 'software',
     }
 
-    return render(request, 'asset/software.html', context)
+    return render(request, 'asset/assets.html', context)

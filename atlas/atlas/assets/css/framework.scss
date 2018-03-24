@@ -6,6 +6,10 @@ body {
   padding: $spacing*0.75;
 }
 
+.button:focus, .reveal:focus {
+  outline: 0;
+}
+
 .block {
   background: $white;
   border-radius: $global-radius;
