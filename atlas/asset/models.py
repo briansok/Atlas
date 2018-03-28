@@ -7,7 +7,6 @@ class Asset(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     section = models.ForeignKey('location.Section', on_delete=models.CASCADE, null=True, blank=True)
     price = models.PositiveIntegerField(null=True, blank=True)
-    price = models.PositiveIntegerField(null=True, blank=True)
     valid_until = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 

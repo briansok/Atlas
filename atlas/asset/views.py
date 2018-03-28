@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Asset, Hardware, Software
+from .forms import AddAssetForm
 
 @login_required
 def index(request):
@@ -12,6 +13,19 @@ def index(request):
     }
 
     return render(request, 'asset/assets.html', context)
+
+@login_required
+def add(request):
+    assets = Asset.objects.all()
+    form = AddAssetForm()
+
+    context = {
+        'assets': assets,
+        'form': form,
+        'filter': 'all',
+    }
+
+    return render(request, 'asset/add.html', context)
 
 @login_required
 def detail(request, id):

@@ -5,7 +5,8 @@ from . import views as asset_views
 
 urlpatterns = [
     path('', asset_views.index, name="assets"),
-    path('<id>', asset_views.detail, name="asset"),
-    path('hardware/', asset_views.hardware, name="hardware"),
-    path('software/', asset_views.software, name="software"),
+    path('add', asset_views.add, name="add"),
+    path('<int:id>', asset_views.detail, name="asset"),
+    path('hardware', asset_views.hardware, name="hardware"),
+    path('software', asset_views.software, name="software"),
 ]
