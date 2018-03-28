@@ -1,4 +1,5 @@
 {% extends 'core/index.html' %}
+{% load i18n %}
 
 {% block metatitle %}
 	 <title>Atlas - Assets</title>
@@ -8,29 +9,102 @@
 {% endblock %}
 
 {% block content-top %}
-    <h3>Shortcuts</h3>
+<header class="block top">
+    <h3>Actions</h3>
     <div class="action-buttons">
-		<button class="button" data-open="addAsset">Remove</button>
-        <a href="/assets/add" class="button">Filter</a>
+        <a href="/assets/{{ asset.id }}/remove" class="button">
+            {% trans "Remove" %}
+        </a>
+        <a href="/assets/{{ asset.id }}/edit" class="button">
+            {% trans "Edit" %}
+        </a>
+        <a href="/info/updates/add" class="button">
+            {% trans "Add update" %}
+        </a>
     </div>
+</header>
 {% endblock %}
 
 {% block content %}
-    <h3>{{ asset.title }}</h3>
-    <table>
-        <thead>
-            <tr>
-                <th width="20%">Name</th>
-                <th>User</th>
-                <th>Section</th>
-                <th width="20%">Date</th>
-                <th width="5%">Price</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="double">
+        <div class="block middle">
+            <h3>{{ asset.title }}</h3>
+            <div class="asset-table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>{% trans "Details" %}</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if asset.user %}
+                        <tr>
+                            <td>{% trans "User" %}</td>
+                            <td>{{ asset.user.username }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if asset.section %}
+                        <tr>
+                            <td>{% trans "Section" %}</td>
+                            <td>{{ asset.section.title }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if asset.price %}
+                        <tr>
+                            <td>{% trans "Price" %}</td>
+                            <td>€{{ asset.price }}</td>
+                        </tr>
+                    {% endif %}
+                    {% if asset.valid_until %}
+                        <tr>
+                            <td>{% trans "Expiration date" %}</td>
+                            <td>{{ asset.valid_until }}</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+                {% block asset_info %}
+                {% endblock %}
+            </div>
+        </div>
+        {% if qr_code %}
+            <div class="block right qr">
+                <h3>QR-Code</h3>
+                {% load qr_code %}
+                {% qr_from_text qr_code size="l" border=0 %}
+            </div>
+        {% endif %}
+    </div>
+    {% if updates %}
+        <div class="block middle">
+            <h3>{% trans "Updates" %}</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>{% trans "Title" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th width="50%">{% trans "Description" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for update in updates %}
+                    <tr>
+                        <td>
+                            {{ update.title }}
+                        </td>
+                        <td>
+                            {{ update.date }}
+                        </td>
+                        <td>
+                            {{ update.description }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block modal %}

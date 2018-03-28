@@ -25,11 +25,12 @@ SECRET_KEY = 'x43805u6za$u806@92wi*lld1a@n24$o7qkr-u+#&8n7i&f$_%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 AUTH_USER_MODEL = 'person.Person'
 
 LOGIN_URL = '/login'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'compressor',
+    'qr_code',
 
     'asset',
     'info',

@@ -1,0 +1,27 @@
+{% extends 'asset/detail.html' %}
+{% load i18n %}
+
+{% block asset_info %}
+    <table>
+        <thead>
+        <tr>
+            <th>{% trans "License info" %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if asset.license %}
+            <tr>
+                <td>{% trans "License" %}</td>
+                <td>{{ asset.license }}</td>
+            </tr>
+        {% endif %}
+        {% if asset.license_amount %}
+            <tr>
+                <td>{% trans "License amount" %}</td>
+                <td>{{ asset.license_amount }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'core/index.html' %}
+{% load i18n %}
 
 {% block metatitle %}
 <title>Atlas - Add assets</title>
@@ -8,27 +9,24 @@
 {% endblock %}
 
 {% block content-top %}
-<h3>Shortcuts</h3>
-<div class="action-buttons">
-    <button class="button" data-open="addAsset">Add asset</button>
-    <a href="/assets/add" class="button">Filter</a>
-</div>
 {% endblock %}
 
 {% block content %}
-<h3>Add Asset</h3>
-<form action="/assets/add" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input class="button" type="submit" value="Submit" />
-</form>
+    <div class="block middle">
+        <h3>{% trans "Add asset" %}</h3>
+        <form action="/assets/add" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input class="button" type="submit" value="Submit" />
+        </form>
+    </div>
 {% endblock %}
 
 {% block modal %}
-<div class="reveal" id="addAsset" data-reveal>
-    <h3>Add asset</h3>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+    <div class="reveal" id="addAsset" data-reveal>
+        <h3>{% trans "Add asset" %}</h3>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 {% endblock %}
