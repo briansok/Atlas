@@ -1,0 +1,10 @@
+@media (max-width: 640px) {
+  .top-bar {
+    &.desktop {
+      display: none;
+    }
+    &.mobile {
+      display: flex;
+    }
+  }
+}

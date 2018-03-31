@@ -1,6 +1,25 @@
 .top-bar {
   color: $white;
 
+  &.mobile {
+    display: none;
+
+    .top-bar-right, .top-bar-left {
+      flex: inherit;
+    }
+
+    .top-bar-right .menu {
+      transition: 0.3s ease;
+      position: absolute;
+      right: -15rem;
+      padding: $spacing/2;
+
+      &.show {
+        right: 0;
+      }
+    }
+  }
+
   .logo {
     padding-left: $spacing;
     i {

@@ -30,42 +30,46 @@
         <div class="block middle">
             <h3>{{ asset.title }}</h3>
             <div class="asset-table-wrapper">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>{% trans "Details" %}</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% if asset.user %}
+                <div class="wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>{% trans "Details" %}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if asset.user %}
                         <tr>
                             <td>{% trans "User" %}</td>
                             <td>{{ asset.user.username }}</td>
                         </tr>
-                    {% endif %}
-                    {% if asset.section %}
+                        {% endif %}
+                        {% if asset.section %}
                         <tr>
                             <td>{% trans "Section" %}</td>
                             <td>{{ asset.section.title }}</td>
                         </tr>
-                    {% endif %}
-                    {% if asset.price %}
+                        {% endif %}
+                        {% if asset.price %}
                         <tr>
                             <td>{% trans "Price" %}</td>
                             <td>€{{ asset.price }}</td>
                         </tr>
-                    {% endif %}
-                    {% if asset.valid_until %}
+                        {% endif %}
+                        {% if asset.valid_until %}
                         <tr>
                             <td>{% trans "Expiration date" %}</td>
                             <td>{{ asset.valid_until }}</td>
                         </tr>
-                    {% endif %}
-                    </tbody>
-                </table>
-                {% block asset_info %}
-                {% endblock %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="wrapper">
+                    {% block asset_info %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
         {% if qr_code %}

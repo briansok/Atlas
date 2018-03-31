@@ -16,7 +16,66 @@
         <h3>{% trans "Add asset" %}</h3>
         <form action="/assets/add" method="post">
             {% csrf_token %}
-            {{ form }}
+            <ul>
+                <li>
+                    {{ form.title.label }}
+                    {{ form.title.errors }}
+                    {{ form.title }}
+                </li>
+                <li>
+                    {{ form.user.label }}
+                    {{ form.user.errors }}
+                    {{ form.user }}
+                </li>
+                <li>
+                    {{ form.section.label }}
+                    {{ form.section.errors }}
+                    {{ form.section }}
+                </li>
+                <li>
+                    {{ form.price.label }}
+                    {{ form.price.errors }}
+                    {{ form.price }}
+                </li>
+                <li>
+                    {{ form.valid_until.label }}
+                    {{ form.valid_until.errors }}
+                    {{ form.valid_until }}
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    {{ form.model.label }}
+                    {{ form.model.errors }}
+                    {{ form.model }}
+                </li>
+                <li>
+                    {{ form.serial.label }}
+                    {{ form.serial.errors }}
+                    {{ form.serial }}
+                </li>
+                <li>
+                    {{ form.cpu.label }}
+                    {{ form.cpu.errors }}
+                    {{ form.cpu }}
+                </li>
+                <li>
+                    {{ form.ram.label }}
+                    {{ form.ram.errors }}
+                    {{ form.ram }}
+                </li>
+                <li>
+                    {{ form.hdd.label }}
+                    {{ form.hdd.errors }}
+                    {{ form.hdd }}
+                </li>
+                <li>
+                    {{ form.ssd.label }}
+                    {{ form.ssd.errors }}
+                    {{ form.ssd }}
+                </li>
+            </ul>
+
             <input class="button" type="submit" value="Submit" />
         </form>
     </div>

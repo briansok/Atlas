@@ -2,6 +2,10 @@ body {
   background-color: $background-color;
 }
 
+main {
+  overflow: hidden;
+}
+
 .inner {
   padding: $spacing*0.75;
 }

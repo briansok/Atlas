@@ -5,7 +5,7 @@
     <body>
         <main>
             <nav class="main-menu">
-                <div class="top-bar">
+                <div class="top-bar desktop">
                     <div class="top-bar-left">
                         <ul class="dropdown menu" data-dropdown-menu>
                             <li class="menu-text logo">
@@ -28,6 +28,30 @@
                     </div>
                     <div class="top-bar-right search-menu">
                         <ul class="menu">
+                            <li><input type="search" placeholder="Search"></li>
+                            <li><button type="button" class="button">{% trans "Search" %}</button></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="top-bar mobile">
+                    <div class="top-bar-left">
+                        <ul class="menu mobile">
+                            <li class="menu-text logo">
+                                <a href="/">
+                                    <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;  Atlas
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="top-bar-right">
+                        <i class="fa fa-bars" aria-hidden="true" id="js-nav-trigger"></i>
+                        <ul class="menu vertical">
+                            <li><a href="/assets/hardware">{% trans "Hardware" %}</a></li>
+                            <li><a href="/assets/software">{% trans "Software" %}</a></li>
+                            <li><a href="/assets">{% trans "All assets" %}</a></li>
+                            <li><a href="/sections">{% trans "Sections" %}</a></li>
+                            <li><a href="/people">{% trans "People" %}</a></li>
+                            <li><a href="/info">{% trans "Info" %}</a></li>
                             <li><input type="search" placeholder="Search"></li>
                             <li><button type="button" class="button">{% trans "Search" %}</button></li>
                         </ul>

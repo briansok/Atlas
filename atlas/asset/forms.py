@@ -1,17 +1,52 @@
+import datetime
 from django import forms
-from person.models import Person
-from location.models import Section
-from django.core.exceptions import ValidationError, ObjectDoesNotExist
+from .models import Hardware, Software, Qrcode
+from django.core.exceptions import ValidationError
 
-class AddAssetForm(forms.Form):
-    title = forms.CharField(max_length=100)
-    description = forms.CharField(widget=forms.Textarea())
-    user = forms.ModelChoiceField(queryset=Person.objects.all(), empty_label="None")
-    section = forms.ModelChoiceField(queryset=Section.objects.all(), empty_label="None")
-    price = forms.IntegerField(min_value=0)
+class AddHardwareForm(forms.ModelForm):
+    class Meta:
+        model = Hardware
+        fields = [
+            'title',
+            'user',
+            'section',
+            'price',
+            'valid_until',
+            'model',
+            'serial',
+            'cpu',
+            'ram',
+            'hdd',
+            'ssd',
+        ]
 
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if Team.objects.filter(title=title).exists():
-            raise ValidationError("Title is already taken")
-        return title
+    buyed_at = forms.DateField(initial=datetime.date.today)
+
+class AddSoftwareForm(forms.ModelForm):
+    class Meta:
+        model = Software
+        fields = [
+            'title',
+            'user',
+            'section',
+            'price',
+            'valid_until',
+            'license',
+            'license_amount',
+        ]
+
+class AddToQrcodeForm(forms.ModelForm):
+    class Meta:
+        model = Qrcode
+        fields = [
+            'asset',
+        ]
+
+    def clean_asset(self):
+        asset = self.cleaned_data['asset']
+        if Qrcode.objects.filter(asset=asset.id).exists():
+            print('bestaat')
+            raise ValidationError("This asset is already linked")
+        print('cleaned')
+        return asset
+

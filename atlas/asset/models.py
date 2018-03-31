@@ -52,6 +52,6 @@ class Qrcode(models.Model):
         return self.uid
 
     def get_qr_code_url(self, host):
-        return 'https://' + host + "/scan/" + self.uid
+        return 'https://' + host + "/assets/scan/" + self.uid
 
 
