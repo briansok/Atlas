@@ -29,7 +29,10 @@ def add(request):
             next = request.POST.get('next', '/')
             return HttpResponseRedirect(next)
     else:
-        form = AddUpdateForm()
+        if request.GET.get('asset'):
+            form = AddUpdateForm(initial={'asset': request.GET.get('asset')})
+        else:
+            form = AddUpdateForm()
 
         context = {
             'form': form,
