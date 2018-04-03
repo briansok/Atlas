@@ -1,10 +1,10 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Asset, Hardware, Software, Qrcode
 from info.models import Update
-from .forms import AddHardwareForm, AddToQrcodeForm
+from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm
 
 @login_required
 def index(request):
@@ -17,16 +17,37 @@ def index(request):
     return render(request, 'asset/assets.html', context)
 
 @login_required
-def add(request):
-    assets = Asset.objects.all()
-    form = AddHardwareForm()
+def add(request, asset):
+    if request.method == 'POST':
+        if asset == 'hardware':
+            print('hardware post')
+            form = AddHardwareForm(request.POST)
+        elif asset == 'software':
+            form = AddSoftwareForm(request.POST)
+        else:
+            form = None
+
+        if form.is_valid():
+            print('valid')
+            form.save()
+            next = request.POST.get('next', '/')
+            return HttpResponseRedirect(next)
+    else:
+        if asset == 'hardware':
+            print('hardware')
+            form = AddHardwareForm()
+        elif asset == 'software':
+            print('software')
+            form = AddSoftwareForm()
+        else:
+            print('none')
+            form = None
 
     context = {
-        'assets': assets,
         'form': form,
     }
 
-    return render(request, 'asset/add.html', context)
+    return render(request, 'asset/' + asset.lower() + '/add.html', context)
 
 @login_required
 def detail(request, id):

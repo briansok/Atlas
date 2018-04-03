@@ -37,7 +37,7 @@ class Hardware(Asset):
     ram = models.CharField(max_length=200, null=True, blank=True)
     hdd = models.CharField(max_length=200, null=True, blank=True)
     ssd = models.CharField(max_length=200, null=True, blank=True)
-    buyed_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    bought_at = models.DateField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Hardware'

@@ -1,5 +1,7 @@
 import datetime
 from django import forms
+from django.forms import SelectDateWidget
+
 from .models import Hardware, Software, Qrcode
 from django.core.exceptions import ValidationError
 
@@ -20,7 +22,8 @@ class AddHardwareForm(forms.ModelForm):
             'ssd',
         ]
 
-    buyed_at = forms.DateField(initial=datetime.date.today)
+    bought_at = forms.DateField(widget=SelectDateWidget(empty_label="Nothing"))
+
 
 class AddSoftwareForm(forms.ModelForm):
     class Meta:

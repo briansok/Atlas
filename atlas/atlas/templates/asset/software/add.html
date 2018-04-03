@@ -1,0 +1,75 @@
+{% extends 'core/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+<title>Atlas - Add assets</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+{% endblock %}
+
+{% block content %}
+    <div class="block middle">
+        <h3>{% trans "Add software" %}</h3>
+        <form action="{{ request.path }}" method="post" class="add-asset-form">
+            {% csrf_token %}
+            <div class="wrapper">
+                <ul>
+                    <h3>{% trans "Details" %}</h3>
+                    <li>
+                        {{ form.title.label }}
+                        {{ form.title.errors }}
+                        {{ form.title }}
+                    </li>
+                    <li>
+                        {{ form.user.label }}
+                        {{ form.user.errors }}
+                        {{ form.user }}
+                    </li>
+                    <li>
+                        {{ form.section.label }}
+                        {{ form.section.errors }}
+                        {{ form.section }}
+                    </li>
+                    <li>
+                        {{ form.price.label }}
+                        {{ form.price.errors }}
+                        {{ form.price }}
+                    </li>
+                    <li>
+                        {{ form.valid_until.label }}
+                        {{ form.valid_until.errors }}
+                        {{ form.valid_until }}
+                    </li>
+                </ul>
+                <ul>
+                    <h3>{% trans "License" %}</h3>
+                    <li>
+                        {{ form.license.label }}
+                        {{ form.license.errors }}
+                        {{ form.license }}
+                    </li>
+                    <li>
+                        {{ form.license_amount.label }}
+                        {{ form.license_amount.errors }}
+                        {{ form.license_amount }}
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
+            <input class="button" type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}
+
+{% block modal %}
+    <div class="reveal" id="addAsset" data-reveal>
+        <h3>{% trans "Add asset" %}</h3>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endblock %}
