@@ -44,7 +44,7 @@
                     <td>{{ asset.created_at }}</td>
                     <td>€{{ asset.price }}</td>
                     <td>
-                        <a href="/assets/add" class="button">Edit</a>
+                        <a href="/assets/{{ asset.id }}/edit" class="button">Edit</a>
                     </td>
                 </tr>
             {% endfor %}

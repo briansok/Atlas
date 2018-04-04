@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Asset, Hardware, Software, Qrcode
 from info.models import Update
 from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm
+import math
 
 @login_required
 def index(request):
@@ -20,7 +21,6 @@ def index(request):
 def add(request, asset):
     if request.method == 'POST':
         if asset == 'hardware':
-            print('hardware post')
             form = AddHardwareForm(request.POST)
         elif asset == 'software':
             form = AddSoftwareForm(request.POST)
@@ -28,26 +28,51 @@ def add(request, asset):
             form = None
 
         if form.is_valid():
-            print('valid')
             form.save()
             next = request.POST.get('next', '/')
             return HttpResponseRedirect(next)
     else:
         if asset == 'hardware':
-            print('hardware')
             form = AddHardwareForm()
         elif asset == 'software':
-            print('software')
             form = AddSoftwareForm()
         else:
-            print('none')
             form = None
 
     context = {
         'form': form,
+        'form_half': math.ceil((len(form.fields)/2)),
+        'asset_name': asset,
     }
 
-    return render(request, 'asset/' + asset.lower() + '/add.html', context)
+    return render(request, 'asset/add.html', context)
+
+@login_required
+def edit(request, id):
+    try:
+        asset = Asset.objects.get_subclass(id=id)
+    except ObjectDoesNotExist:
+        raise Http404('Object does not exist')
+
+    if request.method == 'POST':
+        form = asset.get_post_form(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            next = request.POST.get('next', '/')
+            return HttpResponseRedirect(next)
+    else:
+        form = asset.get_edit_form()
+
+    context = {
+        'form': form,
+        'form_half': math.ceil((len(form.fields)/2)),
+        'asset_name': asset.__class__.__name__.lower(),
+    }
+
+    return render(request, 'asset/edit.html', context)
+
 
 @login_required
 def detail(request, id):

@@ -30,6 +30,22 @@ class Software(Asset):
         verbose_name_plural = 'Software'
         ordering = ['-created_at']
 
+    def get_edit_form(self):
+        from asset.forms import AddSoftwareForm
+        return AddSoftwareForm(initial={
+            'title': self.title,
+            'user': self.user,
+            'section': self.section,
+            'price': self.price,
+            'valid_until': self.valid_until,
+            'license': self.license,
+            'license_amount': self.license_amount,
+        })
+
+    def get_post_form(self, request):
+        from asset.forms import AddSoftwareForm
+        return AddSoftwareForm(request)
+
 class Hardware(Asset):
     model = models.CharField(max_length=200, null=True, blank=True)
     serial = models.CharField(max_length=200, null=True, blank=True)
@@ -37,12 +53,33 @@ class Hardware(Asset):
     ram = models.CharField(max_length=200, null=True, blank=True)
     hdd = models.CharField(max_length=200, null=True, blank=True)
     ssd = models.CharField(max_length=200, null=True, blank=True)
-    bought_at = models.DateField(auto_now_add=True, null=True, blank=True)
+    bought_at = models.DateField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Hardware'
         verbose_name_plural = 'Hardware'
         ordering = ['-created_at']
+
+    def get_edit_form(self):
+        from asset.forms import AddHardwareForm
+        return AddHardwareForm(initial={
+            'title': self.title,
+            'user': self.user,
+            'section': self.section,
+            'price': self.price,
+            'valid_until': self.valid_until,
+            'model': self.model,
+            'serial': self.serial,
+            'cpu': self.cpu,
+            'ram': self.ram,
+            'hdd': self.hdd,
+            'ssd': self.ssd,
+            'bought_at': self.bought_at,
+        })
+
+    def get_post_form(self, request):
+        from asset.forms import AddHardwareForm
+        return AddHardwareForm(request)
 
 class Qrcode(models.Model):
     asset = models.ForeignKey('asset.Asset', on_delete=models.CASCADE, null=True, blank=True)

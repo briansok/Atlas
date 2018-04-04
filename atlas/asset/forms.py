@@ -1,9 +1,11 @@
 import datetime
 from django import forms
 from django.forms import SelectDateWidget
-
 from .models import Hardware, Software, Qrcode
 from django.core.exceptions import ValidationError
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
 class AddHardwareForm(forms.ModelForm):
     class Meta:
@@ -20,9 +22,12 @@ class AddHardwareForm(forms.ModelForm):
             'ram',
             'hdd',
             'ssd',
+            'bought_at',
         ]
-
-    bought_at = forms.DateField(widget=SelectDateWidget(empty_label="Nothing"))
+        widgets = {
+            'valid_until': DateInput(),
+            'bought_at': DateInput(),
+        }
 
 
 class AddSoftwareForm(forms.ModelForm):
@@ -37,6 +42,9 @@ class AddSoftwareForm(forms.ModelForm):
             'license',
             'license_amount',
         ]
+        widgets = {
+            'valid_until': DateInput(),
+        }
 
 class AddToQrcodeForm(forms.ModelForm):
     class Meta:
@@ -48,8 +56,6 @@ class AddToQrcodeForm(forms.ModelForm):
     def clean_asset(self):
         asset = self.cleaned_data['asset']
         if Qrcode.objects.filter(asset=asset.id).exists():
-            print('bestaat')
             raise ValidationError("This asset is already linked")
-        print('cleaned')
         return asset
 

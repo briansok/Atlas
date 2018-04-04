@@ -6,6 +6,11 @@ main {
   overflow: hidden;
 }
 
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
 .inner {
   padding: $spacing*0.75;
 }
