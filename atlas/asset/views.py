@@ -55,7 +55,7 @@ def edit(request, id):
         raise Http404('Object does not exist')
 
     if request.method == 'POST':
-        form = asset.get_post_form(request.POST)
+        form = asset.get_post_form(request.POST, asset)
 
         if form.is_valid():
             form.save()

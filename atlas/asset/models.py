@@ -42,9 +42,9 @@ class Software(Asset):
             'license_amount': self.license_amount,
         })
 
-    def get_post_form(self, request):
+    def get_post_form(self, request, asset):
         from asset.forms import AddSoftwareForm
-        return AddSoftwareForm(request)
+        return AddSoftwareForm(request, instance=asset)
 
 class Hardware(Asset):
     model = models.CharField(max_length=200, null=True, blank=True)
@@ -77,9 +77,9 @@ class Hardware(Asset):
             'bought_at': self.bought_at,
         })
 
-    def get_post_form(self, request):
+    def get_post_form(self, request, asset):
         from asset.forms import AddHardwareForm
-        return AddHardwareForm(request)
+        return AddHardwareForm(request, instance=asset)
 
 class Qrcode(models.Model):
     asset = models.ForeignKey('asset.Asset', on_delete=models.CASCADE, null=True, blank=True)

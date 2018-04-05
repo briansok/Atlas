@@ -3,6 +3,9 @@ from django import forms
 from .models import Update
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class AddUpdateForm(forms.ModelForm):
     class Meta:
         model = Update
@@ -10,6 +13,8 @@ class AddUpdateForm(forms.ModelForm):
             'title',
             'description',
             'asset',
+            'date',
         ]
-
-    date = forms.DateField(initial=datetime.date.today)
+        widgets = {
+            'date': DateInput(),
+        }
