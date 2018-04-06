@@ -138,6 +138,7 @@ def scan(request, uid):
         if qr_code.asset:
             try:
                 asset = Asset.objects.get_subclass(id=qr_code.asset.id)
+                updates = Update.objects.filter(asset=asset.id).order_by('-id')
                 template = asset.get_class_name().lower().replace('.', '/') + '/info.html'
             except ObjectDoesNotExist:
                 pass
@@ -150,6 +151,7 @@ def scan(request, uid):
     context = {
         'extend': "asset/scan.html",
         'qr_code': qr_code,
+        'updates': updates,
         'asset': asset,
         'form': form,
     }

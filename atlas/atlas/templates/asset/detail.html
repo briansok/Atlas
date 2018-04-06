@@ -95,13 +95,19 @@
                 {% for update in updates %}
                     <tr>
                         <td>
-                            {{ update.title }}
+                            {% if update.title %}
+                                {{ update.title }}
+                            {% endif %}
                         </td>
                         <td>
-                            {{ update.date }}
+                            {% if update.date %}
+                                {{ update.date }}
+                            {% endif %}
                         </td>
                         <td>
-                            {{ update.description }}
+                            {% if update.description %}
+                                {{ update.description }}
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

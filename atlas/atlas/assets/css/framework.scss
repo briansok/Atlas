@@ -57,6 +57,10 @@ select {
   .middle {
     flex: 3;
     margin-right: $spacing*0.75;
+
+    &.scan {
+      margin-right: 0;
+    }
   }
 
   .right {
