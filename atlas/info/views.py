@@ -6,8 +6,8 @@ from .forms import AddUpdateForm
 
 @login_required
 def index(request):
-    notifications = Notification.objects.all()
-    updates = Update.objects.all()
+    notifications = Notification.objects.all()[:10]
+    updates = Update.objects.all()[:10]
 
     context = {
         'notifications': notifications,

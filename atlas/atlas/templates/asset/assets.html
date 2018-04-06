@@ -28,7 +28,7 @@
                 <th width="20%">{% trans "Name" %}</th>
                 <th>{% trans "User" %}</th>
                 <th>{% trans "Section" %}</th>
-                <th width="20%">{% trans "Date" %}</th>
+                <th width="20%">{% trans "Expiration date" %}</th>
                 <th width="5%">{% trans "Price" %}</th>
                 <th></th>
             </tr>
@@ -39,10 +39,26 @@
                     <td>
                         <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
                     </td>
-                    <td>{{ asset.user.username }}</td>
-                    <td>{{ asset.section.title }}</td>
-                    <td>{{ asset.created_at }}</td>
-                    <td>€{{ asset.price }}</td>
+                    <td>
+                        {% if asset.user %}
+                            {{ asset.user.username }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if asset.section %}
+                            {{ asset.section.title }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if asset.valid_until %}
+                            {{ asset.valid_until }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if asset.price %}
+                            €{{ asset.price }}
+                        {% endif %}
+                    </td>
                     <td>
                         <a href="/assets/{{ asset.id }}/edit" class="button">Edit</a>
                     </td>
