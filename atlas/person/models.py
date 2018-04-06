@@ -4,6 +4,6 @@ from django.contrib.auth.models import AbstractUser
 class Person(AbstractUser):
     ROLES = (
         ('admin', 'Administrator'),
-        ('employ', 'Employee'),
+        ('user', 'User'),
     )
-    role = models.CharField(max_length=7, choices=ROLES, default='employ')
+    role = models.CharField(max_length=7, choices=ROLES, default='user')

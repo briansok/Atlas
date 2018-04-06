@@ -5,8 +5,10 @@ from django.contrib.auth.decorators import login_required
 from .models import Asset, Hardware, Software, Qrcode
 from info.models import Update
 from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm
+from atlas.decorators import user, administrator
 import math
 
+@administrator
 @login_required
 def index(request):
     assets = Asset.objects.all()
@@ -17,6 +19,7 @@ def index(request):
 
     return render(request, 'asset/assets.html', context)
 
+@administrator
 @login_required
 def add(request, asset):
     if request.method == 'POST':
@@ -47,6 +50,7 @@ def add(request, asset):
 
     return render(request, 'asset/add.html', context)
 
+@administrator
 @login_required
 def edit(request, id):
     try:
@@ -74,6 +78,7 @@ def edit(request, id):
     return render(request, 'asset/edit.html', context)
 
 
+@administrator
 @login_required
 def detail(request, id):
     try:
@@ -100,6 +105,7 @@ def detail(request, id):
 
     return render(request, asset.get_class_name().lower().replace('.', '/') + '/info.html', context)
 
+@administrator
 @login_required
 def hardware(request):
     assets = Hardware.objects.all()
@@ -111,6 +117,7 @@ def hardware(request):
 
     return render(request, 'asset/assets.html', context)
 
+@administrator
 @login_required
 def software(request):
     assets = Software.objects.all()
@@ -122,6 +129,7 @@ def software(request):
 
     return render(request, 'asset/assets.html', context)
 
+@administrator
 @login_required
 def scan(request, uid):
     qr_code = get_object_or_404(Qrcode, uid=uid)

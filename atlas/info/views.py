@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from atlas.decorators import user, administrator
 from .models import Notification, Update
 from .forms import AddUpdateForm
 
+@administrator
 @login_required
 def index(request):
     notifications = Notification.objects.all()[:10]
@@ -16,6 +18,7 @@ def index(request):
 
     return render(request, 'info/info.html', context)
 
+@administrator
 @login_required
 def add(request):
     if request.method == 'POST':

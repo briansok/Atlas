@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+{% include "core/header.html" %}
+{% load i18n %}
+<body>
+<main>
+    {% include "core/menu.html" %}
+    <section class="inner">
+        <div class="wrapper">
+            {% block content-top %}
+                <header class="block top">
+                    <h3>Hello, {{ request.user.username }}</h3>
+                    <p>{% trans "Select your action you want to do" %}</p>
+                </header>
+            {% endblock %}
+            {% block content %}
+                <div class="block middle">
+                </div>
+            {% endblock %}
+        </div>
+        {% block modal %}
+        {% endblock %}
+    </section>
+</main>
+{% include "core/footer.html" %}
+</body>
+</html>

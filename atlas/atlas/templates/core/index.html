@@ -4,77 +4,10 @@
     {% load i18n %}
     <body>
         <main>
-            <nav class="main-menu">
-                <div class="top-bar desktop">
-                    <div class="top-bar-left">
-                        <ul class="dropdown menu" data-dropdown-menu>
-                            <li class="menu-text logo">
-                                <a href="/">
-                                    <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;  Atlas
-                                </a>
-                            </li>
-                            {% if request.user.is_authenticated %}
-                                <li>
-                                    <a href="/assets">{% trans "Assets" %}</a>
-                                    <ul class="menu vertical">
-                                        <li><a href="/assets/hardware">{% trans "Hardware" %}</a></li>
-                                        <li><a href="/assets/software">{% trans "Software" %}</a></li>
-                                        <li><a href="/assets">{% trans "All assets" %}</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="/locations">{% trans "Locations" %}</a>
-                                    <ul class="menu vertical">
-                                        <li><a href="/locations">{% trans "Locations" %}</a></li>
-                                        <li><a href="/sections">{% trans "Sections" %}</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="/people">{% trans "People" %}</a></li>
-                                <li><a href="/info">{% trans "Info" %}</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                    <div class="top-bar-right search-menu">
-                        {% if request.user.is_authenticated %}
-                        <ul class="menu">
-                            <li><input type="search" placeholder="Search"></li>
-                            <li><button type="button" class="button">{% trans "Search" %}</button></li>
-                        </ul>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="top-bar mobile">
-                    <div class="top-bar-left">
-                        <ul class="menu mobile">
-                            <li class="menu-text logo">
-                                <a href="/">
-                                    <i class="fa fa-globe" aria-hidden="true"></i>&nbsp;  Atlas
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="top-bar-right">
-                        <i class="fa fa-bars" aria-hidden="true" id="js-nav-trigger"></i>
-                        <ul class="menu vertical">
-                            <li><a href="/assets/hardware">{% trans "Hardware" %}</a></li>
-                            <li><a href="/assets/software">{% trans "Software" %}</a></li>
-                            <li><a href="/assets">{% trans "All assets" %}</a></li>
-                            <li><a href="/sections">{% trans "Sections" %}</a></li>
-                            <li><a href="/people">{% trans "People" %}</a></li>
-                            <li><a href="/info">{% trans "Info" %}</a></li>
-                            <li><input type="search" placeholder="Search"></li>
-                            <li><button type="button" class="button">{% trans "Search" %}</button></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+            {% include "core/menu.html" %}
             <section class="inner">
                 <div class="wrapper">
                     {% block content-top %}
-                        <header class="block top">
-                            <h3>Hello, {{ request.user.username }}</h3>
-                            <p>{% trans "What section do you want to update?" %}</p>
-                        </header>
                     {% endblock %}
                     {% block content %}
                         <div class="block middle">
