@@ -8,6 +8,7 @@ from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm
 from atlas.decorators import user, administrator
 import math
 
+
 @administrator
 @login_required
 def index(request):
@@ -18,6 +19,7 @@ def index(request):
     }
 
     return render(request, 'asset/assets.html', context)
+
 
 @administrator
 @login_required
@@ -50,7 +52,7 @@ def add(request, asset):
 
     return render(request, 'asset/add.html', context)
 
-@administrator
+
 @login_required
 def edit(request, id):
     try:
@@ -105,6 +107,7 @@ def detail(request, id):
 
     return render(request, asset.get_class_name().lower().replace('.', '/') + '/info.html', context)
 
+
 @administrator
 @login_required
 def hardware(request):
@@ -116,6 +119,7 @@ def hardware(request):
     }
 
     return render(request, 'asset/assets.html', context)
+
 
 @administrator
 @login_required
@@ -129,6 +133,7 @@ def software(request):
 
     return render(request, 'asset/assets.html', context)
 
+
 @administrator
 @login_required
 def scan(request, uid):
@@ -141,6 +146,7 @@ def scan(request, uid):
             return redirect(request.path)
         else:
             asset = None
+            updates = None
             template = 'asset/scan.html'
     else:
         if qr_code.asset:
@@ -152,6 +158,7 @@ def scan(request, uid):
                 pass
         else:
             asset = None
+            updates = None
             template = 'asset/scan.html'
 
         form = AddToQrcodeForm()

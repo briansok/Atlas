@@ -4,10 +4,17 @@
     {% load i18n %}
     <body>
         <main>
-            {% include "core/menu.html" %}
+            {% include "core/admin/menu.html" %}
             <section class="inner">
                 <div class="wrapper">
                     {% block content-top %}
+                        <header class="block top">
+                            <h3>{% trans "Welcome" %} {{ request.user.username }}</h3>
+                            <div class="action-buttons">
+                                <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
+                                <a href="/assets/software/add" class="button">{% trans "Add software" %}</a>
+                            </div>
+                        </header>
                     {% endblock %}
                     {% block content %}
                         <div class="block middle">

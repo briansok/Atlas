@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    {% include "core/header.html" %}
+    {% load i18n %}
+    <body>
+    <main>
+        {% include "core/user/menu.html" %}
+        <section class="inner">
+            <div class="wrapper">
+                {% block content-top %}
+                    <header class="block top">
+                        <h3>Hello, {{ request.user.username }}</h3>
+                        <a href="/assets/hardware/add" class="button">{% trans "Request hardware" %}</a>
+                        <a href="/assets/software/add" class="button">{% trans "Request software" %}</a>
+                    </header>
+                {% endblock %}
+                {% block content %}
+                    <div class="block middle">
+                        <h3>{% trans "Recommendations for category: " %} {{ request.user.category.title }}</h3>
+                    </div>
+                {% endblock %}
+            </div>
+            {% block modal %}
+            {% endblock %}
+        </section>
+    </main>
+    {% include "core/footer.html" %}
+    </body>
+</html>

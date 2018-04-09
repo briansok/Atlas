@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', auth_views.logout, name='logout'),
     path('assets/', include('asset.urls')),
     path('sections/', include('location.urls')),
+    path('users/', include('person.urls')),
     path('info/', include('info.urls')),
     path('admin/', admin.site.urls),
 ]

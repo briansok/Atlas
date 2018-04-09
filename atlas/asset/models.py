@@ -21,6 +21,7 @@ class Asset(models.Model):
     def get_class_name(self):
         return str(self._meta)
 
+
 class Software(Asset):
     license = models.CharField(max_length=200, null=True, blank=True)
     license_amount = models.PositiveIntegerField(null=True, blank=True)
@@ -45,6 +46,7 @@ class Software(Asset):
     def get_post_form(self, request, asset):
         from asset.forms import AddSoftwareForm
         return AddSoftwareForm(request, instance=asset)
+
 
 class Hardware(Asset):
     model = models.CharField(max_length=200, null=True, blank=True)
@@ -80,6 +82,7 @@ class Hardware(Asset):
     def get_post_form(self, request, asset):
         from asset.forms import AddHardwareForm
         return AddHardwareForm(request, instance=asset)
+
 
 class Qrcode(models.Model):
     asset = models.ForeignKey('asset.Asset', on_delete=models.CASCADE, null=True, blank=True)
