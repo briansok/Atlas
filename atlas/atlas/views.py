@@ -1,7 +1,8 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404
-from asset.models import Asset
+from asset.models import Asset, Software, Hardware, Request
 from person.models import Person
 
 
@@ -23,18 +24,20 @@ def index(request):
 @login_required
 def panel(request):
     template = 'core/user/panel.html'
-    asset_list = []
+    recommended_software = None
+    requests = None
 
     try:
-        users = Person.objects.filter(category=request.users.category)
-
-        if users:
-            for user in users:
-                user_assets = Asset.objects.filter(user=user.id)
-                asset_list.append(user_assets)
+        users = Person.objects.filter(category=request.user.category)
+        user_ids = [user.id for user in users]
+        recommended_software = Software.objects.filter(user__id__in=user_ids).distinct()
+        requests = Request.objects.filter(user=request.user.id)
+    except ObjectDoesNotExist:
+        pass
 
     context = {
-        'assets': asset_list,
+        'recommended_software': recommended_software,
+        'requests': requests,
     }
 
     return render(request, template, context)

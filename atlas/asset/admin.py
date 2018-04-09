@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Software, Hardware, Qrcode
+from .models import Software, Hardware, Qrcode, Request
 
 class EntrySoftware(admin.ModelAdmin):
     list_display = (
@@ -23,6 +23,14 @@ class EntryQrcode(admin.ModelAdmin):
         'uid',
     )
 
+class EntryRequest(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'user',
+        'created_at',
+    )
+
 admin.site.register(Software, EntrySoftware)
 admin.site.register(Hardware, EntryHardware)
 admin.site.register(Qrcode, EntryQrcode)
+admin.site.register(Request, EntryRequest)

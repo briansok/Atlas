@@ -10,4 +10,5 @@ urlpatterns = [
     path('hardware/', asset_views.hardware),
     path('software/', asset_views.software),
     path('<str:asset>/add/', asset_views.add),
+    path('request/', asset_views.request),
 ]

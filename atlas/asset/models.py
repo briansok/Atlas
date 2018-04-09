@@ -95,3 +95,18 @@ class Qrcode(models.Model):
         return 'https://' + host + "/assets/scan/" + self.uid
 
 
+class Request(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    STATUS_TYPES = (
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+    )
+    status = models.CharField(max_length=5, choices=STATUS_TYPES, default='open')
+
+    class Meta:
+        verbose_name = 'Request'
+        verbose_name_plural = 'Requests'
+        ordering = ['-created_at']

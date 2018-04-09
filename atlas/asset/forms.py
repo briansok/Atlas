@@ -1,7 +1,7 @@
 import datetime
 from django import forms
 from django.forms import SelectDateWidget
-from .models import Hardware, Software, Qrcode
+from .models import Hardware, Software, Qrcode, Request
 from django.core.exceptions import ValidationError
 
 class DateInput(forms.DateInput):
@@ -46,6 +46,7 @@ class AddSoftwareForm(forms.ModelForm):
             'valid_until': DateInput(),
         }
 
+
 class AddToQrcodeForm(forms.ModelForm):
     class Meta:
         model = Qrcode
@@ -59,3 +60,11 @@ class AddToQrcodeForm(forms.ModelForm):
             raise ValidationError("This asset is already linked")
         return asset
 
+
+class RequestForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = [
+            'title',
+            'description',
+        ]

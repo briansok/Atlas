@@ -18,7 +18,6 @@ def index(request):
     return render(request, 'person/users.html', context)
 
 
-@administrator
 @login_required
 def detail(request, id):
     user = get_object_or_404(Person, id=id)

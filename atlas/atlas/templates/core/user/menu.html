@@ -10,21 +10,10 @@
                 </li>
                 {% if request.user.is_authenticated %}
                     <li>
-                        <a href="/assets">{% trans "My assets" %}</a>
-                    </li>
-                    <li>
-                        <a href="/requests">{% trans "Requests" %}</a>
+                        <a href="/users/{{ request.user.id }}">{% trans "My assets" %}</a>
                     </li>
                 {% endif %}
             </ul>
-        </div>
-        <div class="top-bar-right search-menu">
-            {% if request.user.is_authenticated %}
-                <ul class="menu">
-                    <li><input type="search" placeholder="Search"></li>
-                    <li><button type="button" class="button">{% trans "Search" %}</button></li>
-                </ul>
-            {% endif %}
         </div>
     </div>
     <div class="top-bar mobile">

@@ -4,7 +4,7 @@ from django.http import Http404, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from .models import Asset, Hardware, Software, Qrcode
 from info.models import Update
-from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm
+from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
 from atlas.decorators import user, administrator
 import math
 
@@ -173,3 +173,23 @@ def scan(request, uid):
 
     return render(request, template, context)
 
+
+@login_required
+def request(request):
+    if request.method == 'POST':
+        form = RequestForm(request.POST)
+        if form.is_valid():
+            req = form.save(commit=False)
+            req.user = request.user
+            req.save()
+
+            next = request.POST.get('next', '/')
+            return HttpResponseRedirect(next)
+    else:
+        form = RequestForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'asset/request.html', context)
