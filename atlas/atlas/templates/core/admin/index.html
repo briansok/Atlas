@@ -17,8 +17,20 @@
                         </header>
                     {% endblock %}
                     {% block content %}
-                        <div class="block middle">
-                        </div>
+                        {% if location %}
+                            <div class="plan-wrapper">
+                                <div class="block middle">
+                                    <h3>{% trans "Plan" %}</h3>
+                                    {% load include_anything %}
+                                    <div id="#js-plan">
+                                        {% include_anything location.plan.path %}
+                                    </div>
+                                </div>
+                                <div class="block middle">
+                                    <h3>{% trans "Shiiit" %}</h3>
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endblock %}
                 </div>
                 {% block modal %}

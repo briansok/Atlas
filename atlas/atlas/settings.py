@@ -78,6 +78,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'libraries':{
+                'include_anything': 'atlas.templatetags.include_anything',
+            }
         },
     },
 ]
@@ -138,9 +141,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'atlas/media')
+
+MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 

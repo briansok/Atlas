@@ -4,3 +4,4 @@ django-libsass==0.7
 django-qr-code==1.0.0
 django-model-utils==3.1.1
 uwsgi==2.0.17
+

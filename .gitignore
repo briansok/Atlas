@@ -4,6 +4,7 @@
 __pycache__/
 .idea/
 atlas/static/
+atlas/media/*
 CACHE/
 settings_local.py
 db.sqlite3

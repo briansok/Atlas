@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404
 from asset.models import Asset, Software, Hardware, Request
+from location.models import Location
 from person.models import Person
 
 
@@ -12,10 +13,12 @@ def index(request):
         return panel(request)
 
     assets = Asset.objects.all()
+    location = Location.objects.all().first()
     template = 'core/admin/index.html'
 
     context = {
         'assets': assets,
+        'location': location,
     }
 
     return render(request, template, context)
