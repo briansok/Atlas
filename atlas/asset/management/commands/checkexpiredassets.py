@@ -22,4 +22,4 @@ class Command(BaseCommand):
             for asset in assets:
                 asset_names.append(asset.title)
 
-                #send mail here
+                #TODO: send mail here

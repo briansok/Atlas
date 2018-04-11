@@ -80,6 +80,14 @@ def edit(request, id):
     return render(request, 'asset/edit.html', context)
 
 
+@login_required
+def delete(request, id):
+    if request.method == 'POST':
+        asset = get_object_or_404(Asset, id=id)
+        asset.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 @administrator
 @login_required
 def detail(request, id):

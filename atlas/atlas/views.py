@@ -5,6 +5,8 @@ from django.shortcuts import get_list_or_404
 from asset.models import Asset, Software, Hardware, Request
 from location.models import Location
 from person.models import Person
+from location.forms import SectionPlanForm
+from datetime import datetime, timedelta
 
 
 @login_required
@@ -12,13 +14,15 @@ def index(request):
     if request.user.role == "user":
         return panel(request)
 
-    assets = Asset.objects.all()
+    plan_form = SectionPlanForm()
+    expired_assets = Asset.objects.filter(valid_until__lte=datetime.now()+timedelta(days=31)).order_by('valid_until')
     location = Location.objects.all().first()
     template = 'core/admin/index.html'
 
     context = {
-        'assets': assets,
+        'expired_assets': expired_assets,
         'location': location,
+        'plan_form': plan_form,
     }
 
     return render(request, template, context)

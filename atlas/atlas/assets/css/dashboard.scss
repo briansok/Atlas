@@ -63,3 +63,37 @@
     min-width: 20rem;
   }
 }
+
+.plan-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+
+  .middle {
+    flex: 2;
+    margin-right: $spacing*0.75;
+
+    &.scan {
+      margin-right: 0;
+    }
+  }
+
+  .right {
+    flex: 1;
+    margin-right: 0;
+  }
+}
+
+#plan-popup {
+  display: none;
+  padding: $spacing/2;
+  background-color: $white;
+  border-radius: $global-radius;
+  position: relative;
+
+  .popup-close {
+    position: absolute;
+    top: $spacing/2;
+    right: $spacing/2;
+    cursor: pointer;
+  }
+}

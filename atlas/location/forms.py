@@ -24,3 +24,10 @@ class AddSectionForm(forms.ModelForm):
             'user',
             'section_type',
         ]
+
+
+class SectionPlanForm(forms.ModelForm):
+    class Meta:
+        model = Section
+        fields = []
+    section = forms.ModelChoiceField(queryset=Section.objects.all())

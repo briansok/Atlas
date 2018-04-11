@@ -48,3 +48,16 @@ table {
     font-weight: bold;
   }
 }
+
+.edit-buttons {
+  text-align: right;
+  width: 10%;
+
+  a {
+    padding-left: $spacing/2;
+  }
+
+  form {
+    display: inline-block;
+  }
+}

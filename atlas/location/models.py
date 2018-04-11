@@ -42,6 +42,9 @@ class Section(models.Model):
     title = models.CharField(max_length=200, null=True, blank=True)
     location = models.ForeignKey('location.Location', on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    plan_x = models.FloatField(null=True, blank=True)
+    plan_y = models.FloatField(null=True, blank=True)
+
     SECTION_TYPES = (
         ('room', _('Room')),
         ('area', _('Area')),

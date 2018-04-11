@@ -1,9 +1,12 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from atlas.decorators import user, administrator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
+from django.core import serializers
 from django.shortcuts import render, get_object_or_404
 from .models import Section, Location
-from .forms import AddSectionForm, EditLocationForm
+from asset.models import Asset
+from .forms import AddSectionForm, EditLocationForm, SectionPlanForm
 import math
 
 
@@ -17,6 +20,49 @@ def index(request):
     }
 
     return render(request, 'location/location.html', context)
+
+
+@administrator
+@login_required
+def plan(request):
+    if request.method == 'GET':
+        plan_x = request.GET.get('plan_x', '')
+        plan_y = request.GET.get('plan_y', '')
+
+        try:
+            plan_x = float(plan_x)
+            plan_y = float(plan_y)
+        except ValueError:
+            plan_x = 0
+            plan_y = 0
+
+        print(plan_x)
+        print(plan_y)
+
+        try:
+            section = serializers.serialize('json', Section.objects.filter(plan_x=plan_x, plan_y=plan_y), fields=('id', 'title'))
+        except ObjectDoesNotExist:
+            section = None
+
+        return JsonResponse(section, safe=False)
+
+
+@administrator
+@login_required
+def setPlanSection(request):
+    if request.method == 'POST':
+        if request.is_ajax():
+            print(request.POST['section'])
+            section = get_object_or_404(Section, id=request.POST['section'])
+            form = SectionPlanForm(request.POST, instance=section)
+            if form.is_valid():
+                section = form.save(commit=False)
+                section.plan_x = request.POST['plan_x']
+                section.plan_y = request.POST['plan_y']
+                section.save()
+                return HttpResponse('shit is goed')
+    return render(request)
+
 
 @administrator
 @login_required
@@ -51,6 +97,20 @@ def sections(request):
     }
 
     return render(request, 'location/sections.html', context)
+
+
+@administrator
+@login_required
+def sectionDetail(request, id):
+    section = get_object_or_404(Section, id=id)
+    assets = Asset.objects.filter(section=section.id)
+
+    context = {
+        'section': section,
+        'assets': assets,
+    }
+
+    return render(request, 'location/section/detail.html', context)
 
 
 @administrator

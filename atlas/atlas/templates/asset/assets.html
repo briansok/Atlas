@@ -59,8 +59,14 @@
                             €{{ asset.price }}
                         {% endif %}
                     </td>
-                    <td>
-                        <a href="/assets/{{ asset.id }}/edit" class="button">Edit</a>
+                    <td class="edit-buttons">
+                        <a href="/assets/{{ asset.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <form action="/assets/{{ asset.id }}/delete" method="post">
+                            {% csrf_token %}
+                            <button type="submit">
+                                <a href="/assets/{{ asset.id }}/delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
