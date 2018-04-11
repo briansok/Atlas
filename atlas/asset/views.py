@@ -1,7 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from .models import Asset, Hardware, Software, Qrcode
 from info.models import Update
 from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
@@ -114,6 +115,20 @@ def detail(request, id):
     }
 
     return render(request, asset.get_class_name().lower().replace('.', '/') + '/info.html', context)
+
+
+@administrator
+@login_required
+def search(request):
+    if request.method == 'GET':
+        if request.is_ajax():
+            try:
+                result = Asset.objects.all()
+                json = serializers.serialize('json', result)
+            except ObjectDoesNotExist:
+                json = None
+
+            return JsonResponse(json, safe=False)
 
 
 @administrator

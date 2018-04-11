@@ -26,25 +26,26 @@ def index(request):
 @login_required
 def plan(request):
     if request.method == 'GET':
-        plan_x = request.GET.get('plan_x', '')
-        plan_y = request.GET.get('plan_y', '')
+        if request.is_ajax():
+            plan_x = request.GET.get('plan_x', '')
+            plan_y = request.GET.get('plan_y', '')
 
-        try:
-            plan_x = float(plan_x)
-            plan_y = float(plan_y)
-        except ValueError:
-            plan_x = 0
-            plan_y = 0
+            try:
+                plan_x = float(plan_x)
+                plan_y = float(plan_y)
+            except ValueError:
+                plan_x = 0
+                plan_y = 0
 
-        print(plan_x)
-        print(plan_y)
+            print(plan_x)
+            print(plan_y)
 
-        try:
-            section = serializers.serialize('json', Section.objects.filter(plan_x=plan_x, plan_y=plan_y), fields=('id', 'title'))
-        except ObjectDoesNotExist:
-            section = None
+            try:
+                section = serializers.serialize('json', Section.objects.filter(plan_x=plan_x, plan_y=plan_y), fields=('id', 'title'))
+            except ObjectDoesNotExist:
+                section = None
 
-        return JsonResponse(section, safe=False)
+            return JsonResponse(section, safe=False)
 
 
 @administrator
@@ -52,7 +53,6 @@ def plan(request):
 def setPlanSection(request):
     if request.method == 'POST':
         if request.is_ajax():
-            print(request.POST['section'])
             section = get_object_or_404(Section, id=request.POST['section'])
             form = SectionPlanForm(request.POST, instance=section)
             if form.is_valid():
