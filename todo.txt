@@ -1,0 +1,17 @@
+- valid_until op basis van 2 jaar + bought at
+- add update wanneer user of sectie is veranderd
+- system logs / updates
+- bijlage toevoegen aan update
+- license field textfield maken
+- qr code view voor aanmaken van die dingen
+
+
+Dashboard
+- hardware die niet gekoppeld zijn aan een gebruiker
+- multi user license die bijna vol zijn
+
+Request
+- request kunnen maken vanuit bestaande asset. Over mogelijke update of reparatie dingen aanragen.
+
+User dashboard
+- cijfer met aantal mensen die deze recommended software gebruiken

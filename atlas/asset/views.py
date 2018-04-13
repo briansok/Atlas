@@ -81,6 +81,7 @@ def edit(request, id):
     return render(request, 'asset/edit.html', context)
 
 
+@administrator
 @login_required
 def delete(request, id):
     if request.method == 'POST':
@@ -157,7 +158,6 @@ def software(request):
     return render(request, 'asset/assets.html', context)
 
 
-@administrator
 @login_required
 def scan(request, uid):
     qr_code = get_object_or_404(Qrcode, uid=uid)

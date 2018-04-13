@@ -15,7 +15,7 @@ class Notification(Info):
         ('debug', 'Debug'),
         ('error', 'Error'),
         ('warning', 'Warning'),
-        ('info', 'info'),
+        ('info', 'Info'),
         ('success', 'Sucess'),
     )
     notification_type = models.CharField(max_length=7, choices=NOTIFICATION_TYPES, default='info')
