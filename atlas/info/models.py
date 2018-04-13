@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 
+
 class Info(models.Model):
     title = models.CharField(max_length=200)
     asset = models.ForeignKey('asset.Asset', on_delete=models.CASCADE, null=True, blank=True)
@@ -9,6 +10,7 @@ class Info(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Notification(Info):
     NOTIFICATION_TYPES = (
@@ -26,9 +28,11 @@ class Notification(Info):
         verbose_name_plural = 'Notifications'
         ordering = ['-created_at']
 
+
 class Update(Info):
     description = models.TextField(null=True, blank=True)
     date = models.DateField(null=True, blank=True)
+    attachment = models.FileField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Update'

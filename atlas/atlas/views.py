@@ -1,7 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_list_or_404
 from asset.models import Asset, Software, Hardware, Request
 from location.models import Location
 from person.models import Person
@@ -17,11 +16,13 @@ def index(request):
     plan_form = SectionPlanForm()
     expired_assets = Asset.objects.filter(valid_until__lte=datetime.now()+timedelta(days=31)).order_by('valid_until')
     location = Location.objects.all().first()
+    requests = Request.objects.filter(user=request.user.id)
     template = 'core/admin/index.html'
 
     context = {
         'expired_assets': expired_assets,
         'location': location,
+        'requests': requests,
         'plan_form': plan_form,
     }
 

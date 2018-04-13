@@ -22,11 +22,12 @@ def index(request):
 @login_required
 def add(request):
     if request.method == 'POST':
-        form = AddUpdateForm(request.POST)
+        form = AddUpdateForm(request.POST, request.FILES)
         if form.is_valid():
             update = form.save(commit=False)
             update.created_by = request.user
             update.date = form.cleaned_data['date']
+            update.attachment = request.FILES['attachment']
             update.save()
 
             next = request.POST.get('next', '/')

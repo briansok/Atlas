@@ -9,14 +9,16 @@
 {% endblock %}
 
 {% block content-top %}
-    <header class="block top">
-        <h3>Actions</h3>
-        <div class="action-buttons">
-            <a href="/info/updates/add" class="button">
-                {% trans "Add update" %}
-            </a>
-        </div>
-    </header>
+    {% if assets %}
+        <header class="block top">
+            <h3>Actions</h3>
+            <div class="action-buttons">
+                <a href="/info/updates/add" class="button">
+                    {% trans "Add update" %}
+                </a>
+            </div>
+        </header>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -63,6 +65,10 @@
                 {% endfor %}
                 </tbody>
             </table>
+        </div>
+    {% else %}
+        <div class="block middle">
+            <h3>{% trans "There are no assets" %}</h3>
         </div>
     {% endif %}
 {% endblock %}

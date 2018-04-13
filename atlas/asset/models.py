@@ -23,7 +23,7 @@ class Asset(models.Model):
 
 
 class Software(Asset):
-    license = models.CharField(max_length=200, null=True, blank=True)
+    license = models.TextField(null=True, blank=True)
     license_amount = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:

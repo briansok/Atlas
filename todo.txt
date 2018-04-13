@@ -1,10 +1,7 @@
 - valid_until op basis van 2 jaar + bought at
 - add update wanneer user of sectie is veranderd
 - system logs / updates
-- bijlage toevoegen aan update
-- license field textfield maken
 - qr code view voor aanmaken van die dingen
-
 
 Dashboard
 - hardware die niet gekoppeld zijn aan een gebruiker
@@ -15,3 +12,6 @@ Request
 
 User dashboard
 - cijfer met aantal mensen die deze recommended software gebruiken
+
+Sections
+- Terug kunnen klikken op een sectie om te zien op de map waar het is

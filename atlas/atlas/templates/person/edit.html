@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block metatitle %}
-<title>Atlas - Add assets</title>
+    <title>Atlas - Person</title>
 {% endblock %}
 
 {% block title %}
@@ -13,7 +13,7 @@
 
 {% block content %}
     <div class="block middle">
-        <h3>{% trans "Edit " %}{{ asset_name }}</h3>
+        <h3>{% trans "Edit " %}</h3>
         <form action="{{ request.path }}" method="post" class="add-asset-form">
             {% csrf_token %}
             <div class="wrapper">

@@ -10,6 +10,15 @@ class Person(AbstractUser):
     role = models.CharField(max_length=7, choices=ROLES, default='user')
     category = models.ForeignKey('person.Category', on_delete=models.CASCADE, null=True, blank=True)
 
+    def get_edit_form(self):
+        from person.forms import EditPersonForm
+        return EditPersonForm(initial={
+            'username': self.username,
+            'email': self.email,
+            'role': self.role,
+            'category': self.category,
+        })
+
 
 class Category(models.Model):
     title = models.CharField(max_length=200)

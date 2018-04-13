@@ -89,6 +89,7 @@
                     <th>{% trans "Title" %}</th>
                     <th>{% trans "Date" %}</th>
                     <th width="50%">{% trans "Description" %}</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -109,19 +110,17 @@
                                 {{ update.description }}
                             {% endif %}
                         </td>
+                        <td>
+                            {% if update.attachment %}
+                                <a class="table-attachment" href="{{ update.attachment.url }}" download>
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                </a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     {% endif %}
-{% endblock %}
-
-{% block modal %}
-	<div class="reveal" id="addAsset" data-reveal>
-		<h3>Add asset</h3>
-		<button class="close-button" data-close aria-label="Close modal" type="button">
-		<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
 {% endblock %}

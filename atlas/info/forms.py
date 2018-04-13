@@ -14,6 +14,7 @@ class AddUpdateForm(forms.ModelForm):
             'description',
             'asset',
             'date',
+            'attachment',
         ]
         widgets = {
             'date': DateInput(),

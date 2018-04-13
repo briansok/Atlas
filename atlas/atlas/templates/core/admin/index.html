@@ -66,6 +66,47 @@
                                 </div>
                             </div>
                         {% endif %}
+                        {% if requests %}
+                            <div class="block middle">
+                                <h3>{% trans "Requests" %}</h3>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans "Title" %}</th>
+                                        <th >{% trans "User" %}</th>
+                                        <th width="50%">{% trans "Description" %}</th>
+                                        <th>{% trans "Status" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for asset_request in requests %}
+                                        <tr>
+                                            <td>
+                                                {% if asset_request.title %}
+                                                    {{ asset_request.title }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset_request.user %}
+                                                    <a href="/users/{{ asset_request.user.id  }}">{{ asset_request.user.username }}</a>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset_request.description %}
+                                                    {{ asset_request.description }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset_request.status %}
+                                                    {{ asset_request.status }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
                     {% endblock %}
                 </div>
                 {% block modal %}
