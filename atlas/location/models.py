@@ -6,10 +6,10 @@ from django.utils.translation import gettext as _
 
 class Location(models.Model):
     title = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
-    zip_code = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    country = models.CharField(max_length=200)
+    address = models.CharField(max_length=200, null=True, blank=True)
+    zip_code = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    country = models.CharField(max_length=200, null=True, blank=True)
     plan = models.FileField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 

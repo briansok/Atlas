@@ -14,7 +14,7 @@
 {% block content %}
     <div class="block middle">
         <h3>{% trans "Edit location" %}</h3>
-        <form action="{{ request.path }}" method="post" class="add-asset-form">
+        <form action="{{ request.path }}" method="post" class="add-asset-form" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="wrapper">
                 <ul>

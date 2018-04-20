@@ -39,9 +39,15 @@ def add(request, asset):
             return HttpResponseRedirect(next)
     else:
         if asset == 'hardware':
-            form = AddHardwareForm()
+            if request.GET.get('section'):
+                form = AddHardwareForm(initial={'section': request.GET.get('section')})
+            else:
+                form = AddHardwareForm()
         elif asset == 'software':
-            form = AddSoftwareForm()
+            if request.GET.get('section'):
+                form = AddSoftwareForm(initial={'section': request.GET.get('section')})
+            else:
+                form = AddSoftwareForm()
         else:
             form = None
 

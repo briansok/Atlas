@@ -19,27 +19,31 @@
 
 {% block content %}
 <div class="block middle">
-    <h3>{% trans "All sections" %}</h3>
-    <table>
-        <thead>
-        <tr>
-            <th width="20%">{% trans "Name" %}</th>
-            <th>{% trans "User" %}</th>
-            <th width="5%">{% trans "Type" %}</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for section in sections %}
-        <tr>
-            <td>
-                <a href="/location/sections/{{ section.id  }}">{{ section.title }}</a>
-            </td>
-            <td>{{ section.user.username }}</td>
-            <td>{{ section.section_type }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    {% if sections %}
+        <h3>{% trans "All sections" %}</h3>
+        <table>
+            <thead>
+            <tr>
+                <th width="20%">{% trans "Name" %}</th>
+                <th>{% trans "User" %}</th>
+                <th width="5%">{% trans "Type" %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for section in sections %}
+            <tr>
+                <td>
+                    <a href="/location/sections/{{ section.id  }}">{{ section.title }}</a>
+                </td>
+                <td>{{ section.user.username }}</td>
+                <td>{{ section.section_type }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>{% trans "No sections" %}</h3>
+    {% endif %}
 </div>
 {% endblock %}

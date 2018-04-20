@@ -3,9 +3,12 @@ from django import forms
 from django.forms import SelectDateWidget
 from .models import Hardware, Software, Qrcode, Request
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext as _
+
 
 class DateInput(forms.DateInput):
     input_type = 'date'
+
 
 class AddHardwareForm(forms.ModelForm):
     class Meta:
