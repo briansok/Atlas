@@ -43,6 +43,7 @@ select {
     height: 100%;
     min-width: 14rem;
     max-width: 20rem;
+    margin-left: $spacing*0.75;
 
     svg {
       width: 100%;
@@ -57,7 +58,6 @@ select {
 
   .middle {
     flex: 3;
-    margin-right: $spacing*0.75;
 
     &.scan {
       margin-right: 0;

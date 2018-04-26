@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from atlas.decorators import user, administrator
+from atlas.helpers import CreateNotification
 from .models import Notification, Update
 from .forms import AddUpdateForm
 
@@ -26,12 +27,25 @@ def add(request):
         if form.is_valid():
             update = form.save(commit=False)
             update.created_by = request.user
-            update.date = form.cleaned_data['date']
-            update.attachment = request.FILES['attachment']
             update.save()
 
+            if form.cleaned_data['asset']:
+                asset_id = form.cleaned_data['asset'].id
+            else:
+                asset_id = None
+
+            notification = CreateNotification(
+                'Update added',
+                'info',
+                request,
+                asset=asset_id)
+            notification.create()
+
             next = request.POST.get('next', '/')
-            return HttpResponseRedirect(next)
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('asset-list')
     else:
         if request.GET.get('asset'):
             form = AddUpdateForm(initial={'asset': request.GET.get('asset')})

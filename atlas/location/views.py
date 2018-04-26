@@ -4,10 +4,10 @@ from atlas.decorators import user, administrator
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core import serializers
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
 from django.utils.translation import gettext as _
 from asset.models import Asset
 from info.models import Notification
+from atlas.helpers import CreateNotification
 from .models import Section, Location
 from .forms import AddSectionForm, EditLocationForm, SectionPlanForm, AddLocationForm
 import math
@@ -76,13 +76,12 @@ def editLocation(request, id):
         if form.is_valid():
             form.save()
 
-            Notification.objects.create(
-                title='Location changed',
-                notification_type='info',
-                created_by=request.user
-            )
+            notification = CreateNotification(
+                'Location edited',
+                'info',
+                request)
+            notification.create()
 
-            messages.add_message(request, messages.INFO, _('Location is changed'))
             next = request.POST.get('next', '/')
             if next:
                 return HttpResponseRedirect(next)
@@ -131,7 +130,16 @@ def addSection(request):
     if request.method == 'POST':
         form = AddSectionForm(request.POST)
         if form.is_valid():
-            form.save()
+            section = form.save(commit=False)
+            section.save()
+
+            notification = CreateNotification(
+                _('Section added'),
+                'info',
+                request,
+                section=section.id)
+
+            notification.create()
 
             next = request.POST.get('next', '/')
             if next:
@@ -156,6 +164,13 @@ def addLocation(request):
         form = AddLocationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+
+            notification = CreateNotification(
+                _('Location added'),
+                'info',
+                request)
+
+            notification.create()
 
             next = request.POST.get('next', '/')
             if next:

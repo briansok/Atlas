@@ -1,13 +1,15 @@
+import math
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from .models import Asset, Hardware, Software, Qrcode
+from django.utils.translation import gettext as _
 from info.models import Update
-from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
 from atlas.decorators import user, administrator
-import math
+from atlas.helpers import CreateNotification
+from .models import Asset, Hardware, Software, Qrcode
+from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
 
 
 @administrator
@@ -34,9 +36,22 @@ def add(request, asset):
             form = None
 
         if form.is_valid():
-            form.save()
+            asset = form.save(commit=False)
+            asset.save()
+
+            notification = CreateNotification(
+                _('Asset added'),
+                'info',
+                request,
+                asset=asset.id)
+
+            notification.create()
+
             next = request.POST.get('next', '/')
-            return HttpResponseRedirect(next)
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('asset-list')
     else:
         if asset == 'hardware':
             if request.GET.get('section'):
@@ -73,8 +88,19 @@ def edit(request, id):
         if form.is_valid():
             form.save()
 
+            notification = CreateNotification(
+                _('Asset edited'),
+                'info',
+                request,
+                asset=id)
+
+            notification.create()
+
             next = request.POST.get('next', '/')
-            return HttpResponseRedirect(next)
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('asset-detail')
     else:
         form = asset.get_edit_form()
 
@@ -172,6 +198,15 @@ def scan(request, uid):
         if form.is_valid():
             qr_code.asset = form.cleaned_data['asset']
             qr_code.save()
+
+            notification = CreateNotification(
+                _('Qrcode linked'),
+                'info',
+                request,
+                asset=form.cleaned_data['asset'].id)
+
+            notification.create()
+
             return redirect(request.path)
         else:
             asset = None
@@ -212,8 +247,18 @@ def request(request):
             req.user = request.user
             req.save()
 
+            notification = CreateNotification(
+                _('Request created'),
+                'info',
+                request)
+
+            notification.create()
+
             next = request.POST.get('next', '/')
-            return HttpResponseRedirect(next)
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('home')
     else:
         form = RequestForm()
 

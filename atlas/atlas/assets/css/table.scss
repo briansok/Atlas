@@ -52,6 +52,7 @@ table {
 .edit-buttons {
   text-align: right;
   width: 10%;
+  min-width: 6rem;
 
   a {
     padding-left: $spacing/2;

@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 from . import views as atlas_views
 
 urlpatterns = [
-    path('', atlas_views.index),
+    path('', atlas_views.index, name="home"),
     path('login/', auth_views.login, name='login'),
     path('logout/', auth_views.logout, name='logout'),
     path('assets/', include('asset.urls')),
