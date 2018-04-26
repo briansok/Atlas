@@ -14,7 +14,6 @@
     <div class="action-buttons">
         <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
         <a href="/assets/software/add" class="button">{% trans "Add software" %}</a>
-        <a href="/assets/add" class="button">{% trans "Filter" %}</a>
     </div>
 </header>
 {% endblock %}
@@ -23,7 +22,6 @@
 <div class="block middle">
     {% if assets %}
         <h3>{% trans "All assets" %}</h3>
-        <input type="text" id="assets-search" onkeyup="tableSearch()" placeholder="{% trans "Search" %}">
         <table id="assets-table">
             <thead>
                 <tr>

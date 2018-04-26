@@ -1,11 +1,14 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.core import serializers
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.http import JsonResponse
 from asset.models import Asset, Software, Hardware, Request
-from location.models import Location
-from person.models import Person
+from location.models import Location, Section
 from location.forms import SectionPlanForm
+from person.models import Person
 from datetime import datetime, timedelta
+import json
 
 
 @login_required
@@ -49,3 +52,34 @@ def panel(request):
     }
 
     return render(request, template, context)
+
+
+@login_required
+def search(request):
+    if request.method == 'GET':
+        q = request.GET.get('q', '')
+
+        results = {}
+
+        person_q = {}
+        person_q['username__icontains'] = q
+        person_result = Person.objects.filter(**person_q)
+        if person_result:
+            for person in person_result:
+                results['person_assets'] = list(Asset.objects.filter(user=person.id).values('id', 'title'))
+
+        asset_q = {}
+        asset_q['title__icontains'] = q
+        asset_results = Asset.objects.filter(**asset_q).values('id', 'title')
+        if asset_results:
+            results['assets'] = list(asset_results)
+
+        section_q = {}
+        section_q['title__icontains'] = q
+        section_results = Section.objects.filter(**section_q).values('id', 'title')
+        if section_results:
+            results['sections'] = list(section_results)
+
+        parsed_results = json.dumps(results)
+        return JsonResponse(parsed_results, safe=False)
+

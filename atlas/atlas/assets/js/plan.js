@@ -50,8 +50,9 @@ function addSection(event, $x, $y) {
             url: getRootUrl() + 'location/plan/set/',
             data: $form.serialize(),
             success: function() {
-                console.log('section added');
                 $popup.css('display', 'none');
+
+								$('.messages').append('<li class="info">Success</li>');
             }
         });
         return false;

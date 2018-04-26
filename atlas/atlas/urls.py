@@ -11,6 +11,7 @@ urlpatterns = [
     path('login/', auth_views.login, name='login'),
     path('logout/', auth_views.logout, name='logout'),
     path('assets/', include('asset.urls')),
+    path('search/', atlas_views.search, name="search"),
     path('location/', include('location.urls')),
     path('users/', include('person.urls')),
     path('info/', include('info.urls')),
