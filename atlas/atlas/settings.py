@@ -31,16 +31,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 
 AUTH_USER_MODEL = 'person.Person'
 
-ASGI_APPLICATION = "atlas.routing.application"
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
-}
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 LOGIN_URL = '/login'
 
@@ -55,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'compressor',
-    'channels',
     'qr_code',
 
     'asset',

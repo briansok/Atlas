@@ -4,11 +4,12 @@ from atlas.decorators import user, administrator
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core import serializers
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Section, Location
+from django.contrib import messages
+from django.utils.translation import gettext as _
 from asset.models import Asset
+from info.models import Notification
+from .models import Section, Location
 from .forms import AddSectionForm, EditLocationForm, SectionPlanForm, AddLocationForm
-from channels.layers import get_channel_layer
-from asgiref.sync import async_to_sync
 import math
 
 @administrator
@@ -75,12 +76,13 @@ def editLocation(request, id):
         if form.is_valid():
             form.save()
 
-            layer = get_channel_layer()
-            async_to_sync(layer.send)('notifications', {
-                'type': 'notification_message',
-                'text': 'penis',
-            })
+            Notification.objects.create(
+                title='Location changed',
+                notification_type='info',
+                created_by=request.user
+            )
 
+            messages.add_message(request, messages.INFO, _('Location is changed'))
             next = request.POST.get('next', '/')
             if next:
                 return HttpResponseRedirect(next)

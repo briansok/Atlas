@@ -62,6 +62,7 @@
                 <thead>
                 <tr>
                     <th>{% trans "Title" %}</th>
+                    <th>{% trans "User" %}</th>
                     <th>{% trans "Type" %}</th>
                 </tr>
                 </thead>
@@ -70,6 +71,9 @@
                     <tr>
                         <td>
                             {{ notification.title }}
+                        </td>
+                        <td>
+                            {{ notification.created_by.username }}
                         </td>
                         <td>
                             {{ notification.notification_type }}

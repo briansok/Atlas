@@ -19,26 +19,28 @@
                     {% block content %}
                         {% if location %}
                             <div class="plan-wrapper">
-                                <div class="block middle">
-                                    <h3>{% trans "Plan" %}</h3>
-                                    {% load include_anything %}
-                                    <div id="#js-plan" class="plan-image">
-                                        {% include_anything location.plan.path %}
+                                {% if location.plan %}
+                                    <div class="block middle">
+                                        <h3>{% trans "Plan" %}</h3>
+                                        {% load include_anything %}
+                                        <div id="#js-plan" class="plan-image">
+                                            {% include_anything location.plan.path %}
+                                        </div>
+                                        <div id="plan-popup">
+                                            <h3>{% trans "Set section" %}</h3>
+                                            <span class="popup-close">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </span>
+                                            <form id="plan-form" action="/location/plan/set/" method="post">
+                                                {% csrf_token %}
+                                                {{ plan_form }}
+                                                <input type="hidden" name="plan_x" value="">
+                                                <input type="hidden" name="plan_y" value="">
+                                                <input class="button" type="submit" value="Add" />
+                                            </form>
+                                        </div>
                                     </div>
-                                    <div id="plan-popup">
-                                        <h3>{% trans "Set section" %}</h3>
-                                        <span class="popup-close">
-                                            <i class="fa fa-times" aria-hidden="true"></i>
-                                        </span>
-                                        <form id="plan-form" action="/location/plan/set/" method="post">
-                                            {% csrf_token %}
-                                            {{ plan_form }}
-                                            <input type="hidden" name="plan_x" value="">
-                                            <input type="hidden" name="plan_y" value="">
-                                            <input class="button" type="submit" value="Add" />
-                                        </form>
-                                    </div>
-                                </div>
+                                {% endif %}
                                 <div class="block middle right">
                                     <h3>{% trans "Almost expired" %}</h3>
                                     <table>

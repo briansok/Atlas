@@ -1,3 +1,11 @@
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 {% load static %}
 <script src="{% static "js/imports/jquery-3.3.1.min.js" %}"></script>
 <script src="{% static "foundation/js/foundation.min.js" %}"></script>
