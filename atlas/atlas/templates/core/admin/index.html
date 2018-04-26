@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    {% include "core/header.html" %}
+    {% load i18n %}
+    <body>
+        <main>
+            {% include "core/admin/menu.html" %}
+            <section class="inner">
+                <div class="wrapper">
+                    {% block content-top %}
+                        <header class="block top">
+                            <h3>{% trans "Welcome" %} {{ request.user.username }}</h3>
+                            <div class="action-buttons">
+                                <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
+                                <a href="/assets/software/add" class="button">{% trans "Add software" %}</a>
+                            </div>
+                        </header>
+                    {% endblock %}
+                    {% block content %}
+                        {% if location %}
+                            <div class="plan-wrapper">
+                                {% if location.plan %}
+                                    <div class="block middle">
+                                        <h3>{% trans "Plan" %}</h3>
+                                        {% load include_anything %}
+                                        <div id="#js-plan" class="plan-image">
+                                            {% include_anything location.plan.path %}
+                                        </div>
+                                        <div id="plan-popup">
+                                            <h3>{% trans "Set section" %}</h3>
+                                            <span class="popup-close">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </span>
+                                            <form id="plan-form" action="/location/plan/set/" method="post">
+                                                {% csrf_token %}
+                                                {{ plan_form }}
+                                                <input type="hidden" name="plan_x" value="">
+                                                <input type="hidden" name="plan_y" value="">
+                                                <input class="button" type="submit" value="Add" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <div class="block middle right">
+                                    <h3>{% trans "Almost expired" %}</h3>
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>{% trans "Name" %}</th>
+                                            <th>{% trans "Expiration date" %}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for asset in expired_assets %}
+                                            <tr>
+                                                <td>
+                                                    <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
+                                                </td>
+                                                <td>
+                                                    {% if asset.valid_until %}
+                                                        {{ asset.valid_until }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if requests %}
+                            <div class="block middle">
+                                <h3>{% trans "Requests" %}</h3>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans "Title" %}</th>
+                                        <th >{% trans "User" %}</th>
+                                        <th width="50%">{% trans "Description" %}</th>
+                                        <th>{% trans "Status" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for asset_request in requests %}
+                                        <tr>
+                                            <td>
+                                                {% if asset_request.title %}
+                                                    {{ asset_request.title }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset_request.user %}
+                                                    <a href="/users/{{ asset_request.user.id  }}">{{ asset_request.user.username }}</a>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset_request.description %}
+                                                    {{ asset_request.description }}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if asset_request.status %}
+                                                    {{ asset_request.status }}
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+                </div>
+                {% block modal %}
+                {% endblock %}
+            </section>
+        </main>
+        {% include "core/footer.html" %}
+    </body>
+  </html>

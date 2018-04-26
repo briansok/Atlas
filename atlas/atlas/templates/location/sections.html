@@ -1,0 +1,49 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+<title>{% trans "Atlas - Sections" %}</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+<header class="block top">
+    <h3>{% trans "Actions" %}</h3>
+    <div class="action-buttons">
+        <a href="/location/sections/add" class="button">{% trans "Add section" %}</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="block middle">
+    {% if sections %}
+        <h3>{% trans "All sections" %}</h3>
+        <table>
+            <thead>
+            <tr>
+                <th width="20%">{% trans "Name" %}</th>
+                <th>{% trans "User" %}</th>
+                <th width="5%">{% trans "Type" %}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for section in sections %}
+            <tr>
+                <td>
+                    <a href="/location/sections/{{ section.id  }}">{{ section.title }}</a>
+                </td>
+                <td>{{ section.user.username }}</td>
+                <td>{{ section.section_type }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>{% trans "No sections" %}</h3>
+    {% endif %}
+</div>
+{% endblock %}

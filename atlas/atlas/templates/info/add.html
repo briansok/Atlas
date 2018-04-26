@@ -1,0 +1,24 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+    <title>Atlas - Add update</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+{% endblock %}
+
+{% block content %}
+    <div class="block middle">
+        <h3>{% trans "Add update" %}</h3>
+        <form action="/info/updates/add/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
+            <input class="button" type="submit" value="Add" />
+        </form>
+    </div>
+{% endblock %}

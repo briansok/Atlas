@@ -1,0 +1,47 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+    <title>Atlas - Location</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+{% endblock %}
+
+{% block content %}
+    <div class="block middle">
+        <h3>{% trans "Edit location" %}</h3>
+        <form action="{{ request.path }}" method="post" class="add-asset-form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="wrapper">
+                <ul>
+                    {% for form_item in form %}
+                        {% if forloop.counter <= form_half %}
+                            <li>
+                                {{ form_item.label }}
+                                {{ form_item.errors }}
+                                {{ form_item }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <ul>
+                    {% for form_item in form %}
+                        {% if forloop.counter > form_half %}
+                            <li>
+                                {{ form_item.label }}
+                                {{ form_item.errors }}
+                                {{ form_item }}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
+            <input class="button" type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}

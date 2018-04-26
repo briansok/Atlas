@@ -1,0 +1,71 @@
+.main-menu {
+  position: fixed;
+  width: 100%;
+}
+
+.top-bar {
+  color: $white;
+
+  &.mobile {
+    display: none;
+
+    .top-bar-right, .top-bar-left {
+      flex: inherit;
+    }
+
+    .top-bar-right .menu {
+      transition: 0.3s ease;
+      position: absolute;
+      right: -15rem;
+      padding: $spacing/2;
+
+      &.show {
+        right: 0;
+      }
+    }
+  }
+
+  .logo {
+    padding-left: $spacing;
+    i {
+      position: absolute;
+      top: 7px;
+      left: 10px;
+      font-size: 22px;
+      animation: rotating 20s linear infinite;
+    }
+
+    a {
+      padding: 0;
+    }
+  }
+
+  li a {
+    color: $white;
+  }
+
+  input {
+    margin-right: 0;
+  }
+
+  .search-menu {
+    .button {
+      margin-left: $spacing/2;
+    }
+  }
+
+  .submenu {
+    border: none;
+    border-radius: $global-radius;
+    background-color: $dark-gray;
+    margin-top: $spacing/4;
+
+    li a {
+      padding: $spacing/2;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+}

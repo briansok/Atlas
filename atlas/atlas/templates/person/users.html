@@ -1,0 +1,45 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+<title>{% trans "Atlas - Users" %}</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+<header class="block top">
+    <h3>{% trans "Actions" %}</h3>
+    <div class="action-buttons">
+        <a href="/person/add" class="button">{% trans "Add user" %}</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="block middle">
+    <h3>{% trans "All Users" %}</h3>
+    <table>
+        <thead>
+        <tr>
+            <th width="20%">{% trans "Name" %}</th>
+            <th>{% trans "Email" %}</th>
+            <th width="5%">{% trans "Role" %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>
+                <a href="/users/{{ user.id  }}">{{ user.username }}</a>
+            </td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

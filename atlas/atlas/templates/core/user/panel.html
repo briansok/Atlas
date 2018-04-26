@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    {% include "core/header.html" %}
+    {% load i18n %}
+    <body>
+    <main>
+        {% include "core/user/menu.html" %}
+        <section class="inner">
+            <div class="wrapper">
+                {% block content-top %}
+                    <header class="block top">
+                        <h3>Hello, {{ request.user.username }}</h3>
+                        <a href="/assets/request" class="button">{% trans "Make a request" %}</a>
+                    </header>
+                {% endblock %}
+                {% block content %}
+                    <div class="block middle">
+                        <h3>{% trans "Software that other " %}{{ request.user.category.title|lower }}{% trans "s use" %}</h3>
+                        <div class="panel-wrapper">
+                            {% for software in recommended_software %}
+                                <h4>{{ software.title }}</h4>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% if requests %}
+                        <div class="block middle">
+                            <h3>{% trans "My requests" %}</h3>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>{% trans "Title" %}</th>
+                                    <th width="50%">{% trans "Description" %}</th>
+                                    <th>{% trans "Status" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for request in requests %}
+                                    <tr>
+                                        <td>
+                                            {% if request.title %}
+                                                {{ request.title }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.description %}
+                                                {{ request.description }}
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.status %}
+                                                {{ request.status }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                {% endblock %}
+            </div>
+            {% block modal %}
+            {% endblock %}
+        </section>
+    </main>
+    {% include "core/footer.html" %}
+    </body>
+</html>

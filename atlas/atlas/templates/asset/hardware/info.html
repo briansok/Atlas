@@ -1,0 +1,51 @@
+{% extends extend %}
+{% load i18n %}
+
+{% block asset_info %}
+    <table>
+        <thead>
+        <tr>
+            <th>{% trans "Specifications" %}</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if asset.model %}
+            <tr>
+                <td>{% trans "Model" %}</td>
+                <td>{{ asset.model }}</td>
+            </tr>
+        {% endif %}
+        {% if asset.serial %}
+            <tr>
+                <td>{% trans "Serial" %}</td>
+                <td>{{ asset.serial }}</td>
+            </tr>
+        {% endif %}
+        {% if asset.cpu %}
+            <tr>
+                <td>{% trans "CPU" %}</td>
+                <td>{{ asset.cpu }}</td>
+            </tr>
+        {% endif %}
+        {% if asset.ram %}
+            <tr>
+                <td>{% trans "Ram" %}</td>
+                <td>{{ asset.ram }}</td>
+            </tr>
+        {% endif %}
+        {% if asset.hdd %}
+            <tr>
+                <td>{% trans "HDD" %}</td>
+                <td>{{ asset.hdd }}</td>
+            </tr>
+        {% endif %}
+        {% if asset.ssd %}
+            <tr>
+                <td>{% trans "SSD" %}</td>
+                <td>{{ asset.ssd }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

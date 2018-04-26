@@ -1,0 +1,96 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+    <title>Atlas - Info</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+    <header class="block top">
+        <h3>Actions</h3>
+        <div class="action-buttons">
+            <a href="/info/updates/add" class="button">
+                {% trans "Add update" %}
+            </a>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    {% if updates %}
+        <div class="block middle">
+            <h3>Latest updates</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>{% trans "Title" %}</th>
+                    <th>{% trans "Asset" %}</th>
+                    <th>{% trans "Date" %}</th>
+                    <th width="50%">{% trans "Description" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for update in updates %}
+                    <tr>
+                        <td>
+                            {{ update.title }}
+                        </td>
+                        <td>
+                            <a class="table-link" href="/assets/{{ update.asset.id }}">
+                                {{ update.asset.title }}
+                            </a>
+                        </td>
+                        <td>
+                            {{ update.date }}
+                        </td>
+                        <td>
+                            {{ update.description }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% if notifications %}
+        <div class="block middle">
+            <h3>Latest notifications</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>{% trans "Title" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th>{% trans "Type" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for notification in notifications %}
+                    <tr>
+                        <td>
+                            {{ notification.title }}
+                        </td>
+                        <td>
+                            {{ notification.created_by.username }}
+                        </td>
+                        <td>
+                            {{ notification.notification_type }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block modal %}
+    <div class="reveal" id="addAsset" data-reveal>
+        <h3>Add asset</h3>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endblock %}

@@ -1,0 +1,397 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-04-18 15:16+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: asset/forms.py:17
+#, fuzzy
+#| msgid "Title"
+msgid "title"
+msgstr "Titel"
+
+#: atlas/templates/asset/add.html:16
+msgid "Add "
+msgstr "Toevoegen"
+
+#: atlas/templates/asset/assets.html:5
+msgid "Atlas - Assets"
+msgstr "Atlas - Assets "
+
+#: atlas/templates/asset/assets.html:13
+#: atlas/templates/location/location.html:14
+#: atlas/templates/location/sections.html:13
+#: atlas/templates/person/users.html:13
+msgid "Actions"
+msgstr "Acties"
+
+#: atlas/templates/asset/assets.html:15
+#: atlas/templates/core/admin/index.html:14
+#: atlas/templates/location/section/detail.html:15
+msgid "Add hardware"
+msgstr "Hardware toevoegen"
+
+#: atlas/templates/asset/assets.html:16
+#: atlas/templates/core/admin/index.html:15
+#: atlas/templates/location/section/detail.html:16
+msgid "Add software"
+msgstr "Software toevoegen"
+
+#: atlas/templates/asset/assets.html:17
+msgid "Filter"
+msgstr "Filter"
+
+#: atlas/templates/asset/assets.html:25 atlas/templates/core/admin/menu.html:17
+#: atlas/templates/core/admin/menu.html:56
+#: atlas/templates/core/user/menu.html:34
+msgid "All assets"
+msgstr "Alle assets"
+
+#: atlas/templates/asset/assets.html:26 atlas/templates/core/admin/menu.html:36
+#: atlas/templates/core/admin/menu.html:61
+#: atlas/templates/core/user/menu.html:39
+msgid "Search"
+msgstr "Zoeken"
+
+#: atlas/templates/asset/assets.html:30
+#: atlas/templates/core/admin/index.html:47
+#: atlas/templates/location/location.html:41
+#: atlas/templates/location/section/detail.html:28
+#: atlas/templates/location/sections.html:27
+#: atlas/templates/person/detail.html:73 atlas/templates/person/users.html:26
+msgid "Name"
+msgstr "Naam"
+
+#: atlas/templates/asset/assets.html:31 atlas/templates/asset/detail.html:44
+#: atlas/templates/asset/scan.html:47 atlas/templates/core/admin/index.html:76
+#: atlas/templates/location/section/detail.html:29
+#: atlas/templates/location/sections.html:28
+msgid "User"
+msgstr "Gebruiker"
+
+#: atlas/templates/asset/assets.html:32 atlas/templates/asset/detail.html:50
+#: atlas/templates/asset/scan.html:53
+#: atlas/templates/location/section/detail.html:30
+#: atlas/templates/person/detail.html:74
+msgid "Section"
+msgstr "Gebied"
+
+#: atlas/templates/asset/assets.html:33 atlas/templates/asset/detail.html:62
+#: atlas/templates/asset/scan.html:65 atlas/templates/core/admin/index.html:48
+#: atlas/templates/location/section/detail.html:31
+#: atlas/templates/person/detail.html:75
+msgid "Expiration date"
+msgstr "Verloopdatum"
+
+#: atlas/templates/asset/assets.html:34 atlas/templates/asset/detail.html:56
+#: atlas/templates/asset/scan.html:59
+#: atlas/templates/location/section/detail.html:32
+#: atlas/templates/person/detail.html:76
+msgid "Price"
+msgstr "Prijs"
+
+#: atlas/templates/asset/assets.html:78
+msgid "No assets"
+msgstr "Geen assets"
+
+#: atlas/templates/asset/detail.html:16 atlas/templates/asset/scan.html:17
+#: atlas/templates/person/detail.html:19
+msgid "Remove"
+msgstr "Verwijderen"
+
+#: atlas/templates/asset/detail.html:19 atlas/templates/asset/scan.html:20
+#: atlas/templates/person/detail.html:16
+msgid "Edit"
+msgstr "Wijzig"
+
+#: atlas/templates/asset/detail.html:22 atlas/templates/asset/scan.html:23
+#: atlas/templates/info/add.html:16 atlas/templates/info/info.html:16
+msgid "Add update"
+msgstr "Update toevoegen"
+
+#: atlas/templates/asset/detail.html:37 atlas/templates/asset/scan.html:40
+#: atlas/templates/location/location.html:34
+#: atlas/templates/person/detail.html:33
+msgid "Details"
+msgstr "Informatie"
+
+#: atlas/templates/asset/detail.html:85 atlas/templates/asset/scan.html:92
+msgid "Updates"
+msgstr "Updates"
+
+#: atlas/templates/asset/detail.html:89 atlas/templates/asset/scan.html:96
+#: atlas/templates/core/admin/index.html:75
+#: atlas/templates/core/user/panel.html:31 atlas/templates/info/info.html:29
+#: atlas/templates/info/info.html:64
+msgid "Title"
+msgstr "Titel"
+
+#: atlas/templates/asset/detail.html:90 atlas/templates/asset/scan.html:97
+#: atlas/templates/info/info.html:31
+msgid "Date"
+msgstr "Datum"
+
+#: atlas/templates/asset/detail.html:91 atlas/templates/asset/scan.html:98
+#: atlas/templates/core/admin/index.html:77
+#: atlas/templates/core/user/panel.html:32 atlas/templates/info/info.html:32
+msgid "Description"
+msgstr "Beschrijving"
+
+#: atlas/templates/asset/edit.html:16 atlas/templates/person/edit.html:16
+msgid "Edit "
+msgstr "Wijzig"
+
+#: atlas/templates/asset/hardware/info.html:8
+msgid "Specifications"
+msgstr "Specificaties"
+
+#: atlas/templates/asset/hardware/info.html:15
+msgid "Model"
+msgstr "Model"
+
+#: atlas/templates/asset/hardware/info.html:21
+msgid "Serial"
+msgstr "Serial"
+
+#: atlas/templates/asset/hardware/info.html:27
+msgid "CPU"
+msgstr "CPU"
+
+#: atlas/templates/asset/hardware/info.html:33
+msgid "Ram"
+msgstr "Ram"
+
+#: atlas/templates/asset/hardware/info.html:39
+msgid "HDD"
+msgstr "HDD"
+
+#: atlas/templates/asset/hardware/info.html:45
+msgid "SSD"
+msgstr "SSD"
+
+#: atlas/templates/asset/request.html:16
+#: atlas/templates/core/user/panel.html:13
+msgid "Make a request"
+msgstr "Maak een aanvraag"
+
+#: atlas/templates/asset/scan.html:81
+msgid "This code is not linked to a asset"
+msgstr "Deze code is nog niet gelinkt"
+
+#: atlas/templates/asset/scan.html:82
+msgid "What asset should be linked with this code?"
+msgstr "Welke asset hoort bij deze code?"
+
+#: atlas/templates/asset/software/info.html:8
+msgid "License info"
+msgstr "Licentie info"
+
+#: atlas/templates/asset/software/info.html:15
+msgid "License"
+msgstr "Licentie"
+
+#: atlas/templates/asset/software/info.html:21
+msgid "License amount"
+msgstr "Licentie aantal"
+
+#: atlas/templates/core/admin/index.html:12
+msgid "Welcome"
+msgstr "Welkom"
+
+#: atlas/templates/core/admin/index.html:23
+#: atlas/templates/location/location.html:74
+msgid "Plan"
+msgstr "Plattegrond"
+
+#: atlas/templates/core/admin/index.html:29
+msgid "Set section"
+msgstr ""
+
+#: atlas/templates/core/admin/index.html:43
+msgid "Almost expired"
+msgstr "Bijna verlopen"
+
+#: atlas/templates/core/admin/index.html:71
+msgid "Requests"
+msgstr "Aanvragen"
+
+#: atlas/templates/core/admin/index.html:78
+#: atlas/templates/core/user/panel.html:33
+msgid "Status"
+msgstr "Status"
+
+#: atlas/templates/core/admin/menu.html:13
+#: atlas/templates/person/detail.html:69
+msgid "Assets"
+msgstr "Assets"
+
+#: atlas/templates/core/admin/menu.html:15
+#: atlas/templates/core/admin/menu.html:54
+#: atlas/templates/core/user/menu.html:32
+msgid "Hardware"
+msgstr "Hardware"
+
+#: atlas/templates/core/admin/menu.html:16
+#: atlas/templates/core/admin/menu.html:55
+#: atlas/templates/core/user/menu.html:33
+msgid "Software"
+msgstr "Software"
+
+#: atlas/templates/core/admin/menu.html:21
+#: atlas/templates/core/admin/menu.html:23
+msgid "Location"
+msgstr "Locatie"
+
+#: atlas/templates/core/admin/menu.html:24
+#: atlas/templates/core/admin/menu.html:57
+#: atlas/templates/core/user/menu.html:35
+msgid "Sections"
+msgstr "Gebieden"
+
+#: atlas/templates/core/admin/menu.html:27
+msgid "Users"
+msgstr "Gebruikers"
+
+#: atlas/templates/core/admin/menu.html:28
+#: atlas/templates/core/admin/menu.html:59
+#: atlas/templates/core/user/menu.html:37
+msgid "Info"
+msgstr "Informatie"
+
+#: atlas/templates/core/admin/menu.html:58
+#: atlas/templates/core/user/menu.html:36
+msgid "People"
+msgstr "Gebruikers"
+
+#: atlas/templates/core/user/menu.html:13
+msgid "My assets"
+msgstr "Mijn assets"
+
+#: atlas/templates/core/user/panel.html:18
+msgid "Software that other "
+msgstr "Software dat andere "
+
+#: atlas/templates/core/user/panel.html:18
+msgid "s use"
+msgstr "s gebruiken"
+
+#: atlas/templates/core/user/panel.html:27
+msgid "My requests"
+msgstr "Mijn aanvragen"
+
+#: atlas/templates/info/info.html:30
+msgid "Asset"
+msgstr "Asset"
+
+#: atlas/templates/info/info.html:65 atlas/templates/location/sections.html:29
+msgid "Type"
+msgstr "Type"
+
+#: atlas/templates/location/location.html:6
+msgid "Atlas - Location"
+msgstr "Atlas - Locatie"
+
+#: atlas/templates/location/location.html:17
+#: atlas/templates/location/location/edit.html:16
+msgid "Edit location"
+msgstr "Wijzig locatie"
+
+#: atlas/templates/location/location.html:19
+#: atlas/templates/location/location/add.html:16
+msgid "Add location"
+msgstr "Locatie toevoegen"
+
+#: atlas/templates/location/location.html:47
+msgid "Address"
+msgstr "Adres"
+
+#: atlas/templates/location/location.html:53
+msgid "Zipcode"
+msgstr "Postcode"
+
+#: atlas/templates/location/location.html:59
+msgid "City"
+msgstr "Stad"
+
+#: atlas/templates/location/location.html:65
+msgid "Country"
+msgstr "Land"
+
+#: atlas/templates/location/section/add.html:16
+#: atlas/templates/location/sections.html:15
+msgid "Add section"
+msgstr "Gebied toevoegen"
+
+#: atlas/templates/location/section/detail.html:68
+msgid "There are no assets"
+msgstr "Er zijn geen assets"
+
+#: atlas/templates/location/sections.html:5
+msgid "Atlas - Sections"
+msgstr "Atlas - Gebieden"
+
+#: atlas/templates/location/sections.html:23
+msgid "All sections"
+msgstr "Alle gebieden"
+
+#: atlas/templates/location/sections.html:46
+msgid "No sections"
+msgstr "Er zijn geen gebieden"
+
+#: atlas/templates/person/detail.html:40
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: atlas/templates/person/detail.html:46 atlas/templates/person/users.html:27
+msgid "Email"
+msgstr "Email"
+
+#: atlas/templates/person/detail.html:52 atlas/templates/person/users.html:28
+msgid "Role"
+msgstr "Rol"
+
+#: atlas/templates/person/detail.html:58
+msgid "Last login"
+msgstr "Laatste login"
+
+#: atlas/templates/person/users.html:5
+msgid "Atlas - Users"
+msgstr "Atlas - Gebruikers"
+
+#: atlas/templates/person/users.html:15
+msgid "Add user"
+msgstr "Gebruiker toevoegen"
+
+#: atlas/templates/person/users.html:22
+msgid "All Users"
+msgstr "Alle Gebruikers"
+
+#: location/models.py:21
+msgid "There is can be only one location instance"
+msgstr "Er kan maar 1 locatie zijn"
+
+#: location/models.py:49
+msgid "Room"
+msgstr "Ruimte"
+
+#: location/models.py:50
+msgid "Area"
+msgstr "Gebied"
+
+#: location/models.py:51
+msgid "Desk"
+msgstr "Bureau"

@@ -1,0 +1,26 @@
+@media (max-width: 640px) {
+  .top-bar {
+    &.desktop {
+      display: none;
+    }
+    &.mobile {
+      display: flex;
+    }
+  }
+
+  .login-wrapper .middle {
+    width: 100%;
+  }
+
+  .double .middle {
+    margin-right: 0;
+  }
+
+  .asset-table-wrapper {
+    flex-wrap: wrap;
+
+    .wrapper {
+      width: 100%;
+    }
+  }
+}

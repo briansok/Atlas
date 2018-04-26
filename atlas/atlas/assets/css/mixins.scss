@@ -1,0 +1,4 @@
+@mixin gradient($start-color: rgba($black, 0.5), $end-color: rgba($black, 0), $direction: -45deg, $type: linear) {
+    background-image: #{'-webkit-' + $type + '-gradient('}$direction, $start-color, $end-color#{')'};
+    background-image: #{$type + '-gradient('}$direction, $start-color, $end-color#{')'};
+}

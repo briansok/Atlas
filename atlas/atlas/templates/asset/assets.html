@@ -1,0 +1,90 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+	 <title>{% trans "Atlas - Assets" %}</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+<header class="block top">
+    <h3>{% trans "Actions" %}</h3>
+    <div class="action-buttons">
+        <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
+        <a href="/assets/software/add" class="button">{% trans "Add software" %}</a>
+        <a href="/assets/add" class="button">{% trans "Filter" %}</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="block middle">
+    {% if assets %}
+        <h3>{% trans "All assets" %}</h3>
+        <input type="text" id="assets-search" onkeyup="tableSearch()" placeholder="{% trans "Search" %}">
+        <table id="assets-table">
+            <thead>
+                <tr>
+                    <th width="20%">{% trans "Name" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th>{% trans "Section" %}</th>
+                    <th width="20%">{% trans "Expiration date" %}</th>
+                    <th width="5%">{% trans "Price" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asset in assets %}
+                    <tr>
+                        <td>
+                            <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
+                        </td>
+                        <td>
+                            {% if asset.user %}
+                                {{ asset.user.username }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if asset.section %}
+                                {{ asset.section.title }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if asset.valid_until %}
+                                {{ asset.valid_until }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if asset.price %}
+                                €{{ asset.price }}
+                            {% endif %}
+                        </td>
+                        <td class="edit-buttons">
+                            <a href="/assets/{{ asset.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <form action="/assets/{{ asset.id }}/delete" method="post">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    <a href="/assets/{{ asset.id }}/delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>{% trans "No assets" %}</h3>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block modal %}
+	<div class="reveal" id="addAsset" data-reveal>
+		<h3>Add asset</h3>
+		<button class="close-button" data-close aria-label="Close modal" type="button">
+		<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+{% endblock %}

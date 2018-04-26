@@ -1,0 +1,81 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+{% load include_anything %}
+
+{% block metatitle %}
+    <title>{% trans "Atlas - Location" %}</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+    <header class="block top">
+        <h3>{% trans "Actions" %}</h3>
+        <div class="action-buttons">
+            {% if location %}
+                <a href="/location/{{ location.id }}/edit" class="button">{% trans "Edit location" %}</a>
+            {% else %}
+                <a href="/location/add" class="button">{% trans "Add location" %}</a>
+            {% endif %}
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    {% if location %}
+        <div class="block middle">
+            <h3>{{ location.title }}</h3>
+            <div class="asset-table-wrapper">
+                <div class="wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>{% trans "Details" %}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if location.title %}
+                            <tr>
+                                <td>{% trans "Name" %}</td>
+                                <td>{{ location.title }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if location.address %}
+                            <tr>
+                                <td>{% trans "Address" %}</td>
+                                <td>{{ location.address }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if location.zip_code %}
+                            <tr>
+                                <td>{% trans "Zipcode" %}</td>
+                                <td>{{ location.zip_code }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if location.city %}
+                            <tr>
+                                <td>{% trans "City" %}</td>
+                                <td>{{ location.city }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if location.country %}
+                            <tr>
+                                <td>{% trans "Country" %}</td>
+                                <td>{{ location.country }}</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if location.plan %}
+                    <div class="wrapper">
+                        <h3>{% trans "Plan" %}</h3>
+                        <img src="{{ location.plan.url }}">
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
