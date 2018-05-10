@@ -1,11 +1,14 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+from django.core import serializers
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.http import JsonResponse
 from asset.models import Asset, Software, Hardware, Request
-from location.models import Location
-from person.models import Person
+from location.models import Location, Section
 from location.forms import SectionPlanForm
+from person.models import Person
 from datetime import datetime, timedelta
+import json
 
 
 @login_required
@@ -32,20 +35,59 @@ def index(request):
 @login_required
 def panel(request):
     template = 'core/user/panel.html'
-    recommended_software = None
+    distinct_software_title = []
+    distinct_software = []
     requests = None
 
     try:
         users = Person.objects.filter(category=request.user.category)
         user_ids = [user.id for user in users]
-        recommended_software = Software.objects.filter(user__id__in=user_ids).distinct()
+        recommended_software = Software.objects.filter(user__id__in=user_ids)
+
+        for item in recommended_software:
+            if item.title not in distinct_software_title:
+                distinct_software_title.append(item.title)
+                distinct_software.append(item)
+                print(distinct_software)
+
         requests = Request.objects.filter(user=request.user.id)
     except ObjectDoesNotExist:
         pass
 
     context = {
-        'recommended_software': recommended_software,
+        'recommended_software': distinct_software,
         'requests': requests,
     }
 
     return render(request, template, context)
+
+
+@login_required
+def search(request):
+    if request.method == 'GET':
+        q = request.GET.get('q', '')
+
+        results = {}
+
+        person_q = {}
+        person_q['username__icontains'] = q
+        person_result = Person.objects.filter(**person_q)
+        if person_result:
+            for person in person_result:
+                results['person_assets'] = list(Asset.objects.filter(user=person.id).values('id', 'title'))
+
+        asset_q = {}
+        asset_q['title__icontains'] = q
+        asset_results = Asset.objects.filter(**asset_q).values('id', 'title')
+        if asset_results:
+            results['assets'] = list(asset_results)
+
+        section_q = {}
+        section_q['title__icontains'] = q
+        section_results = Section.objects.filter(**section_q).values('id', 'title')
+        if section_results:
+            results['sections'] = list(section_results)
+
+        parsed_results = json.dumps(results)
+        return JsonResponse(parsed_results, safe=False)
+

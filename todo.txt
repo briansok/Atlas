@@ -1,6 +1,4 @@
 - valid_until op basis van 2 jaar + bought at
-- add update wanneer user of sectie is veranderd
-- system logs / updates
 - qr code view voor aanmaken van die dingen
 
 Dashboard
@@ -10,8 +8,8 @@ Dashboard
 Request
 - request kunnen maken vanuit bestaande asset. Over mogelijke update of reparatie dingen aanragen.
 
+Assets
+- table sorting
+
 User dashboard
 - cijfer met aantal mensen die deze recommended software gebruiken
-
-Sections
-- Terug kunnen klikken op een sectie om te zien op de map waar het is

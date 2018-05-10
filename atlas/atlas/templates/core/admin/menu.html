@@ -32,9 +32,10 @@
         <div class="top-bar-right search-menu">
             {% if request.user.is_authenticated %}
                 <ul class="menu">
-                    <li><input type="search" placeholder="Search"></li>
-                    <li><button type="button" class="button">{% trans "Search" %}</button></li>
+                    <li><input type="text" id="search-bar" name="q" placeholder="Search"></li>
+                    <li><button type="submit" id="search-button" class="button">{% trans "Search" %}</button></li>
                 </ul>
+                <ul id="search-results"></ul>
             {% endif %}
         </div>
     </div>

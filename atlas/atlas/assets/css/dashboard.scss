@@ -97,3 +97,28 @@
     cursor: pointer;
   }
 }
+
+#search-results {
+    display: none;
+    position: absolute;
+    top: $spacing*1.5;
+    width: 200px;
+    left: 0;
+    list-style: none;
+    border-radius: $global-radius;
+    padding: 1rem 1.5rem;
+    margin-left: 0;
+
+    .result {
+        margin-bottom: $spacing/4;
+        
+        a {
+            font-weight: bold;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+    }
+
+}

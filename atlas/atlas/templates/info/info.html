@@ -63,7 +63,8 @@
                 <tr>
                     <th>{% trans "Title" %}</th>
                     <th>{% trans "User" %}</th>
-                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Asset" %}</th>
+                    <th>{% trans "Section" %}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -76,7 +77,18 @@
                             {{ notification.created_by.username }}
                         </td>
                         <td>
-                            {{ notification.notification_type }}
+                            {% if notification.asset %}
+                                <a class="table-link" href="/assets/{{notification.asset.id}}">
+                                    {{ notification.asset.title }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if notification.section %}
+                                <a class="table-link" href="/sections/{{notification.section.id}}">
+                                    {{ notification.section.title }}
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

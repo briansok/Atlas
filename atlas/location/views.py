@@ -39,9 +39,6 @@ def plan(request):
                 plan_x = 0
                 plan_y = 0
 
-            print(plan_x)
-            print(plan_y)
-
             try:
                 section = serializers.serialize('json', Section.objects.filter(plan_x=plan_x, plan_y=plan_y), fields=('id', 'title'))
             except ObjectDoesNotExist:
@@ -62,7 +59,15 @@ def setPlanSection(request):
                 section.plan_x = request.POST['plan_x']
                 section.plan_y = request.POST['plan_y']
                 section.save()
-    return render(request)
+
+                notification = CreateNotification(
+                    _('Section linked to plan'),
+                    'info',
+                    request,
+                    section=section.id)
+                notification.create()
+
+    return redirect('home')
 
 
 @administrator
@@ -77,7 +82,7 @@ def editLocation(request, id):
             form.save()
 
             notification = CreateNotification(
-                'Location edited',
+                _('Location edited'),
                 'info',
                 request)
             notification.create()
