@@ -35,19 +35,27 @@ def index(request):
 @login_required
 def panel(request):
     template = 'core/user/panel.html'
-    recommended_software = None
+    distinct_software_title = []
+    distinct_software = []
     requests = None
 
     try:
         users = Person.objects.filter(category=request.user.category)
         user_ids = [user.id for user in users]
-        recommended_software = Software.objects.filter(user__id__in=user_ids).distinct()
+        recommended_software = Software.objects.filter(user__id__in=user_ids)
+
+        for item in recommended_software:
+            if item.title not in distinct_software_title:
+                distinct_software_title.append(item.title)
+                distinct_software.append(item)
+                print(distinct_software)
+
         requests = Request.objects.filter(user=request.user.id)
     except ObjectDoesNotExist:
         pass
 
     context = {
-        'recommended_software': recommended_software,
+        'recommended_software': distinct_software,
         'requests': requests,
     }
 

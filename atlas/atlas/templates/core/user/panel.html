@@ -16,11 +16,28 @@
                 {% block content %}
                     <div class="block middle">
                         <h3>{% trans "Software that other " %}{{ request.user.category.title|lower }}{% trans "s use" %}</h3>
-                        <div class="panel-wrapper">
-                            {% for software in recommended_software %}
-                                <h4>{{ software.title }}</h4>
-                            {% endfor %}
-                        </div>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th width="80%">{% trans "Title" %}</thwidth>
+                                    <th>{% trans "Request" %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for software in recommended_software %}
+                                <tr>
+                                    <td>
+                                        {{ software.title }}
+                                    </td>
+                                    <td>
+                                        <a class="table-link" href="/assets/request">
+                                            <i class="fa fa-share" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                     </div>
                     {% if requests %}
                         <div class="block middle">
