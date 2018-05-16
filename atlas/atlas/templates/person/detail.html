@@ -9,17 +9,19 @@
 {% endblock %}
 
 {% block content-top %}
-<header class="block top">
-    <h3>Actions</h3>
-    <div class="action-buttons">
-        <a href="/users/{{ user.id }}/edit" class="button">
-            {% trans "Edit" %}
-        </a>
-        <a href="/users/{{ user.id }}/remove" class="button">
-            {% trans "Remove" %}
-        </a>
-    </div>
-</header>
+{% if request.user.role == 'admin' %}
+    <header class="block top">
+        <h3>Actions</h3>
+        <div class="action-buttons">
+            <a href="/users/{{ user.id }}/edit" class="button">
+                {% trans "Edit" %}
+            </a>
+            <a href="/users/{{ user.id }}/remove" class="button">
+                {% trans "Remove" %}
+            </a>
+        </div>
+    </header>
+{% endif %}
 {% endblock %}
 
 {% block content %}

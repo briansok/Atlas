@@ -122,7 +122,6 @@ def delete(request, id):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-@administrator
 @login_required
 def detail(request, id):
     try:

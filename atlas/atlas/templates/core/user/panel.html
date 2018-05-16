@@ -4,7 +4,11 @@
     {% load i18n %}
     <body>
     <main>
-        {% include "core/user/menu.html" %}
+        {% if request.user.role == 'user' %}
+            {% include "core/user/menu.html" %}
+        {% elif request.user.role == 'admin' %}
+            {% include "core/admin/menu.html" %}
+        {% endif %}
         <section class="inner">
             <div class="wrapper">
                 {% block content-top %}

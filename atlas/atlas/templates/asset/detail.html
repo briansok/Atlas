@@ -9,20 +9,22 @@
 {% endblock %}
 
 {% block content-top %}
-<header class="block top">
-    <h3>Actions</h3>
-    <div class="action-buttons">
-        <a href="/assets/{{ asset.id }}/delete" class="button">
-            {% trans "Remove" %}
-        </a>
-        <a href="/assets/{{ asset.id }}/edit" class="button">
-            {% trans "Edit" %}
-        </a>
-        <a href="/info/updates/add?asset={{ asset.id }}" class="button">
-            {% trans "Add update" %}
-        </a>
-    </div>
-</header>
+{% if request.user.role == 'admin' %}
+    <header class="block top">
+        <h3>Actions</h3>
+        <div class="action-buttons">
+            <a href="/assets/{{ asset.id }}/delete" class="button">
+                {% trans "Remove" %}
+            </a>
+            <a href="/assets/{{ asset.id }}/edit" class="button">
+                {% trans "Edit" %}
+            </a>
+            <a href="/info/updates/add?asset={{ asset.id }}" class="button">
+                {% trans "Add update" %}
+            </a>
+        </div>
+    </header>
+{% endif %}
 {% endblock %}
 
 {% block content %}
