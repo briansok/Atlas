@@ -25,6 +25,7 @@
         <table id="assets-table">
             <thead>
                 <tr>
+                    <th width="2%">{% trans "Id" %}</th>
                     <th width="20%">{% trans "Name" %}</th>
                     <th>{% trans "User" %}</th>
                     <th>{% trans "Section" %}</th>
@@ -36,6 +37,9 @@
             <tbody>
                 {% for asset in assets %}
                     <tr>
+                        <td>
+                           {{ asset.id  }} 
+                        </td>
                         <td>
                             <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
                         </td>

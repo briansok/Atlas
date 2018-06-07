@@ -8,14 +8,14 @@ from django.utils.translation import gettext as _
 from info.models import Update
 from atlas.decorators import user, administrator
 from atlas.helpers import CreateNotification
-from .models import Asset, Hardware, Software, Qrcode
+from .models import Asset, Hardware, Software, Qrcode, License
 from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
 
 
 @administrator
 @login_required
 def index(request):
-    assets = Asset.objects.all()
+    assets = Asset.objects.all().order_by('id')
 
     context = {
         'assets': assets,
@@ -130,6 +130,7 @@ def detail(request, id):
         raise Http404('Object does not exist')
 
     updates = Update.objects.filter(asset=id).order_by('-id')
+    licenses = License.objects.filter(software=id).order_by('created_at')
 
     try:
         qr_code = Qrcode.objects.get(asset=id)
@@ -140,9 +141,11 @@ def detail(request, id):
         qr_code = qr_code.get_qr_code_url(request.get_host())
 
     context = {
+        'asset_type': asset.get_class_name().lower().replace('asset.', ''),
         'extend': "asset/detail.html",
         'asset': asset,
         'updates': updates,
+        'licenses': licenses,
         'qr_code': qr_code,
     }
 
@@ -266,3 +269,42 @@ def request(request):
     }
 
     return render(request, 'asset/request.html', context)
+
+
+@administrator
+@login_required
+def addLicense(request):
+    if request.method == 'POST':
+        form = AddLicenseForm(request.POST)
+        if form.is_valid():
+            license = form.save(commit=False)
+            license.save()
+
+            if form.cleaned_data['asset']:
+                asset_id = form.cleaned_data['asset'].id
+            else:
+                asset_id = None
+
+            notification = CreateNotification(
+                'License added',
+                'info',
+                request,
+                asset=asset_id)
+            notification.create()
+
+            next = request.POST.get('next', '/')
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('asset-list')
+    else:
+        if request.GET.get('asset'):
+            form = AddLicenseForm(initial={'asset': request.GET.get('asset')})
+        else:
+            form = AddLicenseForm()
+
+        context = {
+            'form': form,
+        }
+
+        return render(request, 'asset/license/add.html', context)

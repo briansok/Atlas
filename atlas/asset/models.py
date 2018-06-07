@@ -7,7 +7,6 @@ from model_utils.managers import InheritanceManager
 
 class Asset(models.Model):
     title = models.CharField(max_length=200)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     section = models.ForeignKey('location.Section', on_delete=models.CASCADE, null=True, blank=True)
     price = models.PositiveIntegerField(null=True, blank=True)
     valid_until = models.DateField(null=True, blank=True)
@@ -23,12 +22,36 @@ class Asset(models.Model):
 
 
 class Software(Asset):
-    license = models.TextField(null=True, blank=True)
-    license_amount = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Software'
         verbose_name_plural = 'Software'
+        ordering = ['-created_at']
+
+    def get_edit_form(self):
+        from asset.forms import AddSoftwareForm
+        return AddSoftwareForm(initial={
+            'title': self.title,
+            'section': self.section,
+            'price': self.price,
+            'valid_until': self.valid_until,
+        })
+
+    def get_post_form(self, request, asset):
+        from asset.forms import AddSoftwareForm
+        return AddSoftwareForm(request, instance=asset)
+
+
+class License(models.Model):
+    software = models.ForeignKey('asset.Software', on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+    license = models.TextField(null=True, blank=True)
+    license_amount = models.PositiveIntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'License'
+        verbose_name_plural = 'License'
         ordering = ['-created_at']
 
     def get_edit_form(self):
@@ -49,6 +72,7 @@ class Software(Asset):
 
 
 class Hardware(Asset):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     model = models.CharField(max_length=200, null=True, blank=True)
     serial = models.CharField(max_length=200, null=True, blank=True)
     cpu = models.CharField(max_length=200, null=True, blank=True)

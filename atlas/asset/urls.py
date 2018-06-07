@@ -10,6 +10,7 @@ urlpatterns = [
     path('<int:id>/delete', asset_views.delete),
     path('hardware/', asset_views.hardware),
     path('software/', asset_views.software),
+    path('software/license/add', asset_views.addLicense),
     path('<str:asset>/add/', asset_views.add),
     path('request/', asset_views.request),
 ]
