@@ -9,19 +9,19 @@ from info.models import Update
 from atlas.decorators import user, administrator
 from atlas.helpers import CreateNotification
 from .models import Asset, Hardware, Software, Qrcode, License
-from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
+from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm, AddLicenseForm
 
 
 @administrator
 @login_required
 def index(request):
-    assets = Asset.objects.all().order_by('id')
+    assets = Asset.objects.all().select_subclasses().order_by('id')
 
     context = {
         'assets': assets,
     }
 
-    return render(request, 'asset/assets.html', context)
+    return render(request, 'asset/list.html', context)
 
 
 @administrator
@@ -123,14 +123,9 @@ def delete(request, id):
 
 
 @login_required
-def detail(request, id):
-    try:
-        asset = Asset.objects.get_subclass(id=id)
-    except ObjectDoesNotExist:
-        raise Http404('Object does not exist')
-
+def hardwareDetail(request, id):
+    asset = get_object_or_404(Hardware, id=id)
     updates = Update.objects.filter(asset=id).order_by('-id')
-    licenses = License.objects.filter(software=id).order_by('created_at')
 
     try:
         qr_code = Qrcode.objects.get(asset=id)
@@ -141,15 +136,25 @@ def detail(request, id):
         qr_code = qr_code.get_qr_code_url(request.get_host())
 
     context = {
-        'asset_type': asset.get_class_name().lower().replace('asset.', ''),
-        'extend': "asset/detail.html",
         'asset': asset,
         'updates': updates,
-        'licenses': licenses,
         'qr_code': qr_code,
     }
 
-    return render(request, asset.get_class_name().lower().replace('.', '/') + '/info.html', context)
+    return render(request, 'asset/hardware/detail.html', context)
+
+
+@login_required
+def softwareDetail(request, id):
+    asset = get_object_or_404(Software, id=id)
+    licenses = License.objects.filter(software=id).order_by('created_at')
+
+    context = {
+        'asset': asset,
+        'licenses': licenses,
+    }
+
+    return render(request, 'asset/software/detail.html', context)
 
 
 @administrator
@@ -168,28 +173,26 @@ def search(request):
 
 @administrator
 @login_required
-def hardware(request):
+def hardwareList(request):
     assets = Hardware.objects.all()
 
     context = {
         'assets': assets,
-        'filter': 'hardware',
     }
 
-    return render(request, 'asset/assets.html', context)
+    return render(request, 'asset/hardware/list.html', context)
 
 
 @administrator
 @login_required
-def software(request):
+def softwareList(request):
     assets = Software.objects.all()
 
     context = {
         'assets': assets,
-        'filter': 'software',
     }
 
-    return render(request, 'asset/assets.html', context)
+    return render(request, 'asset/software/list.html', context)
 
 
 @login_required
@@ -273,23 +276,21 @@ def request(request):
 
 @administrator
 @login_required
-def addLicense(request):
+def addLicense(request, id):
     if request.method == 'POST':
         form = AddLicenseForm(request.POST)
         if form.is_valid():
-            license = form.save(commit=False)
-            license.save()
+            software = get_object_or_404(Software, id=id)
 
-            if form.cleaned_data['asset']:
-                asset_id = form.cleaned_data['asset'].id
-            else:
-                asset_id = None
+            license = form.save(commit=False)
+            license.software = software
+            license.save()
 
             notification = CreateNotification(
                 'License added',
                 'info',
                 request,
-                asset=asset_id)
+                asset=software.id)
             notification.create()
 
             next = request.POST.get('next', '/')
@@ -298,10 +299,7 @@ def addLicense(request):
             else:
                 return redirect('asset-list')
     else:
-        if request.GET.get('asset'):
-            form = AddLicenseForm(initial={'asset': request.GET.get('asset')})
-        else:
-            form = AddLicenseForm()
+        form = AddLicenseForm()
 
         context = {
             'form': form,

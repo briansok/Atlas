@@ -35,13 +35,14 @@
                 </tr>
             </thead>
             <tbody>
+                {% load model_type %}
                 {% for asset in assets %}
                     <tr>
                         <td>
-                           {{ asset.id  }} 
+                            {{ asset.id  }}
                         </td>
                         <td>
-                            <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
+                            <a class="table-link" href="/assets/{% model_type asset %}/{{ asset.id }}">{{ asset.title }}</a>
                         </td>
                         <td>
                             {% if asset.user %}
@@ -80,13 +81,4 @@
         <h3>{% trans "No assets" %}</h3>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block modal %}
-	<div class="reveal" id="addAsset" data-reveal>
-		<h3>Add asset</h3>
-		<button class="close-button" data-close aria-label="Close modal" type="button">
-		<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
 {% endblock %}

@@ -19,8 +19,8 @@
             <a href="/assets/{{ asset.id }}/edit" class="button">
                 {% trans "Edit" %}
             </a>
-            <a href="/info/updates/add?asset={{ asset.id }}" class="button">
-                {% trans "Add update" %}
+            <a href="/assets/software/{{ asset.id }}/add-license" class="button">
+                {% trans "Add License" %}
             </a>
         </div>
     </header>
@@ -68,12 +68,6 @@
                         </tbody>
                     </table>
                 </div>
-                {% if asset_type == 'hardware'%}
-                    <div class="wrapper">
-                        {% block asset_info %}
-                        {% endblock %}
-                    </div>
-                {% endif %}
             </div>
         </div>
         {% if qr_code %}
@@ -84,9 +78,39 @@
             </div>
         {% endif %}
     </div>
-    {% if asset_type == 'hardware' %}
-        {% include "commons/updates.html" with updates=updates %}
-    {% elif asset_type == 'software' %}
-        {% include "commons/licenses.html" with licenses=licenses %}
+    {% if licenses %}
+        <div class="block middle">
+            <h3>{% trans "Licenses" %}</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>{% trans "License" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for license in licenses %}
+                    <tr>
+                        <td>
+                            {% if license.license %}
+                                {{ license.license }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if license.user %}
+                                {{ license.user.username }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if license.license_amount %}
+                                {{ license.license_amount }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 {% endblock %}

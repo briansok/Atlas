@@ -81,6 +81,7 @@ TEMPLATES = [
             ],
             'libraries':{
                 'include_anything': 'atlas.templatetags.include_anything',
+                'model_type': 'atlas.templatetags.model_type',
             }
         },
     },
@@ -132,7 +133,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'nl'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Amsterdam'
 

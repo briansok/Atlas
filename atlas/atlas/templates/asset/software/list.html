@@ -1,0 +1,76 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+	 <title>{% trans "Atlas - Assets" %}</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+<header class="block top">
+    <h3>{% trans "Actions" %}</h3>
+    <div class="action-buttons">
+        <a href="/assets/software/add" class="button">{% trans "Add software" %}</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="block middle">
+    {% if assets %}
+        <h3>{% trans "All software" %}</h3>
+        <table id="assets-table">
+            <thead>
+                <tr>
+                    <th width="2%">{% trans "Id" %}</th>
+                    <th width="20%">{% trans "Name" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th width="20%">{% trans "Expiration date" %}</th>
+                    <th width="5%">{% trans "Price" %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asset in assets %}
+                    <tr>
+                        <td>
+                            {{ asset.id  }}
+                        </td>
+                        <td>
+                            <a class="table-link" href="/assets/software/{{ asset.id }}">{{ asset.title }}</a>
+                        </td>
+                        <td>
+                            {% if asset.user %}
+                                {{ asset.user.username }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if asset.valid_until %}
+                                {{ asset.valid_until }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if asset.price %}
+                                €{{ asset.price }}
+                            {% endif %}
+                        </td>
+                        <td class="edit-buttons">
+                            <a href="/assets/{{ asset.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <form action="/assets/{{ asset.id }}/delete" method="post">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    <a href="/assets/{{ asset.id }}/delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>{% trans "No software" %}</h3>
+    {% endif %}
+</div>
+{% endblock %}
