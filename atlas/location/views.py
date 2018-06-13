@@ -119,7 +119,7 @@ def sections(request):
 @login_required
 def sectionDetail(request, id):
     section = get_object_or_404(Section, id=id)
-    assets = Asset.objects.filter(section=section.id)
+    assets = Asset.objects.filter(section=section.id).select_subclasses()
 
     context = {
         'section': section,

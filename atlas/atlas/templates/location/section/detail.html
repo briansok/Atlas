@@ -33,10 +33,11 @@
                 </tr>
                 </thead>
                 <tbody>
+                {% load model_type %}
                 {% for asset in assets %}
                     <tr>
                         <td>
-                            <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
+                            <a href="/assets/{% model_type asset %}/{{ asset.id  }}">{{ asset.title }}</a>
                         </td>
                         <td>
                             {% if asset.user %}
