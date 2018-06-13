@@ -41,30 +41,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% if asset.user %}
                         <tr>
                             <td>{% trans "User" %}</td>
                             <td>{{ asset.user.username }}</td>
                         </tr>
-                        {% endif %}
-                        {% if asset.section %}
-                        <tr>
-                            <td>{% trans "Section" %}</td>
-                            <td>{{ asset.section.title }}</td>
-                        </tr>
-                        {% endif %}
-                        {% if asset.price %}
                         <tr>
                             <td>{% trans "Price" %}</td>
-                            <td>€{{ asset.price }}</td>
+                            <td>
+                                {% if asset.price %}
+                                    €{{ asset.price }}
+                                {% endif %}
+                            </td>
                         </tr>
-                        {% endif %}
-                        {% if asset.valid_until %}
                         <tr>
                             <td>{% trans "Expiration date" %}</td>
-                            <td>{{ asset.valid_until }}</td>
+                            <td>
+                                {% if asset.valid_until %}
+                                    {{ asset.valid_until }}
+                                {% endif %}
+                            </td>
                         </tr>
-                        {% endif %}
                         </tbody>
                     </table>
                 </div>

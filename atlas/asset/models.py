@@ -28,6 +28,7 @@ class Software(Asset):
         verbose_name_plural = 'Software'
         ordering = ['-created_at']
 
+
     def get_edit_form(self):
         from asset.forms import AddSoftwareForm
         return AddSoftwareForm(initial={
@@ -86,6 +87,9 @@ class Hardware(Asset):
         verbose_name_plural = 'Hardware'
         ordering = ['-created_at']
 
+    def __str__(self):
+        return self.title
+
     def get_edit_form(self):
         from asset.forms import AddHardwareForm
         return AddHardwareForm(initial={
@@ -109,7 +113,7 @@ class Hardware(Asset):
 
 
 class Qrcode(models.Model):
-    asset = models.ForeignKey('asset.Asset', on_delete=models.CASCADE, null=True, blank=True)
+    asset = models.ForeignKey('asset.Hardware', on_delete=models.CASCADE, null=True, blank=True)
     uid = models.CharField(max_length=50, unique=True, null=True, blank=True, default=uuid.uuid4)
 
     def __str__(self):

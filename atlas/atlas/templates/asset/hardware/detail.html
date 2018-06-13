@@ -41,30 +41,34 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% if asset.user %}
                         <tr>
                             <td>{% trans "User" %}</td>
                             <td>{{ asset.user.username }}</td>
                         </tr>
-                        {% endif %}
-                        {% if asset.section %}
                         <tr>
                             <td>{% trans "Section" %}</td>
-                            <td>{{ asset.section.title }}</td>
+                            <td>
+                                {% if asset.section %}
+                                    {{ asset.section.title }}
+                                {% endif %}
+                            </td>
                         </tr>
-                        {% endif %}
-                        {% if asset.price %}
                         <tr>
                             <td>{% trans "Price" %}</td>
-                            <td>€{{ asset.price }}</td>
+                            <td>
+                                {% if asset.price %}
+                                    €{{ asset.price }}
+                                {% endif %}
+                            </td>
                         </tr>
-                        {% endif %}
-                        {% if asset.valid_until %}
                         <tr>
                             <td>{% trans "Expiration date" %}</td>
-                            <td>{{ asset.valid_until }}</td>
+                            <td>
+                                {% if asset.valid_until %}
+                                    {{ asset.valid_until }}
+                                {% endif %}
+                            </td>
                         </tr>
-                        {% endif %}
                         </tbody>
                     </table>
                 </div>
@@ -77,30 +81,38 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% if asset.model %}
                             <tr>
                                 <td>{% trans "Model" %}</td>
-                                <td>{{ asset.model }}</td>
+                                <td>
+                                    {% if asset.model %}
+                                        {{ asset.model }}
+                                    {% endif %}
+                                </td>
                             </tr>
-                        {% endif %}
-                        {% if asset.serial %}
                             <tr>
                                 <td>{% trans "Serial" %}</td>
-                                <td>{{ asset.serial }}</td>
+                                <td>
+                                    {% if asset.serial %}
+                                        {{ asset.serial }}
+                                    {% endif %}
+                                </td>
                             </tr>
-                        {% endif %}
-                        {% if asset.cpu %}
                             <tr>
                                 <td>{% trans "CPU" %}</td>
-                                <td>{{ asset.cpu }}</td>
+                                <td>
+                                    {% if asset.cpu %}
+                                        {{ asset.cpu }}
+                                    {% endif %}
+                                </td>
                             </tr>
-                        {% endif %}
-                        {% if asset.ram %}
                             <tr>
                                 <td>{% trans "Ram" %}</td>
-                                <td>{{ asset.ram }}</td>
+                                <td>
+                                    {% if asset.ram %}
+                                        {{ asset.ram }}
+                                    {% endif %}
+                                </td>
                             </tr>
-                        {% endif %}
                         {% if asset.hdd %}
                             <tr>
                                 <td>{% trans "HDD" %}</td>

@@ -19,7 +19,7 @@ def index(request):
     plan_form = SectionPlanForm()
     expired_assets = Asset.objects.filter(valid_until__lte=datetime.now()+timedelta(days=31)).order_by('valid_until')
     location = Location.objects.all().first()
-    requests = Request.objects.filter(user=request.user.id)
+    requests = Request.objects.all().order_by('created_at')
     template = 'core/admin/index.html'
 
     context = {
@@ -76,11 +76,17 @@ def search(request):
             for person in person_result:
                 results['person_assets'] = list(Asset.objects.filter(user=person.id).values('id', 'title'))
 
-        asset_q = {}
-        asset_q['title__icontains'] = q
-        asset_results = Asset.objects.filter(**asset_q).values('id', 'title')
-        if asset_results:
-            results['assets'] = list(asset_results)
+        software_q = {}
+        software_q['title__icontains'] = q
+        software_results = Software.objects.filter(**software_q).values('id', 'title')
+        if software_results:
+            results['software'] = list(software_results)
+
+        hardware_q = {}
+        hardware_q['title__icontains'] = q
+        hardware_results = Hardware.objects.filter(**hardware_q).values('id', 'title')
+        if hardware_results:
+            results['hardware'] = list(hardware_results)
 
         section_q = {}
         section_q['title__icontains'] = q

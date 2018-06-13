@@ -55,18 +55,26 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for asset in expired_assets %}
+                                        {% if expired_assets %}
+                                            {% for asset in expired_assets %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {% if asset.valid_until %}
+                                                            {{ asset.valid_until }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
                                             <tr>
                                                 <td>
-                                                    <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
-                                                </td>
-                                                <td>
-                                                    {% if asset.valid_until %}
-                                                        {{ asset.valid_until }}
-                                                    {% endif %}
+                                                   {% trans "None" %}
                                                 </td>
                                             </tr>
-                                        {% endfor %}
+                                        {% endif %}
                                         </tbody>
                                     </table>
                                 </div>
