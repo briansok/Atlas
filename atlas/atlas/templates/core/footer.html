@@ -8,6 +8,7 @@
 
 {% load static %}
 <script src="{% static "js/imports/jquery-3.3.1.min.js" %}"></script>
+<script src="{% static "js/imports/tablesort.min.js" %}"></script>
 <script src="{% static "js/imports/jquery-ui.min.js" %}"></script>
 <script src="{% static "foundation/js/foundation.min.js" %}"></script>
 <script src="{% static "js/dashboard.js" %}"></script>
@@ -17,6 +18,8 @@
     $('.datepicker').datepicker({
         dateFormat: 'dd-mm-yy'
     });
+
+    new Tablesort(document.getElementById('hardware-table'));
 </script>
 {% block javascript %}
 {% endblock %}

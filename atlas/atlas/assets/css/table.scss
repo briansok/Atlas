@@ -66,3 +66,11 @@ table {
 .table-attachment {
   float: right;
 }
+
+#sorttable_sortfwdind, #sorttable_sortrevind {
+  position: absolute;
+}
+
+.sortable th {
+  cursor: pointer;
+}

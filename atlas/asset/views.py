@@ -15,7 +15,7 @@ from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestFor
 @administrator
 @login_required
 def index(request):
-    assets = Asset.objects.all().select_subclasses().order_by('id')
+    assets = Asset.objects.all().select_subclasses().order_by('title')
 
     context = {
         'assets': assets,
@@ -125,7 +125,7 @@ def delete(request, id):
 @login_required
 def hardwareDetail(request, id):
     asset = get_object_or_404(Hardware, id=id)
-    updates = Update.objects.filter(asset=id).order_by('-id')
+    updates = Update.objects.filter(asset=id).order_by('date')
 
     try:
         qr_code = Qrcode.objects.get(asset=id)
@@ -174,7 +174,7 @@ def search(request):
 @administrator
 @login_required
 def hardwareList(request):
-    assets = Hardware.objects.all()
+    assets = Hardware.objects.all().order_by('title')
 
     context = {
         'assets': assets,
@@ -186,7 +186,7 @@ def hardwareList(request):
 @administrator
 @login_required
 def softwareList(request):
-    assets = Software.objects.all()
+    assets = Software.objects.all().order_by('title')
 
     context = {
         'assets': assets,
