@@ -51,8 +51,7 @@ function addSection(event, $x, $y) {
             data: $form.serialize(),
             success: function() {
                 $popup.css('display', 'none');
-
-								$('.messages').append('<li class="info">Success</li>');
+                $('.messages').append('<li class="info">Success</li>');
             }
         });
         return false;
@@ -60,7 +59,7 @@ function addSection(event, $x, $y) {
 }
 
 $el.mouseenter(function(){
-    $(this).css('fill', 'red');
+    $(this).css('fill', '#05d669');
     $(this).css('cursor', 'pointer');
 });
 
