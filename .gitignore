@@ -8,4 +8,6 @@ atlas/static/
 atlas/atlas/media/*
 CACHE/
 settings_local.py
+urls_local.py
 db.sqlite3
+requirements-local.txt

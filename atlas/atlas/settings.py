@@ -35,7 +35,8 @@ MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
 DATE_INPUT_FORMATS = ['%d-%m-%Y']
 
-LOGIN_URL = '/login'
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 
