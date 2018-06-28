@@ -83,6 +83,7 @@
                     <th>{% trans "License" %}</th>
                     <th>{% trans "User" %}</th>
                     <th>{% trans "Amount" %}</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -102,6 +103,22 @@
                             {% if license.license_amount %}
                                 {{ license.license_amount }}
                             {% endif %}
+                        </td>
+                        <td class="edit-buttons">
+                            <a href="/assets/license/{{ license.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a data-open="license-delete-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <div class="reveal" id="license-delete-modal" data-reveal>
+                                <h3>{% trans "Are you sure?" %}</h3>
+                                <p>{% trans "This will delete your license" %}</p>
+                                <form action="/assets/license/{{ license.id }}/delete" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="button" value="Yes">
+                                </form>
+                                <button data-close aria-label="Close reveal" class="button">No</button>
+                                <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

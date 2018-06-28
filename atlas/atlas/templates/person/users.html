@@ -37,6 +37,9 @@
             </td>
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
+            <td class="edit-buttons">
+                <a href="/users/{{ user.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+            </td>
         </tr>
         {% endfor %}
         </tbody>

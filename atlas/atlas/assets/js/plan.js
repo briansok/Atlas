@@ -10,11 +10,7 @@ $el.on('click', function(event){
         url: getRootUrl() + 'location/plan/?plan_x=' + $x + "&plan_y=" + $y,
         success: function(data){
             json = JSON.parse(data);
-            if (json[0]) {
-                redirectSection(json);
-            } else {
-               addSection(event, $x, $y)
-            }
+            openSection(event, json, $x, $y);
         },
         error: function(){
             console.log("Something went wrong");
@@ -33,13 +29,56 @@ function redirectSection(json) {
     }
 }
 
-function addSection(event, $x, $y) {
-    var $form = $('#plan-form');
-
+function openSection(event, json, $x, $y) {
+    console.log('open');
     $popup.css('left',event.pageX);
     $popup.css('top',event.pageY);
     $popup.css('display','inline');
     $popup.css("position", "absolute");
+
+    $.ajax({
+        type:"GET",
+        url: getRootUrl() + 'location/plan/get/',
+        data: {'x': $x, 'y': $y},
+        success: function(data) {
+            console.log(data);
+            if (data.x == 'none') {
+                addSection(event, $x, $y);
+            } else {
+                json = JSON.parse(data);
+                if (json[0].fields.plan_x > 0 && json[0].fields.plan_y > 0) {
+                    editSection(event, json, json[0].fields.plan_x, json[0].fields.plan_y);
+                }
+            }
+        }
+    });
+    return false;
+}
+
+function editSection(event, $x, $y) {
+    var $redirect = $('#plan-redirect');
+    $('#plan-edit-form').show();
+    $('#plan-add-form').hide();
+
+    $('#plan-delete').on('click', function(){
+        $.ajax({
+            type:"POST",
+            url: getRootUrl() + 'location/plan/delete/',
+            data: {'x': $x, 'y': $y},
+            success: function() {
+                console.log('luckt');
+            }
+        });
+        return false;
+    });
+    $redirect.on('click', function(){
+        redirectSection(json)
+    });
+}
+
+function addSection(event, $x, $y) {
+    $('#plan-add-form').show();
+    $('#plan-edit-form').hide();
 
     $('input[name="plan_x"]').val($x);
     $('input[name="plan_y"]').val($y);

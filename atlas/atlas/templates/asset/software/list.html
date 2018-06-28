@@ -58,12 +58,19 @@
                         </td>
                         <td class="edit-buttons">
                             <a href="/assets/{{ asset.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <form action="/assets/{{ asset.id }}/delete" method="post">
-                                {% csrf_token %}
-                                <button type="submit">
-                                    <a href="/assets/{{ asset.id }}/delete"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <a data-open="asset-delete-modal{{ asset.id }}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <div class="reveal" id="asset-delete-modal{{ asset.id }}" data-reveal>
+                                <h3>{% trans "Are you sure?" %}</h3>
+                                <p>{% trans "This will delete " %}{{ asset.title }}</p>
+                                <form action="/assets/{{ asset.id }}/delete" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="button" value="Yes">
+                                </form>
+                                <button data-close aria-label="Close reveal" class="button">No</button>
+                                <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
-                            </form>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}

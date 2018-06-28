@@ -35,13 +35,17 @@
                                             <span class="popup-close">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </span>
-                                            <form id="plan-form" action="/location/plan/set/" method="post">
+                                            <form id="plan-add-form" action="/location/plan/set/" method="post">
                                                 {% csrf_token %}
                                                 {{ plan_form }}
                                                 <input type="hidden" name="plan_x" value="">
                                                 <input type="hidden" name="plan_y" value="">
                                                 <input class="button" type="submit" value="Add" />
                                             </form>
+                                            <div id="plan-edit-form">
+                                                <button class="button" id="plan-redirect">Redirect</button>
+                                                <button class="button" id="plan-delete">Delete</button>
+                                            </div>
                                         </div>
                                     </div>
                                 {% endif %}

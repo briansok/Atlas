@@ -11,8 +11,6 @@ function getRootUrl() {
 $('#search-bar').on('keyup', function(){
 		var q = $(this).val();
 		var result_el = $('#search-results')
-
-
 		if (!q) {
 			result_el.hide();	
 		} else {

@@ -28,7 +28,6 @@ class Software(Asset):
         verbose_name_plural = 'Software'
         ordering = ['-created_at']
 
-
     def get_edit_form(self):
         from asset.forms import AddSoftwareForm
         return AddSoftwareForm(initial={
@@ -56,20 +55,16 @@ class License(models.Model):
         ordering = ['-created_at']
 
     def get_edit_form(self):
-        from asset.forms import AddSoftwareForm
-        return AddSoftwareForm(initial={
-            'title': self.title,
+        from asset.forms import AddLicenseForm
+        return AddLicenseForm(initial={
             'user': self.user,
-            'section': self.section,
-            'price': self.price,
-            'valid_until': self.valid_until,
             'license': self.license,
             'license_amount': self.license_amount,
         })
 
-    def get_post_form(self, request, asset):
-        from asset.forms import AddSoftwareForm
-        return AddSoftwareForm(request, instance=asset)
+    def get_post_form(self, request, license):
+        from asset.forms import AddLicenseForm
+        return AddLicenseForm(request, instance=license)
 
 
 class Hardware(Asset):

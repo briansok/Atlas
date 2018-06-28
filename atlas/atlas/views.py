@@ -3,7 +3,7 @@ from django.core import serializers
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import JsonResponse
-from asset.models import Asset, Software, Hardware, Request
+from asset.models import Asset, Software, Hardware, Request, License
 from location.models import Location, Section
 from location.forms import SectionPlanForm
 from person.models import Person
@@ -42,13 +42,13 @@ def panel(request):
     try:
         users = Person.objects.filter(category=request.user.category)
         user_ids = [user.id for user in users]
-        recommended_software = Software.objects.filter(user__id__in=user_ids)
+        recommended_software = License.objects.filter(user__id__in=user_ids)
 
         for item in recommended_software:
-            if item.title not in distinct_software_title:
-                distinct_software_title.append(item.title)
-                distinct_software.append(item)
-                print(distinct_software)
+            obj = Software.objects.get(id=item.id)
+            if obj.title not in distinct_software_title:
+                distinct_software_title.append(obj.title)
+                distinct_software.append(obj)
 
         requests = Request.objects.filter(user=request.user.id)
     except ObjectDoesNotExist:

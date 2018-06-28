@@ -81,6 +81,10 @@
     flex: 1;
     margin-right: 0;
   }
+
+  #plan-add-form, #plan-edit-form {
+    display: none;
+  }
 }
 
 #plan-popup {
@@ -120,5 +124,10 @@
             }
         }
     }
+}
 
+.reveal {
+  form {
+    display: inline-block;
+  }
 }

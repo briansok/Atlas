@@ -1,6 +1,6 @@
 import math
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -116,14 +116,14 @@ def edit(request, id):
 @administrator
 @login_required
 def delete(request, id):
+    asset = get_object_or_404(Asset, id=id)
     if request.method == 'POST':
-        asset = get_object_or_404(Asset, id=id)
         asset.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect('asset-list')
 
 
 @login_required
-def hardwareDetail(request, id):
+def hardware_detail(request, id):
     asset = get_object_or_404(Hardware, id=id)
     updates = Update.objects.filter(asset=id).order_by('date')
 
@@ -145,7 +145,7 @@ def hardwareDetail(request, id):
 
 
 @login_required
-def softwareDetail(request, id):
+def software_detail(request, id):
     asset = get_object_or_404(Software, id=id)
     licenses = License.objects.filter(software=id).order_by('created_at')
 
@@ -173,7 +173,7 @@ def search(request):
 
 @administrator
 @login_required
-def hardwareList(request):
+def hardware_list(request):
     assets = Hardware.objects.all().order_by('title')
 
     context = {
@@ -185,7 +185,7 @@ def hardwareList(request):
 
 @administrator
 @login_required
-def softwareList(request):
+def software_list(request):
     assets = Software.objects.all().order_by('title')
 
     context = {
@@ -276,7 +276,7 @@ def request(request):
 
 @administrator
 @login_required
-def addLicense(request, id):
+def add_license(request, id):
     if request.method == 'POST':
         form = AddLicenseForm(request.POST)
         if form.is_valid():
@@ -306,3 +306,41 @@ def addLicense(request, id):
         }
 
         return render(request, 'asset/license/add.html', context)
+
+
+@administrator
+@login_required
+def edit_license(request, id):
+    license = get_object_or_404(License, id=id)
+    if request.method == 'POST':
+        form = license.get_post_form(request.POST, license)
+        if form.is_valid():
+            form.save()
+            notification = CreateNotification(
+                _('License edited'),
+                'info',
+                request)
+            notification.create()
+            next = request.POST.get('next', '/')
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('software-detail')
+    else:
+        form = license.get_edit_form()
+
+    context = {
+        'form': form,
+        'form_half': math.ceil((len(form.fields)/2)),
+    }
+
+    return render(request, 'asset/software/license_edit_form.html', context)
+
+
+@administrator
+@login_required
+def delete_license(request, id):
+    license = get_object_or_404(License, id=id)
+    if request.method == 'POST':
+        license.delete()
+    return redirect('software-detail', id=license.software.id)
