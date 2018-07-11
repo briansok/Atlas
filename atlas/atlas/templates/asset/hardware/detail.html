@@ -107,34 +107,30 @@
                                     {% endif %}
                                 </td>
                             </tr>
-                            <tr>
-                                <td>{% trans "CPU" %}</td>
-                                <td>
-                                    {% if asset.cpu %}
-                                        {{ asset.cpu }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{% trans "Ram" %}</td>
-                                <td>
-                                    {% if asset.ram %}
-                                        {{ asset.ram }}
-                                    {% endif %}
-                                </td>
-                            </tr>
-                        {% if asset.hdd %}
-                            <tr>
-                                <td>{% trans "HDD" %}</td>
-                                <td>{{ asset.hdd }}</td>
-                            </tr>
-                        {% endif %}
-                        {% if asset.ssd %}
-                            <tr>
-                                <td>{% trans "SSD" %}</td>
-                                <td>{{ asset.ssd }}</td>
-                            </tr>
-                        {% endif %}
+                            {% if asset.cpu %}
+                                <tr>
+                                    <td>{% trans "CPU" %}</td>
+                                    <td>{{ asset.cpu }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if asset.ram %}
+                                <tr>
+                                    <td>{% trans "Ram" %}</td>
+                                    <td>{{ asset.ram }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if asset.hdd %}
+                                <tr>
+                                    <td>{% trans "HDD" %}</td>
+                                    <td>{{ asset.hdd }}</td>
+                                </tr>
+                            {% endif %}
+                            {% if asset.ssd %}
+                                <tr>
+                                    <td>{% trans "SSD" %}</td>
+                                    <td>{{ asset.ssd }}</td>
+                                </tr>
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>
