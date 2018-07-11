@@ -89,8 +89,8 @@ def get_plan_section(request):
 @login_required
 def delete_plan_section(request):
     if request.method == "POST":
-        x = request.POST['x']
-        y = request.POST['y']
+        x = request.POST['plan_x']
+        y = request.POST['plan_y']
         if x and y:
             try:
                 section = Section.objects.get(plan_x=x, plan_y=y)
@@ -100,7 +100,7 @@ def delete_plan_section(request):
                 return JsonResponse({'saved': True}, safe=False)
             except ObjectDoesNotExist:
                 return JsonResponse({'saved': False}, safe=False)
-
+    return redirect('home')
 
 @administrator
 @login_required

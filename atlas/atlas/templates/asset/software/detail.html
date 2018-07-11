@@ -13,9 +13,19 @@
     <header class="block top">
         <h3>Actions</h3>
         <div class="action-buttons">
-            <a href="/assets/{{ asset.id }}/delete" class="button">
-                {% trans "Remove" %}
-            </a>
+            <a data-open="asset-delete-modal{{ asset.id }}" class="button">{% trans "Delete" %}</a>
+            <div class="reveal" id="asset-delete-modal{{ asset.id }}" data-reveal>
+                <h3>{% trans "Are you sure?" %}</h3>
+                <p>{% trans "This will delete " %}{{ asset.title }}</p>
+                <form action="/assets/{{ asset.id }}/delete" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="button" value="Yes">
+                </form>
+                <button data-close aria-label="Close reveal" class="button">No</button>
+                <button class="close-button" data-close aria-label="Close reveal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             <a href="/assets/{{ asset.id }}/edit" class="button">
                 {% trans "Edit" %}
             </a>

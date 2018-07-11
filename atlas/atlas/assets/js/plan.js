@@ -36,6 +36,10 @@ function openSection(event, json, $x, $y) {
     $popup.css('display','inline');
     $popup.css("position", "absolute");
 
+    $('input[name="plan_x"]').val($x);
+    $('input[name="plan_y"]').val($y);
+
+
     $.ajax({
         type:"GET",
         url: getRootUrl() + 'location/plan/get/',
@@ -55,18 +59,22 @@ function openSection(event, json, $x, $y) {
     return false;
 }
 
-function editSection(event, $x, $y) {
+function editSection(event, json, $x, $y) {
     var $redirect = $('#plan-redirect');
-    $('#plan-edit-form').show();
     $('#plan-add-form').hide();
+    $('#plan-edit-form').show();
+    $('#plan-edit-form .form-title').html(json[0].fields.title);
 
-    $('#plan-delete').on('click', function(){
+    $('#plan-delete').on('click', function(e){
+        e.preventDefault();
         $.ajax({
             type:"POST",
             url: getRootUrl() + 'location/plan/delete/',
-            data: {'x': $x, 'y': $y},
+            data: $('#plan-edit-form').serialize(),
             success: function() {
-                console.log('luckt');
+                $popup.css('display', 'none');
+                $('.messages').append('<li class="info">Deleted</li>');
+                $('#plan-delete').off();
             }
         });
         return false;
@@ -77,20 +85,19 @@ function editSection(event, $x, $y) {
 }
 
 function addSection(event, $x, $y) {
-    $('#plan-add-form').show();
     $('#plan-edit-form').hide();
+    $('#plan-add-form').show();
 
-    $('input[name="plan_x"]').val($x);
-    $('input[name="plan_y"]').val($y);
-
-    $form.submit(function(){
+    $('#plan-add').on('click', function(e){
+        e.preventDefault();
         $.ajax({
             type:"POST",
             url: getRootUrl() + 'location/plan/set/',
-            data: $form.serialize(),
+            data: $('#plan-add-form').serialize(),
             success: function() {
                 $popup.css('display', 'none');
                 $('.messages').append('<li class="info">Success</li>');
+                $('#plan-add').off();
             }
         });
         return false;
