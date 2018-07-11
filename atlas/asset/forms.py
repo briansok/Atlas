@@ -48,6 +48,13 @@ class AddToQrcodeForm(forms.ModelForm):
             'asset',
         ]
 
+    def __init__(self, *args, **kwargs):
+        super(AddToQrcodeForm, self).__init__(*args, **kwargs)
+        free_hardware_ids = []
+        for qr_code in Qrcode.objects.exclude(asset=None):
+            free_hardware_ids.append(qr_code.asset.id)
+        self.fields['asset'].queryset = Hardware.objects.exclude(id__in=free_hardware_ids)
+
     def clean_asset(self):
         asset = self.cleaned_data['asset']
         if Qrcode.objects.filter(asset=asset.id).exists():

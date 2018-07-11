@@ -4,11 +4,12 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import gettext as _
 from info.models import Update
 from atlas.decorators import user, administrator
 from atlas.helpers import CreateNotification
-from .models import Asset, Hardware, Software, Qrcode, License
+from .models import Asset, Hardware, Software, Qrcode, License, Request
 from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm, AddLicenseForm
 
 
@@ -265,13 +266,53 @@ def request(request):
             else:
                 return redirect('home')
     else:
-        form = RequestForm()
+        try:
+            form = RequestForm(initial={'title': request.GET['title']})
+        except MultiValueDictKeyError:
+            form = RequestForm()
+
 
     context = {
         'form': form,
     }
 
     return render(request, 'asset/request.html', context)
+
+
+@login_required
+def edit_request(request, id):
+    req = get_object_or_404(Request, id=id)
+    if request.method == 'POST':
+        form = RequestForm(request.POST, instance=req)
+        if form.is_valid():
+            form.save()
+            notification = CreateNotification(
+                _('Request edited'),
+                'info',
+                request)
+            notification.create()
+            next = request.POST.get('next', '/')
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('home')
+    else:
+        form = req.get_edit_form()
+
+    context = {
+        'form': form,
+        'form_half': math.ceil((len(form.fields)/2)),
+    }
+
+    return render(request, 'asset/request/request_edit_form.html', context)
+
+
+@login_required
+def delete_request(request, id):
+    req = get_object_or_404(Request, id=id)
+    if request.method == 'POST':
+        req.delete()
+    return redirect('home')
 
 
 @administrator
