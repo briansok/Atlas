@@ -159,7 +159,7 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/data/projects/Atlas/atlas/static/'
+STATIC_ROOT = ''
 
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'atlas/assets'),
