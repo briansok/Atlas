@@ -1,6 +1,7 @@
 *.pyc
 *.pot
 *.log
+*.ini
 __pycache__/
 .idea/
 env/
