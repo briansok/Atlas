@@ -13,7 +13,7 @@
             <div class="wrapper">
                 {% block content-top %}
                     <header class="block top">
-                        <h3>Hello, {{ request.user.username }}</h3>
+                        <h3>{% trans "Welcome" %} {{ request.user.username }}</h3>
                         <a href="/assets/request" class="button">{% trans "Make a request" %}</a>
                     </header>
                 {% endblock %}
@@ -34,7 +34,7 @@
                                         {{ software.title }}
                                     </td>
                                     <td>
-                                        <a class="table-link" href="/assets/request">
+                                        <a class="table-link" href="/assets/request?title={{ software.title }}">
                                             <i class="fa fa-share" aria-hidden="true"></i>
                                         </a>
                                     </td>
@@ -43,18 +43,19 @@
                                 </tbody>
                             </table>
                     </div>
-                    {% if requests %}
-                        <div class="block middle">
-                            <h3>{% trans "My requests" %}</h3>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>{% trans "Title" %}</th>
-                                    <th width="50%">{% trans "Description" %}</th>
-                                    <th>{% trans "Status" %}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+                    <div class="block middle">
+                        <h3>{% trans "My requests" %}</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>{% trans "Title" %}</th>
+                                <th width="50%">{% trans "Description" %}</th>
+                                <th>{% trans "Status" %}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if requests %}
                                 {% for request in requests %}
                                     <tr>
                                         <td>
@@ -72,12 +73,34 @@
                                                 {{ request.status }}
                                             {% endif %}
                                         </td>
+                                        <td class="edit-buttons">
+                                            <a href="/assets/request/{{ request.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a data-open="request-delete-modal{{ request.id }}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                            <div class="reveal" id="request-delete-modal{{ request.id }}" data-reveal>
+                                                <h3>{% trans "Are you sure?" %}</h3>
+                                                <p>{% trans "This will delete your request: " %}{{ request.title }}</p>
+                                                <form action="/assets/request/{{ request.id }}/delete" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="submit" class="button" value="Yes">
+                                                </form>
+                                                <button data-close aria-label="Close reveal" class="button">No</button>
+                                                <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    {% endif %}
+                            {% else %}
+                                <tr>
+                                    <td>
+                                        {% trans "No requests" %}
+                                    </td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
                 {% endblock %}
             </div>
             {% block modal %}

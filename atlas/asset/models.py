@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 import uuid
-
 from model_utils.managers import InheritanceManager
 
 
@@ -83,7 +82,10 @@ class Hardware(Asset):
         ordering = ['-created_at']
 
     def __str__(self):
-        return self.title
+        if self.user:
+            return self.title + ' ' + self.user.username
+        else:
+            return self.title
 
     def get_edit_form(self):
         from asset.forms import AddHardwareForm
@@ -133,3 +135,11 @@ class Request(models.Model):
         verbose_name = 'Request'
         verbose_name_plural = 'Requests'
         ordering = ['-created_at']
+
+    def get_edit_form(self):
+        from asset.forms import RequestForm
+        return RequestForm(initial={
+            'title': self.title,
+            'description': self.description,
+            'status': self.status,
+        })

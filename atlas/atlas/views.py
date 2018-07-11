@@ -45,10 +45,9 @@ def panel(request):
         recommended_software = License.objects.filter(user__id__in=user_ids)
 
         for item in recommended_software:
-            obj = Software.objects.get(id=item.id)
-            if obj.title not in distinct_software_title:
-                distinct_software_title.append(obj.title)
-                distinct_software.append(obj)
+            if item.software.title not in distinct_software_title:
+                distinct_software_title.append(item.software.title)
+                distinct_software.append(item.software)
 
         requests = Request.objects.filter(user=request.user.id)
     except ObjectDoesNotExist:

@@ -19,5 +19,8 @@ urlpatterns = [
     path('license/<int:id>/delete', asset_views.delete_license, name="delete-license"),
 
     path('<str:asset>/add/', asset_views.add),
+
     path('request/', asset_views.request),
+    path('request/<int:id>/edit', asset_views.edit_request),
+    path('request/<int:id>/delete', asset_views.delete_request),
 ]
