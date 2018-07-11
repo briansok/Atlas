@@ -2,10 +2,6 @@ from django import forms
 from .models import Update
 
 
-class DateInput(forms.DateInput):
-    input_type = 'date'
-
-
 class AddUpdateForm(forms.ModelForm):
     class Meta:
         model = Update
@@ -17,5 +13,5 @@ class AddUpdateForm(forms.ModelForm):
             'attachment',
         ]
         widgets = {
-            'date': DateInput(),
+            'date': forms.DateInput(attrs={'class': 'datepicker'}),
         }

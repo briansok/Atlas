@@ -33,7 +33,10 @@ AUTH_USER_MODEL = 'person.Person'
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
-LOGIN_URL = '/login'
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 
@@ -81,6 +84,7 @@ TEMPLATES = [
             ],
             'libraries':{
                 'include_anything': 'atlas.templatetags.include_anything',
+                'model_type': 'atlas.templatetags.model_type',
             }
         },
     },
@@ -132,13 +136,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'nl'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Amsterdam'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 

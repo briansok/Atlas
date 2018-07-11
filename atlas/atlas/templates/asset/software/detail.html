@@ -1,0 +1,139 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+	 <title>Atlas - Assets</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+{% if request.user.role == 'admin' %}
+    <header class="block top">
+        <h3>Actions</h3>
+        <div class="action-buttons">
+            <a data-open="asset-delete-modal{{ asset.id }}" class="button">{% trans "Delete" %}</a>
+            <div class="reveal" id="asset-delete-modal{{ asset.id }}" data-reveal>
+                <h3>{% trans "Are you sure?" %}</h3>
+                <p>{% trans "This will delete " %}{{ asset.title }}</p>
+                <form action="/assets/{{ asset.id }}/delete" method="post">
+                    {% csrf_token %}
+                    <input type="submit" class="button" value="Yes">
+                </form>
+                <button data-close aria-label="Close reveal" class="button">No</button>
+                <button class="close-button" data-close aria-label="Close reveal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <a href="/assets/{{ asset.id }}/edit" class="button">
+                {% trans "Edit" %}
+            </a>
+            <a href="/assets/software/{{ asset.id }}/add-license" class="button">
+                {% trans "Add License" %}
+            </a>
+        </div>
+    </header>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="double">
+        <div class="block middle">
+            <h3>{{ asset.title }}</h3>
+            <div class="asset-table-wrapper">
+                <div class="wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>{% trans "Details" %}</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{% trans "User" %}</td>
+                            <td>{{ asset.user.username }}</td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Price" %}</td>
+                            <td>
+                                {% if asset.price %}
+                                    €{{ asset.price }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Expiration date" %}</td>
+                            <td>
+                                {% if asset.valid_until %}
+                                    {{ asset.valid_until }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% if qr_code %}
+            <div class="block right qr">
+                <h3>QR-Code</h3>
+                {% load qr_code %}
+                {% qr_from_text qr_code size="l" border=0 %}
+            </div>
+        {% endif %}
+    </div>
+    {% if licenses %}
+        <div class="block middle">
+            <h3>{% trans "Licenses" %}</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>{% trans "License" %}</th>
+                    <th>{% trans "User" %}</th>
+                    <th>{% trans "Amount" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for license in licenses %}
+                    <tr>
+                        <td>
+                            {% if license.license %}
+                                {{ license.license }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if license.user %}
+                                {{ license.user.username }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if license.license_amount %}
+                                {{ license.license_amount }}
+                            {% endif %}
+                        </td>
+                        <td class="edit-buttons">
+                            <a href="/assets/license/{{ license.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a data-open="license-delete-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            <div class="reveal" id="license-delete-modal" data-reveal>
+                                <h3>{% trans "Are you sure?" %}</h3>
+                                <p>{% trans "This will delete your license" %}</p>
+                                <form action="/assets/license/{{ license.id }}/delete" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" class="button" value="Yes">
+                                </form>
+                                <button data-close aria-label="Close reveal" class="button">No</button>
+                                <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

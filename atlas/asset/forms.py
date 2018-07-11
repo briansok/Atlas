@@ -1,13 +1,7 @@
-import datetime
 from django import forms
-from django.forms import SelectDateWidget
-from .models import Hardware, Software, Qrcode, Request
+from .models import Hardware, Software, Qrcode, Request, License
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
-
-
-class DateInput(forms.DateInput):
-    input_type = 'date'
 
 
 class AddHardwareForm(forms.ModelForm):
@@ -28,8 +22,8 @@ class AddHardwareForm(forms.ModelForm):
             'bought_at',
         ]
         widgets = {
-            'valid_until': DateInput(),
-            'bought_at': DateInput(),
+            'valid_until': forms.DateInput(attrs={'class': 'datepicker'}),
+            'bought_at': forms.DateInput(attrs={'class': 'datepicker'}),
         }
 
 
@@ -38,15 +32,12 @@ class AddSoftwareForm(forms.ModelForm):
         model = Software
         fields = [
             'title',
-            'user',
             'section',
             'price',
             'valid_until',
-            'license',
-            'license_amount',
         ]
         widgets = {
-            'valid_until': DateInput(),
+            'valid_until': forms.DateInput(attrs={'class': 'datepicker'}),
         }
 
 
@@ -70,4 +61,14 @@ class RequestForm(forms.ModelForm):
         fields = [
             'title',
             'description',
+        ]
+
+
+class AddLicenseForm(forms.ModelForm):
+    class Meta:
+        model = License
+        fields = [
+            'user',
+            'license',
+            'license_amount',
         ]

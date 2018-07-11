@@ -1,11 +1,19 @@
 from django.contrib import admin
-from .models import Software, Hardware, Qrcode, Request
+from .models import Software, Hardware, Qrcode, Request, License
 
 class EntrySoftware(admin.ModelAdmin):
     list_display = (
         'title',
         'valid_until',
         'created_at',
+    )
+    save_as = True
+
+class EntryLicense(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'license',
+        'license_amount',
     )
     save_as = True
 
@@ -31,6 +39,7 @@ class EntryRequest(admin.ModelAdmin):
     )
 
 admin.site.register(Software, EntrySoftware)
+admin.site.register(License, EntryLicense)
 admin.site.register(Hardware, EntryHardware)
 admin.site.register(Qrcode, EntryQrcode)
 admin.site.register(Request, EntryRequest)

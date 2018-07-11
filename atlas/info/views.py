@@ -9,8 +9,8 @@ from .forms import AddUpdateForm
 @administrator
 @login_required
 def index(request):
-    notifications = Notification.objects.all()[:10]
-    updates = Update.objects.all()[:10]
+    notifications = Notification.objects.all().order_by('-created_at')[:10]
+    updates = Update.objects.all().order_by('-date')[:10]
 
     context = {
         'notifications': notifications,

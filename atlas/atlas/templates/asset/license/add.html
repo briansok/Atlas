@@ -1,0 +1,24 @@
+{% extends 'core/admin/index.html' %}
+{% load i18n %}
+
+{% block metatitle %}
+    <title>Atlas - Add license</title>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block content-top %}
+{% endblock %}
+
+{% block content %}
+    <div class="block middle">
+        <h3>{% trans "Add license" %}</h3>
+        <form action="{{ request.path }}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
+            <input class="button" type="submit" value="Add" />
+        </form>
+    </div>
+{% endblock %}
