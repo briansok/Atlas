@@ -6,11 +6,11 @@ from django.core import serializers
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import gettext as _
 from asset.models import Asset
-from info.models import Notification
 from atlas.helpers import CreateNotification
 from .models import Section, Location
 from .forms import AddSectionForm, EditLocationForm, SectionPlanForm, AddLocationForm
 import math
+import json
 
 @administrator
 @login_required
@@ -49,7 +49,7 @@ def plan(request):
 
 @administrator
 @login_required
-def setPlanSection(request):
+def set_plan_section(request):
     if request.method == 'POST':
         if request.is_ajax():
             section = get_object_or_404(Section, id=request.POST['section'])
@@ -72,7 +72,39 @@ def setPlanSection(request):
 
 @administrator
 @login_required
-def editLocation(request, id):
+def get_plan_section(request):
+    x = request.GET['x']
+    y = request.GET['y']
+    if request.is_ajax():
+        if x and y:
+            try:
+                section = Section.objects.get(plan_x=x, plan_y=y)
+                json = serializers.serialize('json', [section])
+                return JsonResponse(json, safe=False)
+            except ObjectDoesNotExist:
+                return JsonResponse({'x': 'none'}, safe=False)
+
+
+@administrator
+@login_required
+def delete_plan_section(request):
+    if request.method == "POST":
+        x = request.POST['plan_x']
+        y = request.POST['plan_y']
+        if x and y:
+            try:
+                section = Section.objects.get(plan_x=x, plan_y=y)
+                section.plan_x = 0
+                section.plan_y = 0
+                section.save()
+                return JsonResponse({'saved': True}, safe=False)
+            except ObjectDoesNotExist:
+                return JsonResponse({'saved': False}, safe=False)
+    return redirect('home')
+
+@administrator
+@login_required
+def edit_location(request, id):
     location = get_object_or_404(Location, id=id)
 
     if request.method == 'POST':
@@ -103,6 +135,7 @@ def editLocation(request, id):
 
     return render(request, 'location/location/edit.html', context)
 
+
 @administrator
 @login_required
 def sections(request):
@@ -117,9 +150,9 @@ def sections(request):
 
 @administrator
 @login_required
-def sectionDetail(request, id):
+def section_detail(request, id):
     section = get_object_or_404(Section, id=id)
-    assets = Asset.objects.filter(section=section.id)
+    assets = Asset.objects.filter(section=section.id).select_subclasses()
 
     context = {
         'section': section,
@@ -131,7 +164,7 @@ def sectionDetail(request, id):
 
 @administrator
 @login_required
-def addSection(request):
+def add_section(request):
     if request.method == 'POST':
         form = AddSectionForm(request.POST)
         if form.is_valid():
@@ -164,7 +197,7 @@ def addSection(request):
 
 @administrator
 @login_required
-def addLocation(request):
+def add_location(request):
     if request.method == 'POST':
         form = AddLocationForm(request.POST, request.FILES)
         if form.is_valid():

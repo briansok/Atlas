@@ -1,6 +1,6 @@
 import math
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
@@ -8,20 +8,20 @@ from django.utils.translation import gettext as _
 from info.models import Update
 from atlas.decorators import user, administrator
 from atlas.helpers import CreateNotification
-from .models import Asset, Hardware, Software, Qrcode
-from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm
+from .models import Asset, Hardware, Software, Qrcode, License
+from .forms import AddHardwareForm, AddSoftwareForm, AddToQrcodeForm, RequestForm, AddLicenseForm
 
 
 @administrator
 @login_required
 def index(request):
-    assets = Asset.objects.all()
+    assets = Asset.objects.all().select_subclasses().order_by('title')
 
     context = {
         'assets': assets,
     }
 
-    return render(request, 'asset/assets.html', context)
+    return render(request, 'asset/list.html', context)
 
 
 @administrator
@@ -116,20 +116,16 @@ def edit(request, id):
 @administrator
 @login_required
 def delete(request, id):
+    asset = get_object_or_404(Asset, id=id)
     if request.method == 'POST':
-        asset = get_object_or_404(Asset, id=id)
         asset.delete()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return redirect('asset-list')
 
 
 @login_required
-def detail(request, id):
-    try:
-        asset = Asset.objects.get_subclass(id=id)
-    except ObjectDoesNotExist:
-        raise Http404('Object does not exist')
-
-    updates = Update.objects.filter(asset=id).order_by('-id')
+def hardware_detail(request, id):
+    asset = get_object_or_404(Hardware, id=id)
+    updates = Update.objects.filter(asset=id).order_by('date')
 
     try:
         qr_code = Qrcode.objects.get(asset=id)
@@ -140,13 +136,25 @@ def detail(request, id):
         qr_code = qr_code.get_qr_code_url(request.get_host())
 
     context = {
-        'extend': "asset/detail.html",
         'asset': asset,
         'updates': updates,
         'qr_code': qr_code,
     }
 
-    return render(request, asset.get_class_name().lower().replace('.', '/') + '/info.html', context)
+    return render(request, 'asset/hardware/detail.html', context)
+
+
+@login_required
+def software_detail(request, id):
+    asset = get_object_or_404(Software, id=id)
+    licenses = License.objects.filter(software=id).order_by('created_at')
+
+    context = {
+        'asset': asset,
+        'licenses': licenses,
+    }
+
+    return render(request, 'asset/software/detail.html', context)
 
 
 @administrator
@@ -165,28 +173,26 @@ def search(request):
 
 @administrator
 @login_required
-def hardware(request):
-    assets = Hardware.objects.all()
+def hardware_list(request):
+    assets = Hardware.objects.all().order_by('title')
 
     context = {
         'assets': assets,
-        'filter': 'hardware',
     }
 
-    return render(request, 'asset/assets.html', context)
+    return render(request, 'asset/hardware/list.html', context)
 
 
 @administrator
 @login_required
-def software(request):
-    assets = Software.objects.all()
+def software_list(request):
+    assets = Software.objects.all().order_by('title')
 
     context = {
         'assets': assets,
-        'filter': 'software',
     }
 
-    return render(request, 'asset/assets.html', context)
+    return render(request, 'asset/software/list.html', context)
 
 
 @login_required
@@ -266,3 +272,75 @@ def request(request):
     }
 
     return render(request, 'asset/request.html', context)
+
+
+@administrator
+@login_required
+def add_license(request, id):
+    if request.method == 'POST':
+        form = AddLicenseForm(request.POST)
+        if form.is_valid():
+            software = get_object_or_404(Software, id=id)
+
+            license = form.save(commit=False)
+            license.software = software
+            license.save()
+
+            notification = CreateNotification(
+                'License added',
+                'info',
+                request,
+                asset=software.id)
+            notification.create()
+
+            next = request.POST.get('next', '/')
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('asset-list')
+    else:
+        form = AddLicenseForm()
+
+        context = {
+            'form': form,
+        }
+
+        return render(request, 'asset/license/add.html', context)
+
+
+@administrator
+@login_required
+def edit_license(request, id):
+    license = get_object_or_404(License, id=id)
+    if request.method == 'POST':
+        form = license.get_post_form(request.POST, license)
+        if form.is_valid():
+            form.save()
+            notification = CreateNotification(
+                _('License edited'),
+                'info',
+                request)
+            notification.create()
+            next = request.POST.get('next', '/')
+            if next:
+                return HttpResponseRedirect(next)
+            else:
+                return redirect('software-detail')
+    else:
+        form = license.get_edit_form()
+
+    context = {
+        'form': form,
+        'form_half': math.ceil((len(form.fields)/2)),
+    }
+
+    return render(request, 'asset/software/license_edit_form.html', context)
+
+
+@administrator
+@login_required
+def delete_license(request, id):
+    license = get_object_or_404(License, id=id)
+    if request.method == 'POST':
+        license.delete()
+    return redirect('software-detail', id=license.software.id)

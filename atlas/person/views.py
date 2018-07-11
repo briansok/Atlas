@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from atlas.decorators import user, administrator
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from asset.models import Asset
+from asset.models import Hardware, License
 from .models import Person
 from .forms import EditPersonForm
 import math
@@ -23,11 +23,13 @@ def index(request):
 @login_required
 def detail(request, id):
     user = get_object_or_404(Person, id=id)
-    assets = get_list_or_404(Asset, user=user.id)
+    assets = Hardware.objects.filter(user=user.id).select_subclasses()
+    licenses = License.objects.filter(user=user.id)
 
     context = {
         'user': user,
         'assets': assets,
+        'licenses': licenses,
     }
 
     return render(request, 'person/detail.html', context)

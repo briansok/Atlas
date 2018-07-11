@@ -21,7 +21,7 @@ class Notification(Info):
         ('success', 'Sucess'),
     )
     notification_type = models.CharField(max_length=7, choices=NOTIFICATION_TYPES, default='info')
-    created_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Notification'

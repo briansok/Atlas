@@ -11,8 +11,6 @@ function getRootUrl() {
 $('#search-bar').on('keyup', function(){
 		var q = $(this).val();
 		var result_el = $('#search-results')
-
-
 		if (!q) {
 			result_el.hide();	
 		} else {
@@ -48,19 +46,28 @@ function parseResults(json) {
 		}
 	}
 
-	if (json.assets) {
-		for (var i in json.assets) {
-			var id = json.assets[i].id;
-			var title = json.assets[i].title;
-			result_el.append('<li class="result"><a href="/assets/' + id + '">' + title + '</a></li>');
+	if (json.software) {
+		for (var i in json.software) {
+			var id = json.software[i].id;
+			var title = json.software[i].title;
+			result_el.append('<li class="result"><a href="/assets/software/' + id + '">' + title + '</a></li>');
 		}
 	}
 
-	if (json.person_assets) {
-		for (var i in json.person_assets) {
-			var id = json.person_assets[i].id;
-			var title = json.person_assets[i].title;
-			result_el.append('<li class="result"><a href="/assets/' + id + '">' + title + '</a></li>');
-		}
-	}
+    if (json.hardware) {
+        for (var i in json.hardware) {
+            var id = json.hardware[i].id;
+            var title = json.hardware[i].title;
+            result_el.append('<li class="result"><a href="/assets/hardware/' + id + '">' + title + '</a></li>');
+        }
+    }
+
+    // Currently disabled
+	// if (json.person_assets) {
+	// 	for (var i in json.person_assets) {
+	// 		var id = json.person_assets[i].id;
+	// 		var title = json.person_assets[i].title;
+	// 		result_el.append('<li class="result"><a href="/assets/' + id + '">' + title + '</a></li>');
+	// 	}
+	// }
 }

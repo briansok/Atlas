@@ -23,4 +23,18 @@
       width: 100%;
     }
   }
+
+  .action-buttons .button {
+    margin-bottom: $spacing/8;
+  }
+
+  table {
+    td, th {
+      font-size: 90%;
+    }
+
+    td {
+      padding: $spacing/4!important;
+    }
+  }
 }

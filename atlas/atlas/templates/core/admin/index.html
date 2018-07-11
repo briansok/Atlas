@@ -31,16 +31,24 @@
                                             {% include_anything location.plan.path %}
                                         </div>
                                         <div id="plan-popup">
-                                            <h3>{% trans "Set section" %}</h3>
                                             <span class="popup-close">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </span>
-                                            <form id="plan-form" action="/location/plan/set/" method="post">
+                                            <form id="plan-add-form" action="/location/plan/set/" method="post">
                                                 {% csrf_token %}
+                                                <h3 class="form-title">{% trans "Set section" %}</h3>
                                                 {{ plan_form }}
                                                 <input type="hidden" name="plan_x" value="">
                                                 <input type="hidden" name="plan_y" value="">
-                                                <input class="button" type="submit" value="Add" />
+                                                <input class="button" type="submit" id="plan-add" value="Add" />
+                                            </form>
+                                            <form id="plan-edit-form" action="/location/plan/delete" method="post">
+                                                {% csrf_token %}
+                                                <h3 class="form-title">{% trans "Set section" %}</h3>
+                                                <input type="hidden" name="plan_x" value="">
+                                                <input type="hidden" name="plan_y" value="">
+                                                <a class="button" id="plan-redirect">{% trans "Open" %}</a>
+                                                <input type="submit" class="button" id="plan-delete" value="{% trans 'Delete' %}" />
                                             </form>
                                         </div>
                                     </div>
@@ -55,18 +63,26 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {% for asset in expired_assets %}
+                                        {% if expired_assets %}
+                                            {% for asset in expired_assets %}
+                                                <tr>
+                                                    <td>
+                                                        <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {% if asset.valid_until %}
+                                                            {{ asset.valid_until }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
                                             <tr>
                                                 <td>
-                                                    <a href="/assets/{{ asset.id  }}">{{ asset.title }}</a>
-                                                </td>
-                                                <td>
-                                                    {% if asset.valid_until %}
-                                                        {{ asset.valid_until }}
-                                                    {% endif %}
+                                                   {% trans "None" %}
                                                 </td>
                                             </tr>
-                                        {% endfor %}
+                                        {% endif %}
                                         </tbody>
                                     </table>
                                 </div>
