@@ -84,6 +84,7 @@
                 {% csrf_token %}
                 {{ form }}
                 <input class="button" type="submit" value="Submit" />
+                <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
             </form>
          </div>
     {% endif %}
