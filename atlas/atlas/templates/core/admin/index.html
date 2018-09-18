@@ -98,6 +98,7 @@
                                         <th >{% trans "User" %}</th>
                                         <th width="50%">{% trans "Description" %}</th>
                                         <th>{% trans "Status" %}</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -122,6 +123,22 @@
                                                 {% if asset_request.status %}
                                                     {{ asset_request.status }}
                                                 {% endif %}
+                                            </td>
+                                            <td class="edit-buttons">
+                                                <a href="/assets/request/{{ asset_request.id }}/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                <a data-open="request-delete-modal{{ asset_request.id }}"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                <div class="reveal" id="request-delete-modal{{ asset_request.id }}" data-reveal>
+                                                    <h3>{% trans "Are you sure?" %}</h3>
+                                                    <p>{% trans "This will delete your request: " %}{{ asset_request.title }}</p>
+                                                    <form action="/assets/request/{{ asset_request.id }}/delete" method="post">
+                                                        {% csrf_token %}
+                                                        <input type="submit" class="button" value="Yes">
+                                                    </form>
+                                                    <button data-close aria-label="Close reveal" class="button">No</button>
+                                                    <button class="close-button" data-close aria-label="Close reveal" type="button">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     {% endfor %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 import uuid
 from model_utils.managers import InheritanceManager
 
@@ -40,6 +41,10 @@ class Software(Asset):
         from asset.forms import AddSoftwareForm
         return AddSoftwareForm(request, instance=asset)
 
+    def has_permission(self, user):
+        if user.role == 'user':
+            raise PermissionDenied
+
 
 class License(models.Model):
     software = models.ForeignKey('asset.Software', on_delete=models.CASCADE, null=True, blank=True)
@@ -64,6 +69,11 @@ class License(models.Model):
     def get_post_form(self, request, license):
         from asset.forms import AddLicenseForm
         return AddLicenseForm(request, instance=license)
+
+    def has_permission(self, user):
+        if user.role == 'user':
+            if self.user != user:
+                raise PermissionDenied
 
 
 class Hardware(Asset):
@@ -107,6 +117,12 @@ class Hardware(Asset):
     def get_post_form(self, request, asset):
         from asset.forms import AddHardwareForm
         return AddHardwareForm(request, instance=asset)
+
+    def has_permission(self, user):
+        if user.role == 'user':
+            if self.user != user:
+                raise PermissionDenied
+
 
 
 class Qrcode(models.Model):
