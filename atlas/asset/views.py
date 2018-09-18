@@ -76,10 +76,12 @@ def add(request, asset):
     return render(request, 'asset/add.html', context)
 
 
+@administrator
 @login_required
 def edit(request, id):
     try:
         asset = Asset.objects.get_subclass(id=id)
+        asset.has_permission(request.user)
     except ObjectDoesNotExist:
         raise Http404('Object does not exist')
 
@@ -126,6 +128,7 @@ def delete(request, id):
 @login_required
 def hardware_detail(request, id):
     asset = get_object_or_404(Hardware, id=id)
+    asset.has_permission(request.user)
     updates = Update.objects.filter(asset=id).order_by('date')
 
     try:

@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% block content %}
+    {% load model_type %}
     {% if updates %}
         <div class="block middle">
             <h3>Latest updates</h3>
@@ -39,7 +40,7 @@
                             {{ update.title }}
                         </td>
                         <td>
-                            <a class="table-link" href="/assets/{{ update.asset.id }}">
+                            <a class="table-link" href="/assets/{% model_type update.asset %}/{{ update.asset.id }}">
                                 {{ update.asset.title }}
                             </a>
                         </td>
@@ -78,14 +79,12 @@
                         </td>
                         <td>
                             {% if notification.asset %}
-                                <a class="table-link" href="/assets/{{notification.asset.id}}">
-                                    {{ notification.asset.title }}
-                                </a>
+                                {{ notification.asset.title }}
                             {% endif %}
                         </td>
                         <td>
                             {% if notification.section %}
-                                <a class="table-link" href="/sections/{{notification.section.id}}">
+                                <a class="table-link" href="/location/sections/{{notification.section.id}}">
                                     {{ notification.section.title }}
                                 </a>
                             {% endif %}
