@@ -59,4 +59,4 @@ class Section(models.Model):
     class Meta:
         verbose_name = 'Section'
         verbose_name_plural = 'Sections'
-        ordering = ['-created_at']
+        ordering = ['title']

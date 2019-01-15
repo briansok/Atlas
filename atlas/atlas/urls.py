@@ -17,8 +17,8 @@ urlpatterns = [
     path('info/', include('info.urls')),
     path('admin/', admin.site.urls),
 
-    #path('login/', auth_views.login, name='login'),
-    #path('logout/', auth_views.logout, name='logout'),
+    path('login/', auth_views.login, name='login'),
+    path('logout/', auth_views.logout, name='logout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 try:

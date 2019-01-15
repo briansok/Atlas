@@ -10,6 +10,12 @@ class Person(AbstractUser):
     role = models.CharField(max_length=7, choices=ROLES, default='user')
     category = models.ForeignKey('person.Category', on_delete=models.CASCADE, null=True, blank=True)
 
+    def __str__(self):
+        if self.first_name and self.last_name:
+            return self.first_name + ' ' + self.last_name
+        else:
+            return self.username
+
     def get_edit_form(self):
         from person.forms import EditPersonForm
         return EditPersonForm(initial={

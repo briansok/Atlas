@@ -13,7 +13,7 @@
             <div class="wrapper">
                 {% block content-top %}
                     <header class="block top">
-                        <h3>{% trans "Welcome" %} {{ request.user.username }}</h3>
+                        <h3>{% trans "Welcome" %} {{ request.user }}</h3>
                         <a href="/assets/request" class="button">{% trans "Make a request" %}</a>
                     </header>
                 {% endblock %}

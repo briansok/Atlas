@@ -26,7 +26,7 @@
 
 {% block content %}
 <div class="block middle">
-    <h3>{{ user.username }}</h3>
+    <h3>{{ user }}</h3>
     <div class="user-table-wrapper">
         <div class="wrapper">
             <table>
@@ -41,6 +41,18 @@
                     <tr>
                         <td>{% trans "Username" %}</td>
                         <td>{{ user.username }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if user.first_name %}
+                    <tr>
+                        <td>{% trans "First name" %}</td>
+                        <td>{{ user.first_name }}</td>
+                    </tr>
+                    {% endif %}
+                    {% if user.last_name %}
+                    <tr>
+                        <td>{% trans "Last name" %}</td>
+                        <td>{{ user.last_name }}</td>
                     </tr>
                     {% endif %}
                     {% if user.email %}

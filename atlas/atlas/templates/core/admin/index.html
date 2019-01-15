@@ -13,7 +13,7 @@
                 <div class="wrapper">
                     {% block content-top %}
                         <header class="block top">
-                            <h3>{% trans "Welcome" %} {{ request.user.username }}</h3>
+                            <h3>{% trans "Welcome" %} {{ request.user }}</h3>
                             <div class="action-buttons">
                                 <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
                                 <a href="/assets/software/add" class="button">{% trans "Add software" %}</a>
@@ -111,7 +111,7 @@
                                             </td>
                                             <td>
                                                 {% if asset_request.user %}
-                                                    <a href="/users/{{ asset_request.user.id  }}">{{ asset_request.user.username }}</a>
+                                                    <a href="/users/{{ asset_request.user.id  }}">{{ asset_request.user }}</a>
                                                 {% endif %}
                                             </td>
                                             <td>

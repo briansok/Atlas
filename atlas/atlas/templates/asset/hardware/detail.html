@@ -53,7 +53,7 @@
                         <tbody>
                         <tr>
                             <td>{% trans "User" %}</td>
-                            <td>{{ asset.user.username }}</td>
+                            <td>{{ asset.user }}</td>
                         </tr>
                         <tr>
                             <td>{% trans "Section" %}</td>
@@ -68,6 +68,14 @@
                             <td>
                                 {% if asset.price %}
                                     €{{ asset.price }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{% trans "Bought at" %}</td>
+                            <td>
+                                {% if asset.bought_at %}
+                                    {{ asset.bought_at }}
                                 {% endif %}
                             </td>
                         </tr>

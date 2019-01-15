@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from asset.models import Asset
 
 
 class Info(models.Model):
@@ -33,6 +34,10 @@ class Update(Info):
     description = models.TextField(null=True, blank=True)
     date = models.DateField(null=True, blank=True)
     attachment = models.FileField(null=True, blank=True)
+
+    @property
+    def get_asset_name(self):
+        return Asset.objects.filter(id=self.asset.id).select_subclasses().first()
 
     class Meta:
         verbose_name = 'Update'
