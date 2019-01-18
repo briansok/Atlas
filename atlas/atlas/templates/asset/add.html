@@ -18,7 +18,7 @@
             {% csrf_token %}
             <div class="wrapper">
                 <ul>
-                    {% for form_item in form %}
+                    {% for form_item in form.visible_fields %}
                         {% if forloop.counter <= form_half %}
                             <li>
                                 {{ form_item.label }}
@@ -29,7 +29,7 @@
                     {% endfor %}
                 </ul>
                 <ul>
-                    {% for form_item in form %}
+                    {% for form_item in form.visible_fields %}
                         {% if forloop.counter > form_half %}
                             <li>
                                 {{ form_item.label }}
@@ -39,6 +39,7 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
+                <input type="hidden" name="qr_code" value="{{ request.GET.qr_code }}">
             </div>
             <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
             <input class="button" type="submit" value="Submit" />

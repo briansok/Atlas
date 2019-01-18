@@ -48,6 +48,12 @@ def add(request, asset):
 
             notification.create()
 
+            if request.POST.get('qr_code'):
+                qr_code = get_object_or_404(Qrcode, uid=request.POST.get('qr_code'))
+                qr_code.asset = asset
+                qr_code.save()
+                return redirect('hardware-detail', asset.id)
+
             next = request.POST.get('next', '/')
             if next:
                 return HttpResponseRedirect(next)

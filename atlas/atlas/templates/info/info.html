@@ -40,7 +40,7 @@
                             {{ update.title }}
                         </td>
                         <td>
-                            <a class="table-link" href="/assets/{% model_type update.asset %}/{{ update.asset.id }}">
+                            <a class="table-link" href="/assets/{% model_type update.get_asset_name %}/{{ update.asset.id }}">
                                 {{ update.asset.title }}
                             </a>
                         </td>

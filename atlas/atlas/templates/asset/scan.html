@@ -45,7 +45,7 @@
                             {% if asset.user %}
                                 <tr>
                                     <td>{% trans "User" %}</td>
-                                    <td>{{ asset.user.username }}</td>
+                                    <td>{{ asset.user }}</td>
                                 </tr>
                             {% endif %}
                             {% if asset.section %}
@@ -84,7 +84,7 @@
                 {% csrf_token %}
                 {{ form }}
                 <input class="button" type="submit" value="Submit" />
-                <a href="/assets/hardware/add" class="button">{% trans "Add hardware" %}</a>
+                <a href="/assets/hardware/add?qr_code={{ qr_code }}" class="button">{% trans "Add hardware" %}</a>
             </form>
          </div>
     {% endif %}

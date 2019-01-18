@@ -24,6 +24,7 @@ class AddHardwareForm(forms.ModelForm):
         widgets = {
             'valid_until': forms.DateInput(attrs={'class': 'datepicker'}),
             'bought_at': forms.DateInput(attrs={'class': 'datepicker'}),
+            'qr_code': forms.HiddenInput()
         }
 
 
