@@ -12,7 +12,6 @@ class AddHardwareForm(forms.ModelForm):
             'user',
             'section',
             'price',
-            'valid_until',
             'model',
             'serial',
             'cpu',
@@ -20,11 +19,11 @@ class AddHardwareForm(forms.ModelForm):
             'hdd',
             'ssd',
             'bought_at',
+            'guarantee_years',
         ]
         widgets = {
             'valid_until': forms.DateInput(attrs={'class': 'datepicker'}),
             'bought_at': forms.DateInput(attrs={'class': 'datepicker'}),
-            'qr_code': forms.HiddenInput()
         }
 
 

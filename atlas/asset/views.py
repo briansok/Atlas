@@ -1,4 +1,5 @@
 import math
+from dateutil.relativedelta import relativedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import Http404, HttpResponseRedirect, JsonResponse
@@ -37,22 +38,26 @@ def add(request, asset):
             form = None
 
         if form.is_valid():
-            asset = form.save(commit=False)
-            asset.save()
+            asset_obj = form.save(commit=False)
+            if asset == 'hardware' and asset_obj.guarantee_years is not None \
+                and asset_obj.bought_at is not None:
+                asset_obj.valid_until = asset_obj.bought_at + \
+                    relativedelta(years=asset_obj.guarantee_years)
+            asset_obj.save()
 
             notification = CreateNotification(
                 _('Asset added'),
                 'info',
                 request,
-                asset=asset.id)
+                asset=asset_obj.id)
 
             notification.create()
 
             if request.POST.get('qr_code'):
                 qr_code = get_object_or_404(Qrcode, uid=request.POST.get('qr_code'))
-                qr_code.asset = asset
+                qr_code.asset = asset_obj
                 qr_code.save()
-                return redirect('hardware-detail', asset.id)
+                return redirect('hardware-detail', asset_obj.id)
 
             next = request.POST.get('next', '/')
             if next:
@@ -95,7 +100,15 @@ def edit(request, id):
         form = asset.get_post_form(request.POST, asset)
 
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+
+            try:
+                if obj.bought_at is not None and obj.guarantee_years is not None:
+                    obj.valid_until = obj.bought_at + \
+                    relativedelta(years=obj.guarantee_years)
+            except AttributeError:
+                pass
+            obj.save()
 
             notification = CreateNotification(
                 _('Asset edited'),

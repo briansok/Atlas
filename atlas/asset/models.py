@@ -84,6 +84,7 @@ class Hardware(Asset):
     ram = models.CharField(max_length=200, null=True, blank=True)
     hdd = models.CharField(max_length=200, null=True, blank=True)
     ssd = models.CharField(max_length=200, null=True, blank=True)
+    guarantee_years = models.PositiveIntegerField(null=True, blank=True)
     bought_at = models.DateField(null=True, blank=True)
 
     class Meta:
@@ -112,6 +113,7 @@ class Hardware(Asset):
             'hdd': self.hdd,
             'ssd': self.ssd,
             'bought_at': self.bought_at,
+            'guarantee_years': self.guarantee_years,
         })
 
     def get_post_form(self, request, asset):
